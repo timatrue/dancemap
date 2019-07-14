@@ -1,0 +1,19 @@
+{
+  "name": "dancemap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timatrue/dancemap.git"
+  },
+  "author": "Trushinskii Artem",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/timatrue/dancemap/issues"
+  },
+  "homepage": "https://github.com/timatrue/dancemap#readme"
+}
