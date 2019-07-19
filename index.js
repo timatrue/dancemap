@@ -1,3 +1,4 @@
+/*Сервер завелся после удаления nginx*/
 const http = require('http');
 
 //const hostname = '127.0.0.1';
@@ -32,4 +33,5 @@ https://gist.github.com/tomasevich/a2fe588c451c5a192893e6521a813020
 https://stackoverflow.com/questions/5009324/node-js-nginx-what-now
 
 https://serverfault.com/questions/665709/allowing-node-js-applications-to-run-on-port-80/840035
+https://www.digitalocean.com/community/questions/how-can-i-get-node-js-to-listen-on-port-80
 */
