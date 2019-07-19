@@ -1,7 +1,7 @@
 const http = require('http');
 
 //const hostname = '127.0.0.1';
-const hostname = 'localhost';
+//const hostname = 'localhost';
 const port = 80;
 
 const server = http.createServer((req, res) => {
@@ -30,4 +30,6 @@ sudo iptables -L -n -t nat
 https://stackoverflow.com/questions/49237886/nodejs-app-wont-create-server-says-err-connection-timed-out
 https://gist.github.com/tomasevich/a2fe588c451c5a192893e6521a813020
 https://stackoverflow.com/questions/5009324/node-js-nginx-what-now
+
+https://serverfault.com/questions/665709/allowing-node-js-applications-to-run-on-port-80/840035
 */
