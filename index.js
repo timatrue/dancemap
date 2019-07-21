@@ -1,18 +1,27 @@
 /*Сервер завелся после удаления nginx*/
 const http = require('http');
+const express = require('express');
+const app = express();
 
 //const hostname = '127.0.0.1';
 //const hostname = 'localhost';
 const port = 80;
+app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
 
-const server = http.createServer((req, res) => {
+
+
+/*const server = http.createServer((req, res) => {
   console.log('income');
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
   res.end('Hello World\n');
-});
+});*/
 
-server.listen(port, () => {
+app.get('/', function (req, res) {
+   res.send('Hello World');
+})
+
+app.listen(port, () => {
   console.log(`Server running at ${port}`);
 });
 
@@ -34,4 +43,7 @@ https://stackoverflow.com/questions/5009324/node-js-nginx-what-now
 
 https://serverfault.com/questions/665709/allowing-node-js-applications-to-run-on-port-80/840035
 https://www.digitalocean.com/community/questions/how-can-i-get-node-js-to-listen-on-port-80
+
+FOREVER
+https://stackoverflow.com/questions/12701259/how-to-make-a-node-js-application-run-permanently/12710118
 */
