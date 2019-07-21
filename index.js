@@ -6,7 +6,8 @@ const fs = require('fs');
 
 //const hostname = '127.0.0.1';
 //const hostname = 'localhost';
-const port = 80;
+const portHTTP = 80;
+const portHTTPS = 443;
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
 
 
@@ -22,9 +23,23 @@ app.get('/', function (req, res) {
    res.send('Hello World');
 })
 
-app.listen(port, () => {
-  console.log(`Server running at ${port}`);
+app.listen(portHTTP, () => {
+  console.log(`Server running at ${portHTTP}`);
 });
+
+
+
+  /*
+	Congratulations! Your certificate and chain have been saved at:
+   /etc/letsencrypt/live/dancemap.online/fullchain.pem
+   Your key file has been saved at:
+   /etc/letsencrypt/live/dancemap.online/privkey.pem
+   Your cert will expire on 2019-10-19. To obtain a new or tweaked
+   version of this certificate in the future, simply run certbot
+   again. To non-interactively renew *all* of your certificates, run
+   "certbot renew"
+  */
+
 
 //https://stackoverflow.com/questions/23281895/node-js-eacces-error-when-listening-on-http-80-port-permission-denied
 //https://serverfault.com/questions/288729/once-i-set-iptables-to-reroute-a-port-how-do-i-undo-it
@@ -47,4 +62,5 @@ https://www.digitalocean.com/community/questions/how-can-i-get-node-js-to-listen
 
 FOREVER
 https://stackoverflow.com/questions/12701259/how-to-make-a-node-js-application-run-permanently/12710118
+https://flaviocopes.com/express-letsencrypt-ssl/
 */
