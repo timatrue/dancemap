@@ -6,24 +6,43 @@ const fs = require('fs');
 
 //const hostname = '127.0.0.1';
 //const hostname = 'localhost';
-const port = 80;
+const portHTTP = 80;
+const portHTTPS = 443;
+
+/*Certificate
+/etc/letsencrypt/live/example.com/privkey.pem
+/etc/letsencrypt/live/example.com/chain.pem
+/etc/letsencrypt/live/example.com/fullchain.pem
+/etc/letsencrypt/live/example.com/cert.pem
+*/
+
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/chain.pem', 'utf8');
+
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+	ca: ca
+};
+
+
+
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
-
-
-
-/*const server = http.createServer((req, res) => {
-  console.log('income');
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World\n');
-});*/
-
 app.get('/', function (req, res) {
-   res.send('Hello World');
+   res.send('dancemap here');
 })
 
-app.listen(port, () => {
-  console.log(`Server running at ${port}`);
+// Starting both http & https servers
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(portHTTP, () => {
+	console.log('HTTP Server running on port 80');
+});
+
+httpsServer.listen(portHTTPS, () => {
+	console.log('HTTPS Server running on port 443');
 });
 
 //https://stackoverflow.com/questions/23281895/node-js-eacces-error-when-listening-on-http-80-port-permission-denied
