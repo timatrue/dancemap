@@ -29,11 +29,11 @@ const credentials = {
 
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
 
-app.get('/', function (req, res) {
+app.get('/', function (req, res, next) {
     //res.send('dancemap here');
-    if(req.secure){
-     // OK, continue
-     return next();
+    if(req.secure) {
+      // OK, continue
+      return next();
    };
    // handle port numbers if you need non defaults
    // res.redirect('https://' + req.host + req.url); // express 3.x
