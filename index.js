@@ -48,9 +48,6 @@ app.get('/', function (req, res) {
 })
 
 
-app.listen(portHTTP, () => {
-  console.log(`Server running at ${portHTTP}`);
-
 // Starting both http & https servers
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
