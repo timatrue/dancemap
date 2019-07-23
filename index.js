@@ -1,5 +1,6 @@
 /*Сервер завелся после удаления nginx*/
 const http = require('http');
+const https = require('https');
 const express = require('express');
 const app = express();
 const fs = require('fs');
@@ -8,23 +9,59 @@ const fs = require('fs');
 //const hostname = 'localhost';
 const portHTTP = 80;
 const portHTTPS = 443;
+
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
 
 
+/*Certificate
+/etc/letsencrypt/live/example.com/privkey.pem
+/etc/letsencrypt/live/example.com/chain.pem
+/etc/letsencrypt/live/example.com/fullchain.pem
+/etc/letsencrypt/live/example.com/cert.pem
+*/
 
-/*const server = http.createServer((req, res) => {
-  console.log('income');
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World\n');
-});*/
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/chain.pem', 'utf8');
+
+const credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca: ca
+};
+
+app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
+
+app.use((req, res, next) => {
+    //res.send('dancemap here');
+    if(req.secure) {
+      // OK, continue
+      return next();
+   };
+   // handle port numbers if you need non defaults
+   // res.redirect('https://' + req.host + req.url); // express 3.x
+   res.redirect('https://' + req.hostname + req.url); // express 4.x
+})
 
 app.get('/', function (req, res) {
-   res.send('Hello World');
+   res.send('dancemap here');
 })
+
 
 app.listen(portHTTP, () => {
   console.log(`Server running at ${portHTTP}`);
+
+// Starting both http & https servers
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(portHTTP, () => {
+	console.log('HTTP Server running on port 80');
+});
+
+httpsServer.listen(portHTTPS, () => {
+	console.log('HTTPS Server running on port 443');
+
 });
 
 
