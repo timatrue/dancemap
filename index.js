@@ -44,7 +44,8 @@ app.use((req, res, next) => {
 })
 
 app.get('/', function (req, res) {
-   res.send('dancemap here');
+   //res.send('dancemap here');
+   res.sendFile('static/index.html', {root: __dirname })
 })
 
 
