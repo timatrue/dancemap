@@ -24,8 +24,9 @@ app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
 
 
 
-app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
+app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
 
+app.enable('trust proxy');
 app.use((req, res, next) => {
     //res.send('dancemap here');
     if(req.secure) {
