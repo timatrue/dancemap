@@ -32,6 +32,7 @@ app.use((req, res, next) => {
     console.log('req.secure', req.secure);
     if(req.secure) {
       // OK, continue
+      console.log('rin IF statement req.secure', req.secure);
       return next();
    };
    // handle port numbers if you need non defaults
@@ -48,6 +49,7 @@ app.use((req, res, next) => {
 
 app.get('/', function (req, res) {
    //res.send('dancemap here');
+   console.log('get /');
    res.sendFile('static/index.html', {root: __dirname })
 })
 
@@ -113,4 +115,6 @@ https://www.digitalocean.com/community/questions/how-can-i-get-node-js-to-listen
 FOREVER
 https://stackoverflow.com/questions/12701259/how-to-make-a-node-js-application-run-permanently/12710118
 https://flaviocopes.com/express-letsencrypt-ssl/
+forever logs index.js -f
+
 */
