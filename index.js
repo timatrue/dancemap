@@ -27,7 +27,7 @@ app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
 
 app.enable('trust proxy');
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
     //res.send('dancemap here');
     if(req.secure) {
       // OK, continue
@@ -37,7 +37,12 @@ app.use((req, res, next) => {
    // res.redirect('https://' + req.host + req.url); // express 3.x
    console.log('https://' + req.hostname + req.url);
    res.redirect('https://' + req.hostname + req.url); // express 4.x
-})
+})*/
+
+app.get("*", function(req, res) {
+  res.redirect("https://" + req.headers.host + req.url);
+});
+
 
 app.get('/', function (req, res) {
    //res.send('dancemap here');
