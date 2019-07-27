@@ -29,16 +29,17 @@ app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
 //app.enable('trust proxy');
 app.use((req, res, next) => {
     //res.send('dancemap here');
-    console.log('req.secure', req.secure);
-    if(req.secure) {
+    console.log('req.secure', req.secure, req.headers['x-forwarded-proto']);
+    let scheme = req.headers['x-forwarded-proto'];
+
+    if(scheme === 'https') {
       // OK, continue
       console.log('rin IF statement req.secure', req.secure);
       return next();
-   };
-   // handle port numbers if you need non defaults
-   // res.redirect('https://' + req.host + req.url); // express 3.x
-   console.log('redirect use https://' + req.hostname + req.url);
-   res.redirect('https://' + req.hostname + req.url); // express 4.x
+   } else {
+     console.log('redirect use https://' + req.hostname + req.url);
+     res.redirect('https://' + req.hostname + req.url); // express 4.x
+   }
 });
 
 /*app.get("*", function(req, res) {
