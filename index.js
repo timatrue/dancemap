@@ -40,7 +40,7 @@ app.enable('trust proxy');
 })*/
 
 app.get("*", function(req, res) {
-  res.redirect("https://" + req.headers.host + req.url);
+  res.redirect("https://" + req.hostname + req.url);
 });
 
 
