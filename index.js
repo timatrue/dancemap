@@ -7,6 +7,8 @@ const fs = require('fs');
 
 //const hostname = '127.0.0.1';
 //const hostname = 'localhost';
+//win32 is development
+const isWin = process.platform === 'win32';
 const portHTTP = 80;
 const portHTTPS = 443;
 
@@ -20,15 +22,7 @@ app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
 /etc/letsencrypt/live/example.com/cert.pem
 */
 
-const privateKey = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/cert.pem', 'utf8');
-const ca = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/chain.pem', 'utf8');
 
-const credentials = {
-    key: privateKey,
-    cert: certificate,
-    ca: ca
-};
 
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
 
@@ -51,16 +45,28 @@ app.get('/', function (req, res) {
 
 // Starting both http & https servers
 const httpServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
-
 httpServer.listen(portHTTP, () => {
-	console.log('HTTP Server running on port 80');
+  console.log('HTTP Server running on port 80');
 });
 
-httpsServer.listen(portHTTPS, () => {
-	console.log('HTTPS Server running on port 443');
 
-});
+if(!isWin) {
+  const privateKey = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/privkey.pem', 'utf8');
+  const certificate = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/cert.pem', 'utf8');
+  const ca = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/chain.pem', 'utf8');
+
+  const credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca: ca
+  };
+  const httpsServer = https.createServer(credentials, app);
+
+
+  httpsServer.listen(portHTTPS, () => {
+    console.log('HTTPS Server running on port 443');
+  });
+}
 
 
 
