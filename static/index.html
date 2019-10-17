@@ -7,6 +7,7 @@
 	
 
 	<script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+	<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css'/>
 	<link href='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
 	<!--Leaflet-->
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="crossorigin=""/>
@@ -22,6 +23,26 @@
             height: 100%;
             width: 100%;
         }
+		
+		
+		
+
+	.count-icon {
+	  background:#ff8888;
+	  border:5px solid rgba(255,255,255,0.5);
+	  color:#fff;
+	  font-weight:bold;
+	  text-align:center;
+	  border-radius:50%;
+	  line-height:30px;
+	}
+	.count-icon:hover {
+		background:#bbb;
+	}
+  
+  /* Show popups on hover so hide the close link */
+  .leaflet-popup-close-button { display:none; }
+
     </style>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -37,7 +58,7 @@
 		var mymap = L.map('mapid').setView([59.921104, 30.359772], 13);
 		
 		//var mymap = L.map('mapid').fitWorld();
-		mymap.locate({setView: true, maxZoom: 16});
+		mymap.locate({setView: true, maxZoom: 12});
 		
 		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGltYXRydWUiLCJhIjoiY2p4cmQwem8wMDcxdDNtcWpndWhjOTMwbiJ9.SoBmmbCYNBwXFXuZFRcgHw', {
 			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -46,11 +67,70 @@
 			accessToken: 'your.mapbox.access.token'})
 			.addTo(mymap);
 			
-		var marker = L.marker([59.921104, 30.359772])
-			.addTo(mymap)
-			.bindPopup("<b>Hello world!</b><br>I am a popup.")
-			.bindTooltip("Test Label", { permanent: true, direction: 'right'});
+		
+		
+		const fontAwesomeIcon = L.divIcon({
+			   iconSize: [20, 20], 
+			   className: "count-icon",
+			   html: ""
+		});
+			
+			
+		var data = {
+		  "type": "FeatureCollection",
+		  "features": [
+			{
+			  "type": "Feature",
+			  "geometry": {
+				"type": "Point",
+				"coordinates": [30.359772,59.921104]
+			  },
+			  "properties": {
+				"name": "Youdance Spbn",
+				"popupContent": "Youdance Spb"
+			  }
+			},
+			{
+			  "type": "Feature",
+			  "geometry": {
+				"type": "Point",
+				"coordinates": [30.295164,59.961922 ]
+			  },
+			  "properties": {
+				"name": "Dance Driven",
+				"popupContent": "Dance Drive"
+			  }
+			}
+		  ]
+		};
+		
+		function onEachFeature(feature, layer) {
+			// does this feature have a property named popupContent?
+			if (feature.properties && feature.properties.popupContent) {
+				layer.bindPopup(feature.properties.popupContent);
+			}
+		}
+		
+		function pointToLayer(feature, latlng) {
+			return L.marker(latlng, {icon: fontAwesomeIcon});
+			/*return L.circleMarker(latlng, {
+				radius: 8,
+				fillColor: "#F20732",
+				color: "#707070",
+				weight: 1,
+				opacity: 1,
+				fillOpacity: 0.8
+			});*/
+		}
+		
+		L.geoJSON(data, {
+			onEachFeature: onEachFeature,
+			pointToLayer: pointToLayer
+		}).addTo(mymap);
+			
+		
 
 		</script>
+		
   </body>
 </html>
