@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Dance Map</title>
+    <title>Танцевальная карта - Dancemap.online</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
+    <meta name="Description" content="Школы танцев, танцевальные события и вечеринки"/>
 	
 
 	<script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
@@ -55,10 +56,10 @@
 	<div id="mapid"></div>
 		<script>
 		//59.921104 | Longitude: 30.359772
-		var mymap = L.map('mapid').setView([59.921104, 30.359772], 13);
+		var mymap = L.map('mapid').setView([59.94116984, 30.30488491], 12);
 		
 		//var mymap = L.map('mapid').fitWorld();
-		mymap.locate({setView: true, maxZoom: 12});
+		//mymap.locate({setView: true, maxZoom: 12});
 		
 		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGltYXRydWUiLCJhIjoiY2p4cmQwem8wMDcxdDNtcWpndWhjOTMwbiJ9.SoBmmbCYNBwXFXuZFRcgHw', {
 			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -86,8 +87,8 @@
 				"coordinates": [30.359772,59.921104]
 			  },
 			  "properties": {
-				"name": "Youdance Spbn",
-				"popupContent": "Youdance Spb"
+				"name": "Youdance Spb",
+				"popupContent": "<b>Youdance Spb</b></br>улица Черняховского, 65, Санкт-Петербург"
 			  }
 			},
 			{
@@ -97,10 +98,22 @@
 				"coordinates": [30.295164,59.961922 ]
 			  },
 			  "properties": {
-				"name": "Dance Driven",
-				"popupContent": "Dance Drive"
+				"name": "Dance Drive",
+				"popupContent": "<b>Dance Drive</b></br>Чкаловский пр., 15, Санкт-Петербург"
+			  }
+			},
+			{
+			  "type": "Feature",
+			  "geometry": {
+				"type": "Point",
+				"coordinates": [30.34178777182774,59.917375 ]
+			  },
+			  "properties": {
+				"name": "MMDance",
+				"popupContent": "<b>MMDance</b></br>Звенигородская улица, 9-11, 3 этаж, Санкт-Петербург"
 			  }
 			}
+
 		  ]
 		};
 		
