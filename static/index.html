@@ -5,160 +5,176 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <meta name="Description" content="Школы танцев, танцевальные события и вечеринки"/>
-	<meta name="yandex-verification" content="e73d49b4298f11ea" />
+  <meta name="yandex-verification" content="e73d49b4298f11ea" />
 
-	<script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
-	<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css'/>
-	<link href='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
-	<!--Leaflet-->
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="crossorigin=""/>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+  <script src="https://kit.fontawesome.com/3d2fe1a67d.js" crossorigin="anonymous"></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
+  <!--Leaflet-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="crossorigin=""/>
     <!-- Make sure you put this AFTER Leaflet's CSS -->
-	<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="crossorigin=""></script>
-	
-    <style>
-        body {
-            padding: 0;
-            margin: 0;
-        }
-        html, body, #mapid {
-            height: 100%;
-            width: 100%;
-        }
-		
-		
-		
-
-	.count-icon {
-	  background:#ff8888;
-	  border:5px solid rgba(255,255,255,0.5);
-	  color:#fff;
-	  font-weight:bold;
-	  text-align:center;
-	  border-radius:50%;
-	  line-height:30px;
-	}
-	.count-icon:hover {
-		background:#bbb;
-	}
+  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="crossorigin=""></script>
   
-  /* Show popups on hover so hide the close link */
-  .leaflet-popup-close-button { display:none; }
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    html, body, #mapid {
+      height: 100%;
+      width: 100%;
+    }
+    
+    .fa-map-marker-alt {
+      padding-right: 5px;
+      color: grey;
+    }
 
-    </style>
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	
-	<!-- Yandex.Metrika counter -->
-	<script type="text/javascript" >
-	   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-	   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-	   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+    .count-icon {
+      background:#ff8888;
+      border:5px solid rgba(255,255,255,0.5);
+      color:#fff;
+      font-weight:bold;
+      text-align:center;
+      border-radius:50%;
+      line-height:30px;
+    }
+    .count-icon:hover {
+      background:#bbb;
+    }
+    
+    /* Show popups on hover so hide the close link
+    .leaflet-popup-close-button {
+      display:none;
+    } */
+  </style>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+     m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+     (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-	   ym(55886317, "init", {
-			clickmap:true,
-			trackLinks:true,
-			accurateTrackBounce:true
-	   });
-	</script>
-	<noscript><div><img src="https://mc.yandex.ru/watch/55886317" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-	<!-- /Yandex.Metrika counter -->
+     ym(55886317, "init", {
+      clickmap:true,
+      trackLinks:true,
+      accurateTrackBounce:true
+     });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/55886317" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
 
   </head>
   
   <body>
     
-	
-	<div id="mapid"></div>
-		<script>
-		//59.921104 | Longitude: 30.359772
-		var mymap = L.map('mapid').setView([59.94116984, 30.30488491], 12);
-		
-		//var mymap = L.map('mapid').fitWorld();
-		//mymap.locate({setView: true, maxZoom: 12});
-		
-		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGltYXRydWUiLCJhIjoiY2p4cmQwem8wMDcxdDNtcWpndWhjOTMwbiJ9.SoBmmbCYNBwXFXuZFRcgHw', {
-			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-			maxZoom: 18,
-			id: 'mapbox.streets',
-			accessToken: 'your.mapbox.access.token'})
-			.addTo(mymap);
-			
-		
-		
-		const fontAwesomeIcon = L.divIcon({
-			   iconSize: [20, 20], 
-			   className: "count-icon",
-			   html: ""
-		});
-			
-			
-		var data = {
-		  "type": "FeatureCollection",
-		  "features": [
-			{
-			  "type": "Feature",
-			  "geometry": {
-				"type": "Point",
-				"coordinates": [30.359772,59.921104]
-			  },
-			  "properties": {
-				"name": "Youdance Spb",
-				"popupContent": "<b>Youdance Spb</b></br>улица Черняховского, 65, Санкт-Петербург"
-			  }
-			},
-			{
-			  "type": "Feature",
-			  "geometry": {
-				"type": "Point",
-				"coordinates": [30.295164,59.961922 ]
-			  },
-			  "properties": {
-				"name": "Dance Drive",
-				"popupContent": "<b>Dance Drive</b></br>Чкаловский пр., 15, Санкт-Петербург"
-			  }
-			},
-			{
-			  "type": "Feature",
-			  "geometry": {
-				"type": "Point",
-				"coordinates": [30.34178777182774,59.917375 ]
-			  },
-			  "properties": {
-				"name": "MMDance",
-				"popupContent": "<b>MMDance</b></br>Звенигородская улица, 9-11, 3 этаж, Санкт-Петербург"
-			  }
-			}
+  
+  <div id="mapid"></div>
+    <script>
+    //59.921104 | Longitude: 30.359772
+    this.dancemap = this.dancemap || {};
+    var mymap = L.map('mapid').setView([59.94116984, 30.30488491], 12);
+    
+    //var mymap = L.map('mapid').fitWorld();
+    //mymap.locate({setView: true, maxZoom: 12});
+    
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGltYXRydWUiLCJhIjoiY2p4cmQwem8wMDcxdDNtcWpndWhjOTMwbiJ9.SoBmmbCYNBwXFXuZFRcgHw', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 18,
+      id: 'mapbox.streets',
+      accessToken: 'your.mapbox.access.token'})
+      .addTo(mymap);
+      
+    
+    
+    const fontAwesomeIcon = L.divIcon({
+         iconSize: [20, 20], 
+         className: "count-icon",
+         html: ""
+    });
+      
+    this.dancemap.icons = {};
+    this.dancemap.icons.marker = "<span><i class='fas fa-map-marker-alt'></i></span>";
+    
+    this.dancemap.schools = {
+      "type": "FeatureCollection",
+      "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+        "type": "Point",
+        "coordinates": [30.359772,59.921104]
+        },
+        "properties": {
+        "name": "Youdance Spb",
+        "popupContent": "<b>Youdance Spb</b></br>" + this.dancemap.icons.marker + "улица Черняховского, 65, Санкт-Петербург"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+        "type": "Point",
+        "coordinates": [30.295164,59.961922]
+        },
+        "properties": {
+        "name": "Dance Drive",
+        "popupContent": "<b>Dance Drive</b></br>" + this.dancemap.icons.marker + "Чкаловский пр., 15, Санкт-Петербург"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+        "type": "Point",
+        "coordinates": [30.34178777182774,59.917375]
+        },
+        "properties": {
+        "name": "MMDance",
+        "popupContent": "<b>MMDance</b></br>" + this.dancemap.icons.marker + "Звенигородская улица, 9-11, 3 этаж, Санкт-Петербург"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+        "type": "Point",
+        "coordinates": [30.3126,59.9358],
+        },
+        "properties": {
+        "name": "MEGAPOLIS СПБ",
+        "popupContent": "<b>MEGAPOLIS СПБ</b></br>" + this.dancemap.icons.marker + "ул. Малая морская, дом 11, Санкт-Петербург"
+        }
+      }
+      ]
+    };
+    
+    function onEachFeature(feature, layer) {
+      // does this feature have a property named popupContent?
+      if (feature.properties && feature.properties.popupContent) {
+        layer.bindPopup(feature.properties.popupContent);
+      }
+    }
+    
+    function pointToLayer(feature, latlng) {
+      return L.marker(latlng, {icon: fontAwesomeIcon});
+      /*return L.circleMarker(latlng, {
+        radius: 8,
+        fillColor: "#F20732",
+        color: "#707070",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.8
+      });*/
+    }
+    
+    L.geoJSON(this.dancemap.schools , {
+      onEachFeature: onEachFeature,
+      pointToLayer: pointToLayer
+    }).addTo(mymap);
+      
+    
 
-		  ]
-		};
-		
-		function onEachFeature(feature, layer) {
-			// does this feature have a property named popupContent?
-			if (feature.properties && feature.properties.popupContent) {
-				layer.bindPopup(feature.properties.popupContent);
-			}
-		}
-		
-		function pointToLayer(feature, latlng) {
-			return L.marker(latlng, {icon: fontAwesomeIcon});
-			/*return L.circleMarker(latlng, {
-				radius: 8,
-				fillColor: "#F20732",
-				color: "#707070",
-				weight: 1,
-				opacity: 1,
-				fillOpacity: 0.8
-			});*/
-		}
-		
-		L.geoJSON(data, {
-			onEachFeature: onEachFeature,
-			pointToLayer: pointToLayer
-		}).addTo(mymap);
-			
-		
-
-		</script>
-		
+    </script>
+    
   </body>
 </html>
