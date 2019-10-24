@@ -16,14 +16,26 @@
   <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="crossorigin=""></script>
   
   <style>
-    body {
-      padding: 0;
-      margin: 0;
-    }
-    html, body, #mapid {
+
+    html, body {
       height: 100%;
       width: 100%;
+	  margin:0;
+	  padding:0;
     }
+	header {
+	  height: auto;
+      min-height: 55px;
+      background: #fff;
+	}
+	
+	#mapid {
+      overflow: hidden;
+      position: absolute;
+      top: 55px;
+      bottom: 0;
+      width: 100%;
+	}
     
     .fa-map-marker-alt {
       padding-right: 5px;
@@ -83,7 +95,7 @@
   
   <body>
     
-  
+  <header style="padding-top:20px;"></header>
   <div id="mapid"></div>
     <script>
     //59.921104 | Longitude: 30.359772
