@@ -56,7 +56,7 @@ app.get('/', function (req, res) {
 
 app.get('/add', function (req, res) {
    //res.send('dancemap here');
-   console.log('get /');
+   console.log('get /add');
    res.sendFile('static/add.html', {root: __dirname })
 })
 
