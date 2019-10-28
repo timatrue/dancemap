@@ -54,6 +54,11 @@ app.get('/', function (req, res) {
    res.sendFile('static/index.html', {root: __dirname })
 })
 
+app.get('/add', function (req, res) {
+   //res.send('dancemap here');
+   console.log('get /');
+   res.sendFile('static/add.html', {root: __dirname })
+})
 
 // Starting both http & https servers
 const httpServer = http.createServer(app);
