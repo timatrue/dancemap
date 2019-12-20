@@ -9,8 +9,8 @@ const fs = require('fs');
 //const hostname = 'localhost';
 //win32 is development
 const isWin = process.platform === 'win32';
-const portHTTP = 80;
-const portHTTPS = 443;
+const portHTTP = 8080;
+const portHTTPS = 8443;
 
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
 
@@ -30,7 +30,7 @@ app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
 app.use((req, res, next) => {
     //res.send('dancemap here');
     console.log('req.secure', req.secure, req.headers['x-forwarded-proto']);
-    let scheme = req.headers['x-forwarded-proto'];
+    var scheme = req.headers['x-forwarded-proto'];
 
     if(scheme === 'https') {
       // OK, continue
