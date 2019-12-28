@@ -3,7 +3,17 @@ const http = require('http');
 const https = require('https');
 const express = require('express');
 const app = express();
+const bodyParser = require("body-parser");
 const fs = require('fs');
+
+
+
+/*MONGO CLOUD*/
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://dancemap:Yy4UqOE9bihpePZc@cluster0-kkgwk.gcp.mongodb.net/test?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+
+
 
 //const hostname = '127.0.0.1';
 //const hostname = 'localhost';
@@ -12,15 +22,17 @@ const isWin = process.platform === 'win32';
 const portHTTP = 8080;
 const portHTTPS = 8443;
 
+
+app.use(express.json({ extended: false }));
+
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
 
 
-/*Certificate
-/etc/letsencrypt/live/example.com/privkey.pem
-/etc/letsencrypt/live/example.com/chain.pem
-/etc/letsencrypt/live/example.com/fullchain.pem
-/etc/letsencrypt/live/example.com/cert.pem
-*/
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
 
 
 
