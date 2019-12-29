@@ -1,4 +1,5 @@
-/*Сервер завелся после удаления nginx*/
+const isWin = process.platform === 'win32';
+///**///
 const http = require('http');
 const https = require('https');
 const express = require('express');
@@ -18,9 +19,10 @@ const client = new MongoClient(uri, { useNewUrlParser: true });
 //const hostname = '127.0.0.1';
 //const hostname = 'localhost';
 //win32 is development
-const isWin = process.platform === 'win32';
+
 const portHTTP = 8080;
 const portHTTPS = 8443;
+const port = isWin ? portHTTP : portHTTPS;
 
 
 app.use(express.json({ extended: false }));
@@ -39,7 +41,7 @@ client.connect(err => {
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
 
 //app.enable('trust proxy');
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
     //res.send('dancemap here');
     console.log('req.secure', req.secure, req.headers['x-forwarded-proto']);
     var scheme = req.headers['x-forwarded-proto'];
@@ -52,7 +54,7 @@ app.use((req, res, next) => {
      console.log('redirect use https://' + req.hostname + req.url);
      res.redirect('https://' + req.hostname + req.url); // express 4.x
    }
-});
+});*/
 
 /*app.get("*", function(req, res) {
   res.redirect("https://" + req.hostname + req.url);
@@ -72,6 +74,14 @@ app.get('/add', function (req, res) {
    res.sendFile('static/add.html', {root: __dirname })
 })
 
+
+const server = isWin ? http.createServer(app) : https.createServer(getCrendetialsSSL(), app);
+server.listen(port, () => {
+  console.log('HTTPS Server running on port ' + port);
+});
+
+
+/*
 // Starting both http & https servers
 const httpServer = http.createServer(app);
 httpServer.listen(portHTTP, () => {
@@ -96,9 +106,31 @@ if(!isWin) {
     console.log('HTTPS Server running on port 443');
   });
 }
+*/
+/*SOCKET*/
+const io = require('socket.io')(server);
+io.on('connection', function(socket) {
 
+  socket.emit('news', { server: 'ping' });
 
+  console.log('a user connected');
+});
 
+function getCrendetialsSSL() {
+  
+  const privateKey = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/privkey.pem', 'utf8');
+  const certificate = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/cert.pem', 'utf8');
+  const ca = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/chain.pem', 'utf8');
+
+  const credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca: ca
+  };
+
+  return credentials;
+
+}
   /*
 	Congratulations! Your certificate and chain have been saved at:
    /etc/letsencrypt/live/dancemap.online/fullchain.pem
