@@ -102,8 +102,23 @@
 	  display: inline-block;
 	  margin: 0 5px 0 0;
 	}
-	.geo-icons svg .marker{
+	.geo-icons svg .marker {
 	  fill: grey;
+	}
+
+	.leaflet-control-location a{
+      cursor: pointer; 
+    }
+
+	.icon.geolocate {
+	  display: inline-block;
+      margin: 6px;
+      background-image: url(/images/location-arrow-solid.svg);
+      height: 18px;
+      width: 18px;
+      opacity: 0.5;
+      filter: grayscale(100%);
+      -webkit-filter: grayscale(100%);
 	}
     
     /* Show popups on hover so hide the close link
@@ -145,7 +160,7 @@
     <script>
     //59.921104 | Longitude: 30.359772
     this.dancemap = this.dancemap || {};
-    var mymap = L.map('mapid').setView([59.94116984, 30.30488491], 12);
+    var mymap = L.map('mapid', {geohandler: true}).setView([59.94116984, 30.30488491], 12);
     
     //var mymap = L.map('mapid').fitWorld();
     //mymap.locate({setView: true, maxZoom: 12});
@@ -252,7 +267,55 @@
       onEachFeature: onEachFeature,
       pointToLayer: pointToLayer
     }).addTo(mymap);
-      
+    
+
+
+    /*MAP: CUSTOM CONTROL*/
+    L.Control.Geolocate = L.Control.extend({
+      onAdd: function(map) {
+        var div = L.DomUtil.create('div', 'leaflet-control-location leaflet-bar leaflet-control');
+        var a = document.createElement('a');
+        var span = document.createElement('span');
+        div.id ='getgeo';
+        span.className = 'icon geolocate';
+        a.appendChild(span);
+        div.appendChild(a);
+
+        return div;
+      },
+
+      onRemove: function(map) {
+        // Nothing to do here
+      }
+    });
+
+    L.control.geolocate = function(opts) {
+      return new L.Control.Geolocate(opts);
+   }
+
+    L.control.geolocate({ position: 'topleft' }).addTo(mymap);
+
+
+    L.GeoHandler = L.Handler.extend({
+      addHooks: function() {
+        L.DomEvent.on(document.getElementById('getgeo'), 'click', this._getGeo, this);
+      },
+
+      removeHooks: function() {
+        L.DomEvent.off(document.getElementById('getgeo'), 'click', this._getGeo, this);
+      },
+
+      _getGeo: function(ev) {
+         alert('test');
+         //L.DomEvent.stopPropagation(ev);
+      }
+    });
+
+    
+	mymap.addHandler('geohandler', L.GeoHandler);
+   //document.getElementById ("command").addEventListener ("click", getCoord, false);
+
+
    /*SOCKET*/
     const socket = io();
     socket.on('news', function (data) {
