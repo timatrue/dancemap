@@ -8,9 +8,11 @@ const app = express();
 const bodyParser = require("body-parser");
 const fs = require('fs');
 //Mongo cloud
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://dancemap:Yy4UqOE9bihpePZc@cluster0-kkgwk.gcp.mongodb.net/test?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
+//const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://dancemap:Yy4UqOE9bihpePZc@cluster0-kkgwk.gcp.mongodb.net/dancemap?retryWrites=true&w=majority";
+
+
+const mongoose = require('mongoose');
 //Ports
 const portHTTP = 8080;
 const portHTTPS = 8443;
@@ -21,11 +23,19 @@ app.use(express.json({ extended: false }));
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
 app.use('/api', require('./routes/api'));
 
+//Mongo connect
+/*const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
   const collection = client.db("test").collection("devices");
   // perform actions on the collection object
   client.close();
-});
+});*/
+
+//Mongoose connect
+;(async () => {
+  const connnector = mongoose.connect(uri);
+})();
+
 
 
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
