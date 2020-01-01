@@ -1,34 +1,25 @@
+//win32 is development
 const isWin = process.platform === 'win32';
-///**///
+//Server
 const http = require('http');
 const https = require('https');
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
 const fs = require('fs');
-
-
-
-/*MONGO CLOUD*/
+//Mongo cloud
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://dancemap:Yy4UqOE9bihpePZc@cluster0-kkgwk.gcp.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
-
-
-
-//const hostname = '127.0.0.1';
-//const hostname = 'localhost';
-//win32 is development
-
+//Ports
 const portHTTP = 8080;
 const portHTTPS = 8443;
 const port = isWin ? portHTTP : portHTTPS;
 
 
 app.use(express.json({ extended: false }));
-
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
-
+app.use('/api', require('./routes/api'));
 
 client.connect(err => {
   const collection = client.db("test").collection("devices");
@@ -37,31 +28,7 @@ client.connect(err => {
 });
 
 
-
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
-
-//app.enable('trust proxy');
-/*app.use((req, res, next) => {
-    //res.send('dancemap here');
-    console.log('req.secure', req.secure, req.headers['x-forwarded-proto']);
-    var scheme = req.headers['x-forwarded-proto'];
-
-    if(scheme === 'https') {
-      // OK, continue
-      console.log('rin IF statement req.secure', req.secure);
-      return next();
-   } else {
-     console.log('redirect use https://' + req.hostname + req.url);
-     res.redirect('https://' + req.hostname + req.url); // express 4.x
-   }
-});*/
-
-/*app.get("*", function(req, res) {
-  res.redirect("https://" + req.hostname + req.url);
-
-});*/
-
-
 app.get('/', function (req, res) {
    //res.send('dancemap here');
    console.log('get /');
@@ -74,39 +41,12 @@ app.get('/add', function (req, res) {
    res.sendFile('static/add.html', {root: __dirname })
 })
 
-
 const server = isWin ? http.createServer(app) : https.createServer(getCrendetialsSSL(), app);
 server.listen(port, () => {
   console.log('HTTPS Server running on port ' + port);
 });
 
 
-/*
-// Starting both http & https servers
-const httpServer = http.createServer(app);
-httpServer.listen(portHTTP, () => {
-  console.log('HTTP Server running on port 80');
-});
-
-
-if(!isWin) {
-  const privateKey = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/privkey.pem', 'utf8');
-  const certificate = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/cert.pem', 'utf8');
-  const ca = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/chain.pem', 'utf8');
-
-  const credentials = {
-    key: privateKey,
-    cert: certificate,
-    ca: ca
-  };
-  const httpsServer = https.createServer(credentials, app);
-
-
-  httpsServer.listen(portHTTPS, () => {
-    console.log('HTTPS Server running on port 443');
-  });
-}
-*/
 /*SOCKET*/
 const io = require('socket.io')(server);
 io.on('connection', function(socket) {
@@ -121,7 +61,6 @@ function getCrendetialsSSL() {
   const privateKey = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/privkey.pem', 'utf8');
   const certificate = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/cert.pem', 'utf8');
   const ca = fs.readFileSync('/etc/letsencrypt/live/dancemap.online/chain.pem', 'utf8');
-
   const credentials = {
     key: privateKey,
     cert: certificate,
@@ -129,7 +68,6 @@ function getCrendetialsSSL() {
   };
 
   return credentials;
-
 }
   /*
 	Congratulations! Your certificate and chain have been saved at:
