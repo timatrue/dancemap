@@ -111,7 +111,7 @@ if(!isWin) {
 const io = require('socket.io')(server);
 io.on('connection', function(socket) {
 
-  socket.emit('news', { server: 'ping' });
+  socket.emit('server_ping', { server: 'ping' });
 
   console.log('a user connected');
 });
