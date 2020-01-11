@@ -10,7 +10,7 @@ const fs = require('fs');
 //Mongo cloud
 //const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://dancemap:Yy4UqOE9bihpePZc@cluster0-kkgwk.gcp.mongodb.net/dancemap?retryWrites=true&w=majority";
-
+const Studio = require('./models/studio');
 
 const mongoose = require('mongoose');
 //Ports
@@ -63,8 +63,22 @@ io.on('connection', function(socket) {
 
   socket.emit('server_ping', { server: 'ping' });
 
+  socket.on('get_studio', function (msg) {
+    
+    console.log ('coord' + msg);
+    
+    Studio.find({}).then(function(studios) { 
+	  console.log('studio_list', studios);
+      socket.emit('studio_list', studios);
+	});
+    
+
+  });
+
   console.log('a user connected');
 });
+
+
 
 function getCrendetialsSSL() {
   

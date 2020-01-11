@@ -54,19 +54,20 @@
   </header>
   <div id="map-box"></div>
   
-
+  <script  src="/js/dancemap.js"></script>
+  <script  src="/js/socket.js"></script>
+  <script  src="/js/main.js"></script>
   <script>
-    this.dancemap = this.dancemap || {};
-    /*SOCKETS IO*/
-    const socket = io();
+  //https://learn.javascript.ru/async-await
+  this.dancemap.socket.getStudios((data) => {
+  	this.dancemap.data = data
+  	this.dancemap.initMap.plotStudios(data);
+  })
 
-    socket.on('server_ping', function (data) {
-      console.log(data);
-      socket.emit('client_ping', { client: 'client_ping' });
-    });
+
 
   </script>
-  <script src="/js/main.js"></script>
+
     
   </body>
 </html>

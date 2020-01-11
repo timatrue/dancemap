@@ -1,4 +1,6 @@
 //59.921104 | Longitude: 30.359772
+
+
 this.dancemap.initMap = (function(){
 
   var map = L.map('map-box', {
@@ -157,8 +159,16 @@ this.dancemap.initMap = (function(){
   });
 
   map.addHandler('geoLocationHandler', L.GeoLocationHandler);
-
+  
+  function plotStudios() {
+    console.log('draw')
+  }
+  return {
+    plotStudios:plotStudios
+  }
 
 })();
+
+
 
 

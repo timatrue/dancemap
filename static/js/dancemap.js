@@ -1,0 +1,1 @@
+this.dancemap = this.dancemap || {};
