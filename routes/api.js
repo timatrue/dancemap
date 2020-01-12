@@ -2,18 +2,22 @@ const express = require('express');
 const router = express.Router();
 const Studio = require('../models/studio');
 
-router.get('/studios', function(req, res) {
+router.get('/mongo', function(req, res) {
 	Studio.find({}).then(function(studio) { 
-	  console.log('GET',studio);
-      res.send(studio);
+	  console.log('GET /mongo',studio);
+      
+      res.sendFile('/mongo.html', {root: __dirname })
+      //res.send(studio);
 	});
 
     Studio.countDocuments({}).then(function(err, count) {
       console.log('GET', count);
     });
+
+
 })
 
-router.post('/studios', function(req, res) {
+router.post('/mongo', function(req, res) {
 	/*var studio = new Studio(req.body);
 	studio.save();*/
 	Studio.create(req.body).then(function(studio) {
@@ -24,11 +28,11 @@ router.post('/studios', function(req, res) {
 	res.send({type:'POST'});
 });
 
-router.put('/studios/:id', function(req, res) {
+router.put('/mongo/:id', function(req, res) {
 	res.send({type:'PUT'});
 });
 
-router.delete('/studios/:id', function(req, res) {
+router.delete('/mongo/:id', function(req, res) {
 	res.send({type:'DELETE'});
 });
 

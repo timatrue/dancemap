@@ -65,15 +65,19 @@ io.on('connection', function(socket) {
 
   socket.on('get_studio', function (msg) {
     
-    console.log ('coord' + msg);
+    console.log ('get_studio', msg);
     
     Studio.find({}).then(function(studios) { 
 	  console.log('studio_list', studios);
       socket.emit('studio_list', studios);
 	});
-    
+  });
+  socket.on('post_studio', function (msg) {
+     
+     console.log ('post_studio', msg);
 
   });
+
 
   console.log('a user connected');
 });

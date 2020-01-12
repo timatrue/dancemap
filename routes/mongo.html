@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mongo</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="Description" content=""/>
+    <script src="/socket.io/socket.io.js"></script>
+    <style></style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    </head>
+  
+  <body>
+    
+  <header style=""></header>
+
+  <form  id="formElem">
+    <input type="text" name="name">
+    <input type="text" name="geo">
+    <input type="submit" name="Submit">
+  </form>
+  
+  <script  src="/js/dancemap.js"></script>
+  <script  src="/js/socket.js"></script>
+
+  <script>
+  //https://learn.javascript.ru/async-await
+  let dancemap = this.dancemap;
+  document.querySelector("#formElem").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Array.from(formData.entries()).reduce((memo, pair) => ({
+      ...memo,
+      [pair[0]]:pair[1],
+
+    }), {})
+    
+    dancemap.socket.postStudio(data);
+    
+  })
+
+
+
+
+  </script>
+
+    
+  </body>
+</html>

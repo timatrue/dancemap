@@ -15,8 +15,16 @@ function getStudios(fn) {
       });
 }
 
+
+function postStudio(studio) {
+  console.log('postStudio', studio);
+  socket.emit('post_studio', studio);
+
+}
+
   return {
-    getStudios: getStudios
+    getStudios: getStudios,
+    postStudio: postStudio
   }
 
 })();
