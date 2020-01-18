@@ -11,6 +11,8 @@ const fs = require('fs');
 //const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://dancemap:Yy4UqOE9bihpePZc@cluster0-kkgwk.gcp.mongodb.net/dancemap?retryWrites=true&w=majority";
 const Studio = require('./models/studio');
+const studioTemplate = require('./models/studioTemplate');
+
 
 const mongoose = require('mongoose');
 //Ports
@@ -73,8 +75,16 @@ io.on('connection', function(socket) {
 	});
   });
   socket.on('post_studio', function (msg) {
+
+  	let studio = studioTemplate.getStudioTemplate();
+    
+
+    studio.geometry.coordinates.push(msg.lat);
+    studio.geometry.coordinates.push(msg.lon);
+    studio.properties.name = msg.name;
+    studio.properties.address = msg.address;
      
-     console.log ('post_studio', msg);
+    console.log ('post_studio', studio);
 
   });
 
