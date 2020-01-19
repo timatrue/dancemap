@@ -13,14 +13,16 @@ const GeoSchema = new Schema({
 });
 
 const StudioScheme = new Schema({
-  name: {
-  	type: String,
-  	required: [true, 'name field required']
-  },
-  address: {
-  	type: String,
-  	required: [true, 'address field required']
-  },
+  properties: {
+    name: {
+  	  type: String,
+  	  required: [true, 'name field required']
+    },
+    address: {
+  	  type: String,
+  	  required: [true, 'address field required']
+    }
+  }/*,
   city: {
   	type: String,
   	required: [true, 'city field required']
@@ -33,7 +35,7 @@ const StudioScheme = new Schema({
   	type: Boolean,
   	default: true
   },
-  geometry: GeoSchema
+  geometry: GeoSchema*/
 
 });
 

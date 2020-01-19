@@ -35,7 +35,7 @@ client.connect(err => {
 
 //Mongoose connect
 ;(async () => {
-  const connnector = mongoose.connect(uri);
+  const connector = mongoose.connect(uri);
 })();
 
 
@@ -74,6 +74,7 @@ io.on('connection', function(socket) {
       socket.emit('studio_list', studios);
 	});
   });
+
   socket.on('post_studio', function (msg) {
 
   	let studio = studioTemplate.getStudioTemplate();
@@ -83,9 +84,11 @@ io.on('connection', function(socket) {
     studio.geometry.coordinates.push(msg.lon);
     studio.properties.name = msg.name;
     studio.properties.address = msg.address;
-     
+    
     console.log ('post_studio', studio);
-
+    Studio.create(studio).then(function(result) {
+		console.log('Studio.create', result);
+	})
   });
 
 
