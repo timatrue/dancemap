@@ -85,6 +85,7 @@ io.on('connection', function(socket) {
     studio.properties.name = msg.name;
     studio.properties.address = msg.address;
     
+    
     console.log ('post_studio', studio);
     Studio.create(studio).then(function(result) {
 		console.log('Studio.create', result);
