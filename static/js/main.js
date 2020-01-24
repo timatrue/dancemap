@@ -25,7 +25,6 @@ this.dancemap.initMap = (function(){
   this.dancemap.icons = {};
   this.dancemap.icons.marker = "<div class='geo-icons'><svg  height='16' width='12' viewBox='0 0 384 512'><path class='marker' d='M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z'></path></svg></div>";
     
-    
   function onEachFeature(feature, layer) {
     // does this feature have a property named popupContent?
     if (feature.properties && feature.properties.popupContent) {
@@ -104,13 +103,28 @@ this.dancemap.initMap = (function(){
     addMarkersMap(self.dancemap.studios.features); 
     console.log('plotStudios', self.dancemap.studios);
   }
-
+   
   function addMarkersMap(studios) {
-    L.geoJSON(studios , {
+    self.dancemap.geojson = L.geoJSON(studios , {
       onEachFeature: onEachFeature,
       pointToLayer: pointToLayer
-    }).addTo(map);  
+    })
+    //use addTo(map) without clusterMarkers();
+    //.addTo(map); 
+    clusterMarkers(); 
   }
+
+  function clusterMarkers() {
+    //https://github.com/Leaflet/Leaflet.markercluster/blob/master/example/marker-clustering-geojson.html
+    let markers = L.markerClusterGroup();
+    const ll = self.dancemap.studios.features.map((studio) => markers.addLayer(L.marker(studio.geometry.coordinates)));
+    markers.addLayer(self.dancemap.geojson).addLayers(ll);
+    map.addLayer(markers);
+  }
+
+
+
+
 
   return {
     plotStudios : plotStudios

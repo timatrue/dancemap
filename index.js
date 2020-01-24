@@ -84,7 +84,7 @@ io.on('connection', function(socket) {
     studio.geometry.coordinates.push(msg.lon);
     studio.properties.name = msg.name;
     studio.properties.address = msg.address;
-    
+    studio.type = "Feature";
     
     console.log ('post_studio', studio);
     Studio.create(studio).then(function(result) {
