@@ -79,12 +79,12 @@ io.on('connection', function(socket) {
 
   	let studio = studioTemplate.getStudioTemplate();
     
-
-    studio.geometry.coordinates.push(msg.lat);
     studio.geometry.coordinates.push(msg.lon);
+    studio.geometry.coordinates.push(msg.lat);
+    
     studio.properties.name = msg.name;
     studio.properties.address = msg.address;
-    studio.type = "Feature";
+    studio["type"] = "Feature";
     
     console.log ('post_studio', studio);
     Studio.create(studio).then(function(result) {

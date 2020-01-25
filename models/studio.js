@@ -13,6 +13,9 @@ const GeoSchema = new Schema({
 });
 
 const StudioScheme = new Schema({
+  type: {type: String,
+  	required: [true, 'type field required']
+  },
   properties: {
     name: {
   	  type: String,
