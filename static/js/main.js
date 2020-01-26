@@ -1,5 +1,7 @@
 this.dancemap.initMap = (function(){
   let self = this; 
+
+
   let map = L.map('map-box', {
     	geoLocationHandler: true,
       })
@@ -93,8 +95,8 @@ this.dancemap.initMap = (function(){
       pointToLayer: pointToLayer
     })
     //use addTo(map) without clusterMarkers();
-    //.addTo(map); 
-    clusterMarkers(); 
+    .addTo(map); 
+    //clusterMarkers(); 
   }
 
   function onEachFeature(feature, layer) {
@@ -123,12 +125,23 @@ this.dancemap.initMap = (function(){
     map.addLayer(markers);
   }
 
+  function serverCluster(data) {
+    self.dancemap.cluster = data;
+    self.dancemap.geojson.clearLayers();
+    self.dancemap.geojson.addData(data);
+  }
+ 
+  function getMap() {
+    return map;
+  }
 
 
 
 
   return {
-    plotStudios : plotStudios
+    plotStudios : plotStudios,
+    getMap: getMap,
+    serverCluster: serverCluster
   }
 
 })();

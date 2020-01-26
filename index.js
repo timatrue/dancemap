@@ -12,7 +12,7 @@ const fs = require('fs');
 const uri = "mongodb+srv://dancemap:Yy4UqOE9bihpePZc@cluster0-kkgwk.gcp.mongodb.net/dancemap?retryWrites=true&w=majority";
 const Studio = require('./models/studio');
 const studioTemplate = require('./models/studioTemplate');
-
+const Supercluster = require('supercluster');
 
 const mongoose = require('mongoose');
 //Ports
@@ -92,6 +92,27 @@ io.on('connection', function(socket) {
 	})
   });
 
+  socket.on('testCluster', (box) => {
+
+    console.log('testCluster', box);
+
+    const index = new Supercluster({
+      radius: 40,
+      maxZoom: box.zoom
+    });
+
+  	Studio.find({}).then(function(studios) { 
+      index.load(studios);
+      // ([westLng, southLat, eastLng, northLat])
+      index.getClusters(box.bounds, box.zoom);
+	  console.log('testCluster_index', index);
+
+      socket.emit('testCluster', index.getClusters(box.bounds, box.zoom));
+	});
+
+
+
+  });
 
   console.log('a user connected');
 });
@@ -111,6 +132,11 @@ function getCrendetialsSSL() {
 
   return credentials;
 }
+
+
+
+
+
   /*
 	Congratulations! Your certificate and chain have been saved at:
    /etc/letsencrypt/live/dancemap.online/fullchain.pem
