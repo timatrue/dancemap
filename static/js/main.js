@@ -72,6 +72,7 @@ this.dancemap.initMap = (function(){
   });
 
   map.addHandler('geoLocationHandler', L.GeoLocationHandler);
+  map.on('moveend', self.dancemap.socket.testCluster);
   
   function plotStudios(studios) {
 
@@ -107,7 +108,22 @@ this.dancemap.initMap = (function(){
   }
     
   function pointToLayer(feature, latlng) {
-    return L.marker(latlng, {icon: fontAwesomeIcon});
+    //return L.marker(latlng, {icon: fontAwesomeIcon});
+
+
+    if (!feature.properties.cluster) return L.marker(latlng, {icon: fontAwesomeIcon});
+
+    const count = feature.properties.point_count;
+    const size =
+        count < 100 ? 'small' :
+        count < 1000 ? 'medium' : 'large';
+    const icon = L.divIcon({
+        html: `<div><span>${  feature.properties.point_count_abbreviated  }</span></div>`,
+        className: `marker-cluster marker-cluster-${  size}`,
+        iconSize: L.point(40, 40)
+    });
+
+    return L.marker(latlng, {icon});
       /*return L.circleMarker(latlng, {
         radius: 8,
         fillColor: "#F20732",
