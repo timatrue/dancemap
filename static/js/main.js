@@ -81,10 +81,7 @@ this.dancemap.initMap = (function(){
       "features": []
     };
 
-    studios.forEach((studio) => {
-      studio.properties.popupContent = "<div>" + studio.properties.name + "</div>" + "<div class='address-container'>" + self.dancemap.icons.marker + "<div>" + studio.properties.address + "</div></div>";
-    })
-    self.dancemap.studios.features = studios;
+    self.dancemap.studios.features = addPopupContent(studios);
 
     addMarkersMap(self.dancemap.studios.features); 
     console.log('plotStudios', self.dancemap.studios);
@@ -144,11 +141,21 @@ this.dancemap.initMap = (function(){
   function addClusters(data) {
     self.dancemap.cluster = data;
     self.dancemap.geojson.clearLayers();
-    self.dancemap.geojson.addData(data);
+    self.dancemap.geojson.addData(addPopupContent(data));
   }
  
   function getMap() {
     return map;
+  }
+
+  function addPopupContent(studios) {
+
+    studios.forEach((studio) => {
+      if(!studio.properties.cluster) {
+        studio.properties.popupContent = "<div>" + studio.properties.name + "</div>" + "<div class='address-container'>" + self.dancemap.icons.marker + "<div>" + studio.properties.address + "</div></div>";
+      }
+    })
+    return studios;
   }
 
 
