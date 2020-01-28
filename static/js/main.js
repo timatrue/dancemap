@@ -72,7 +72,7 @@ this.dancemap.initMap = (function(){
   });
 
   map.addHandler('geoLocationHandler', L.GeoLocationHandler);
-  map.on('moveend', self.dancemap.socket.testCluster);
+  map.on('moveend', self.dancemap.socket.getClusters);
   
   function plotStudios(studios) {
 
@@ -141,7 +141,7 @@ this.dancemap.initMap = (function(){
     map.addLayer(markers);
   }
 
-  function serverCluster(data) {
+  function addClusters(data) {
     self.dancemap.cluster = data;
     self.dancemap.geojson.clearLayers();
     self.dancemap.geojson.addData(data);
@@ -157,7 +157,7 @@ this.dancemap.initMap = (function(){
   return {
     plotStudios : plotStudios,
     getMap: getMap,
-    serverCluster: serverCluster
+    addClusters: addClusters
   }
 
 })();

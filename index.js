@@ -92,9 +92,9 @@ io.on('connection', function(socket) {
 	})
   });
 
-  socket.on('testCluster', (box) => {
+  socket.on('get_clusters', (box) => {
 
-    console.log('testCluster', box);
+    console.log('get_clusters', box);
 
     const index = new Supercluster({
       radius: 40,
@@ -105,9 +105,9 @@ io.on('connection', function(socket) {
       index.load(studios);
       // ([westLng, southLat, eastLng, northLat])
       index.getClusters(box.bounds, box.zoom);
-	  console.log('testCluster_index', index);
+	  console.log('get_clusters_index', index);
 
-      socket.emit('testCluster', index.getClusters(box.bounds, box.zoom));
+      socket.emit('get_clusters', index.getClusters(box.bounds, box.zoom));
 	});
 
 
