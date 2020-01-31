@@ -67,7 +67,18 @@ this.dancemap.initMap = (function(){
     },
 
     _getLocation: function(ev) {
-       alert('test');
+      var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+       };
+       
+      navigator.geolocation.getCurrentPosition((pos)=> {
+        map.flyTo([pos.coords.latitude, pos.coords.longitude], map.getZoom())
+        console.log(pos.coords)
+      }, (err) => {
+        console.warn(`ERROR(${err.code}): ${err.message}`)
+       }, options);
     }
   });
 
@@ -185,11 +196,6 @@ this.dancemap.initMap = (function(){
     })
     return studios;
   }
-
-
-
-
-
 
   return {
     plotStudios : plotStudios,
