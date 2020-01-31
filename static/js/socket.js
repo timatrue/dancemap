@@ -15,7 +15,7 @@ function getStudios(fn) {
   socket.emit('get_studio', {});
 }
 
-function getClusters() {
+function getClusters(e) {
   let map = dancemap.initMap.getMap();
   let bounds = map.getBounds();
   let zoom = map.getZoom();
@@ -27,12 +27,23 @@ function getClusters() {
   socket.emit('get_clusters', box);
 }
 
+function getZoomedClusters(box) {
+
+  socket.emit('get_clusters', box);
+}
+
 
 socket.on('get_clusters', function (clusters) {
 
   //testCluster.getClusterExpansionZoom(e.data.getClusterExpansionZoom)
-  dancemap.initMap.addClusters(clusters);
-  console.log('clusters_server', clusters); 
+  
+  if (clusters.expansionZoom) {
+    dancemap.initMap.flyToClusters(clusters);
+  } else {
+
+    dancemap.initMap.addClusters(clusters);
+    console.log('clusters_server', clusters); 
+  }
 });
 
 function postStudio(studio) {
@@ -44,7 +55,8 @@ function postStudio(studio) {
   return {
     getStudios: getStudios,
     postStudio: postStudio,
-    getClusters: getClusters
+    getClusters: getClusters,
+    getZoomedClusters: getZoomedClusters
   }
 
 })();

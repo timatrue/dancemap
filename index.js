@@ -92,14 +92,27 @@ io.on('connection', function(socket) {
 	})
   });
 
+
+  const index = new Supercluster({
+    radius: 40,
+    maxZoom: 17
+  });
+
   socket.on('get_clusters', (box) => {
 
     console.log('get_clusters', box);
 
-    const index = new Supercluster({
-      radius: 40,
-      maxZoom: box.zoom
-    });
+
+    if (box.getClusterExpansionZoom) {
+       
+        let data = {
+            expansionZoom: index.getClusterExpansionZoom(box.getClusterExpansionZoom),
+            center: box.center
+        };
+         console.log('get_zoomed_clusters', data);
+        socket.emit('get_clusters', data);
+
+    } else {
 
   	Studio.find({}).then(function(studios) { 
       index.load(studios);
@@ -110,7 +123,7 @@ io.on('connection', function(socket) {
       socket.emit('get_clusters', index.getClusters(box.bounds, box.zoom));
 	});
 
-
+    }
 
   });
 

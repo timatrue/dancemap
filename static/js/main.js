@@ -73,6 +73,12 @@ this.dancemap.initMap = (function(){
 
   map.addHandler('geoLocationHandler', L.GeoLocationHandler);
   map.on('moveend', self.dancemap.socket.getClusters);
+
+  self.dancemap.geojson = L.geoJSON(null, {
+    onEachFeature: onEachFeature,
+    pointToLayer: pointToLayer
+  }).addTo(map)
+
   
   function plotStudios(studios) {
 
@@ -94,8 +100,25 @@ this.dancemap.initMap = (function(){
     })
     //use addTo(map) without clusterMarkers();
     .addTo(map); 
-    //clusterMarkers(); 
+    //clusterMarkers();
   }
+  
+  
+  self.dancemap.geojson.on('click', (e) => {
+    if (e.layer.feature.properties.cluster_id) {
+
+      let clusterData = {
+          getClusterExpansionZoom: e.layer.feature.properties.cluster_id,
+          center: e.latlng
+      }
+        
+      self.dancemap.socket.getZoomedClusters(clusterData);
+      console.log('click cluster', clusterData);
+      }
+  }); 
+
+  
+
 
   function onEachFeature(feature, layer) {
     // does this feature have a property named popupContent?
@@ -138,6 +161,11 @@ this.dancemap.initMap = (function(){
     map.addLayer(markers);
   }
 
+  function flyToClusters(data) {
+
+    map.flyTo(data.center, data.expansionZoom);
+  }
+
   function addClusters(data) {
     self.dancemap.cluster = data;
     self.dancemap.geojson.clearLayers();
@@ -161,10 +189,13 @@ this.dancemap.initMap = (function(){
 
 
 
+
+
   return {
     plotStudios : plotStudios,
     getMap: getMap,
-    addClusters: addClusters
+    addClusters: addClusters,
+    flyToClusters: flyToClusters
   }
 
 })();

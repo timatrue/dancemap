@@ -65,10 +65,12 @@
   <script  src="/js/main.js"></script>
   <script>
   //https://learn.javascript.ru/async-await
-  this.dancemap.socket.getStudios((data) => {
+  /*this.dancemap.socket.getStudios((data) => {
   	this.dancemap.data = data
   	this.dancemap.initMap.plotStudios(data);
-  })
+  })*/
+
+  this.dancemap.socket.getClusters();
 
 
 
