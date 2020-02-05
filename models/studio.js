@@ -24,6 +24,13 @@ const StudioScheme = new Schema({
     address: {
   	  type: String,
   	  required: [true, 'address field required']
+    },
+    city: {
+  	  type: String,
+  	  required: [true, 'city field required']
+    },
+    vk: {
+      type: String
     }
   },/*
   city: {

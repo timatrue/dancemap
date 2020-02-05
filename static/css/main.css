@@ -71,19 +71,26 @@ header > * {
   background:#bbb;
 }
 
-.address-container {
+.info-container {
   display: inline-flex;
   justify-content: center;
   margin-top: 5px;
 }
 
-.geo-icons {
+.container-icon {
   display: inline-block;
   margin: 0 5px 0 0;
 }
-.geo-icons svg .marker {
+
+.container-icon svg .icon--grey {
   fill: grey;
 }
+
+.container-icon svg .vk--blue {
+  fill: #4680C2;
+}
+
+
 
 .leaflet-control-location a{
   cursor: pointer; 
@@ -99,7 +106,8 @@ header > * {
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
 }
-    
+ 
+
 /* Show popups on hover so hide the close link
 .leaflet-popup-close-button {
   display:none;

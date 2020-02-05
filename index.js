@@ -75,6 +75,28 @@ io.on('connection', function(socket) {
 	});
   });
 
+
+  socket.on('set_all_documents', function (msg) {
+    
+    console.log ('set_all_documents', msg);
+    let path = msg.path;
+    let value = '';
+
+/*    const agg = [
+  {
+    '$addFields': {
+      'properties.vk': ''
+    }
+  }
+];*/
+    
+    Studio.updateMany({}, {$set: { 'properties.vk': value }} ).then(function(result) {
+		console.log('set_all_documents', result);
+	});
+  
+  });
+
+
   socket.on('post_studio', function (msg) {
 
   	let studio = studioTemplate.getStudioTemplate();
@@ -84,11 +106,12 @@ io.on('connection', function(socket) {
     
     studio.properties.name = msg.name;
     studio.properties.address = msg.address;
+    studio.properties.city = msg.city;
+    studio.properties.vk = msg.vk;
     studio["type"] = "Feature";
     
-    console.log ('post_studio', studio);
     Studio.create(studio).then(function(result) {
-		console.log('Studio.create', result);
+		console.log('post_studio', result);
 	})
   });
 

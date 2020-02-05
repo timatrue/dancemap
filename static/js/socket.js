@@ -52,10 +52,15 @@ function postStudio(studio) {
 
 }
 
+function setAllDocuments(propUpdate) {
+  socket.emit('set_all_documents', propUpdate);
+}
+
   return {
     getStudios: getStudios,
     postStudio: postStudio,
     getClusters: getClusters,
+    setAllDocuments: setAllDocuments,
     getZoomedClusters: getZoomedClusters
   }
 

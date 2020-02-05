@@ -15,16 +15,29 @@
   <header style=""></header>
 
   
-  <form  id="formElem">
+  <form  id="formStudio">
     <div style="display:flex;flex-direction: column;">
       <label for="name">Name:</label>
       <input type="text" name="name" id="name" minlength="1" maxlength="30" required>
       <label for="address">Address:</label>
       <input type="text" name="address" id="address" minlength="1" maxlength="50" required>
+      <label for="city">City:</label>
+      <input type="text" name="city" id="city" minlength="1" maxlength="50" required>
+      <label for="vk">vk:</label>
+      <input type="text" name="vk" id="vk" minlength="1" maxlength="50" >
       <label for="lat">Latitude:</label>
       <input type="text" name="lat" id="lat"  minlength="1" maxlength="10" required>
       <label for="lon">Longitude:</label>
       <input type="text" name="lon" id="lon"  minlength="1" maxlength="10" required>
+      <input type="submit" name="Submit">
+    </div>
+  </form>
+
+
+  <form  id="formSetAllDocuments">
+    <div style="display:flex;flex-direction: column;">
+      <label for="path">Path:</label>
+      <input type="text" name="path" id="path" minlength="1" maxlength="30" required>
       <input type="submit" name="Submit">
     </div>
   </form>
@@ -37,7 +50,7 @@
   <script>
   //https://learn.javascript.ru/async-await
   let dancemap = this.dancemap;
-  document.querySelector("#formElem").addEventListener("submit", function(e) {
+  document.querySelector("#formStudio").addEventListener("submit", function(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Array.from(formData.entries()).reduce((memo, pair) => ({
@@ -50,7 +63,24 @@
        if(dancemap.util.isObjPropNotEmpty(data)) dancemap.socket.postStudio(data);
        return; 
     }
-    else console.error('data is empty');
+    else console.error('formStudio data is empty');
+    
+  })
+
+  document.querySelector("#formSetAllDocuments").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Array.from(formData.entries()).reduce((memo, pair) => ({
+      ...memo,
+      [pair[0]]:pair[1],
+
+    }), {})
+    
+    if(!dancemap.util.isObjEmpty(data)) {
+       if(dancemap.util.isObjPropNotEmpty(data)) dancemap.socket.setAllDocuments(data);
+       return; 
+    }
+    else console.error('formSetAllDocuments data is empty');
     
   })
 
