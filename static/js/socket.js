@@ -33,6 +33,27 @@ function getZoomedClusters(box) {
 }
 
 
+function getClusterChildren(clusterId) {
+
+  socket.emit('get_children', clusterId);
+}
+
+socket.on('get_children', function (clusters) {
+  console.log('get_children_server', clusters);
+});
+
+
+function getClusterLeaves(clusterId) {
+
+  socket.emit('get_leaves', clusterId);
+}
+
+socket.on('get_leaves', function (clusters) {
+  console.log('get_leaves_server', clusters);
+});
+
+
+
 socket.on('get_clusters', function (clusters) {
 
   //testCluster.getClusterExpansionZoom(e.data.getClusterExpansionZoom)
@@ -49,7 +70,6 @@ socket.on('get_clusters', function (clusters) {
 function postStudio(studio) {
   console.log('postStudio', studio);
   socket.emit('post_studio', studio);
-
 }
 
 function setAllDocuments(propUpdate) {
@@ -61,7 +81,10 @@ function setAllDocuments(propUpdate) {
     postStudio: postStudio,
     getClusters: getClusters,
     setAllDocuments: setAllDocuments,
-    getZoomedClusters: getZoomedClusters
+    getZoomedClusters: getZoomedClusters,
+    getClusterChildren: getClusterChildren,
+    getClusterLeaves: getClusterLeaves
+
   }
 
 })();

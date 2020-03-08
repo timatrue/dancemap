@@ -1,0 +1,131 @@
+[{
+	"_id": {
+		"$oid": "5e2941be25e9bc316cdea6b5"
+	},
+	"geometry": {
+		"type": "Point",
+		"_id": {
+			"$oid": "5e2941be25e9bc316cdea6b6"
+		},
+		"coordinates": [{
+			"$numberDouble": "30.359772"
+		}, {
+			"$numberDouble": "59.921104"
+		}]
+	},
+	"type": "Feature",
+	"properties": {
+		"name": "Youdance SPb",
+		"address": "улица Черняховского, 65",
+		"city": "Санкт-Петербург",
+		"vk": "https://vk.com/youdance_spb"
+	},
+	"__v": {
+		"$numberInt": "0"
+	}
+},
+{
+	"_id": {
+		"$oid": "5e29433f25e9bc316cdea6b7"
+	},
+	"geometry": {
+		"type": "Point",
+		"_id": {
+			"$oid": "5e29433f25e9bc316cdea6b8"
+		},
+		"coordinates": [{
+			"$numberDouble": "30.295164"
+		}, {
+			"$numberDouble": "59.961922"
+		}]
+	},
+	"type": "Feature",
+	"properties": {
+		"name": "Dance Drive",
+		"address": "Чкаловский пр., 15",
+		"city": "Санкт-Петербург",
+		"vk": "https://vk.com/dance.piter"
+	},
+	"__v": {
+		"$numberInt": "0"
+	}
+},
+{
+	"_id": {
+		"$oid": "5e29437f25e9bc316cdea6b9"
+	},
+	"geometry": {
+		"type": "Point",
+		"_id": {
+			"$oid": "5e29437f25e9bc316cdea6ba"
+		},
+		"coordinates": [{
+			"$numberDouble": "30.3417877"
+		}, {
+			"$numberDouble": "59.917375"
+		}]
+	},
+	"type": "Feature",
+	"properties": {
+		"name": "MMDance",
+		"address": "Звенигородская улица, 9-11, 3 эт.",
+		"city": "Санкт-Петербург",
+		"vk": "https://vk.com/mmdance_spb"
+	},
+	"__v": {
+		"$numberInt": "0"
+	}
+},
+{
+	"_id": {
+		"$oid": "5e2943ab25e9bc316cdea6bb"
+	},
+	"geometry": {
+		"type": "Point",
+		"_id": {
+			"$oid": "5e2943ab25e9bc316cdea6bc"
+		},
+		"coordinates": [{
+			"$numberDouble": "30.3126"
+		}, {
+			"$numberDouble": "59.9358"
+		}]
+	},
+	"type": "Feature",
+	"properties": {
+		"name": "MEGAPOLIS SPb",
+		"address": "ул. Малая морская, дом 11",
+		"city": "Санкт-Петербург",
+		"vk": "https://vk.com/dance.megapolis"
+	},
+	"__v": {
+		"$numberInt": "0"
+	}
+},
+{
+	"_id": {
+		"$oid": "5e2943da25e9bc316cdea6bd"
+	},
+	"geometry": {
+		"type": "Point",
+		"_id": {
+			"$oid": "5e2943da25e9bc316cdea6be"
+		},
+		"coordinates": [{
+			"$numberDouble": "30.2986801"
+		}, {
+			"$numberDouble": "59.9501296"
+		}]
+	},
+	"type": "Feature",
+	"properties": {
+		"name": "NON-STOP",
+		"address": "пр. Добролюбова 21",
+		"city": "Санкт-Петербург",
+		"vk": "https://vk.com/non_stop_spb_ru"
+	},
+	"__v": {
+		"$numberInt": "0"
+	}
+}
+]

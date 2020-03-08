@@ -89,8 +89,8 @@ io.on('connection', function(socket) {
     }
   }
 ];*/
-    
-    Studio.updateMany({}, {$set: { 'properties.vk': value }} ).then(function(result) {
+    /*firstly you have to define new property in studio.js */
+    Studio.updateMany({}, {$set: { 'properties.classes': {'hustle':true} }} ).then(function(result) {
 		console.log('set_all_documents', result);
 	});
   
@@ -108,13 +108,19 @@ io.on('connection', function(socket) {
     studio.properties.address = msg.address;
     studio.properties.city = msg.city;
     studio.properties.vk = msg.vk;
+    if(msg.zouk) studio.properties.classes.zouk = true;
+    if(msg.hustle) studio.properties.classes.hustle = true;
+    if(msg.bachata) studio.properties.classes.bachata = true;
+    if(msg.salsa) studio.properties.classes.salsa = true;
+    if(msg.wcs) studio.properties.classes.wcs = true;
+    
+    
     studio["type"] = "Feature";
     
     Studio.create(studio).then(function(result) {
 		console.log('post_studio', result);
 	})
   });
-
 
   const index = new Supercluster({
     radius: 40,
@@ -148,6 +154,18 @@ io.on('connection', function(socket) {
 
     }
 
+  });
+
+    socket.on('get_children', (clusterId) => {
+
+  	let children = index.getChildren(clusterId);
+  	socket.emit('get_children', children);
+  });
+
+  socket.on('get_leaves', (clusterId) => {
+    
+    let leaves = index.getLeaves(clusterId, limit = 10, offset = 0);
+    socket.emit('get_leaves', leaves);
   });
 
   console.log('a user connected');

@@ -153,7 +153,7 @@ this.dancemap.initMap = (function(){
         count < 1000 ? 'medium' : 'large';
     const icon = L.divIcon({
         html: `<div><span>${  feature.properties.point_count_abbreviated  }</span></div>`,
-        className: `marker-cluster marker-cluster-${  size}`,
+        className: `marker-cluster marker-cluster-${size}`,
         iconSize: L.point(40, 40)
     });
 

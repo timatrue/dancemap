@@ -29,18 +29,32 @@
       <input type="text" name="lat" id="lat"  minlength="1" maxlength="10" required>
       <label for="lon">Longitude:</label>
       <input type="text" name="lon" id="lon"  minlength="1" maxlength="10" required>
+      
+      <div>
+        <input type="checkbox" name="hustle" id="hustle">
+        <label for="hustle">hustle</label>
+        <input type="checkbox" name="zouk" id="zouk">
+        <label for="zouk">zouk</label>
+        <input type="checkbox" name="wcs" id="wcs">
+        <label for="wcs">wcs</label>
+        <input type="checkbox" name="salsa" id="salsa">
+        <label for="salsa">salsa</label>
+        <input type="checkbox" name="bachata" id="bachata">
+        <label for="bachata">bachata</label>
+      </div>
+      
       <input type="submit" name="Submit">
     </div>
   </form>
 
 
-  <form  id="formSetAllDocuments">
+  <!--<form  id="formSetAllDocuments">
     <div style="display:flex;flex-direction: column;">
       <label for="path">Path:</label>
       <input type="text" name="path" id="path" minlength="1" maxlength="30" required>
       <input type="submit" name="Submit">
     </div>
-  </form>
+  </form>-->
 
   
   <script  src="/js/dancemap.js"></script>
@@ -67,7 +81,7 @@
     
   })
 
-  document.querySelector("#formSetAllDocuments").addEventListener("submit", function(e) {
+  /*document.querySelector("#formSetAllDocuments").addEventListener("submit", function(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Array.from(formData.entries()).reduce((memo, pair) => ({
@@ -82,7 +96,7 @@
     }
     else console.error('formSetAllDocuments data is empty');
     
-  })
+  })*/
 
 
 

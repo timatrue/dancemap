@@ -31,6 +31,13 @@ const StudioScheme = new Schema({
     },
     vk: {
       type: String
+    },
+    classes: {
+    	hustle: {type: Boolean},
+    	zouk: {type: Boolean},
+    	bachata: {type: Boolean},
+    	salsa: {type: Boolean},
+    	wcs: {type: Boolean}
     }
   },/*
   city: {
