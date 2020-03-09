@@ -58,6 +58,37 @@ server.listen(port, () => {
   console.log('HTTPS Server running on port ' + port);
 });
 
+let index = {};
+index.all = new Supercluster({
+  radius: 40,
+  maxZoom: 17
+});
+
+Studio.find({}).then(function(studios) { 
+  index.all.load(studios);
+  console.log('index_all', index.all);
+});
+
+index.hustle = new Supercluster({
+  radius: 40,
+  maxZoom: 17
+});
+
+Studio.find({'properties.classes.hustle': true}).then(function(studios) { 
+  index.hustle.load(studios);
+  console.log('index_hustle', index.hustle);
+});
+
+index.zouk = new Supercluster({
+    radius: 40,
+    maxZoom: 17
+});
+
+Studio.find({'properties.classes.zouk': true}).then(function(studios) { 
+  index.zouk.load(studios);
+  console.log('indexZouk', index.zouk);
+});
+
 
 /*SOCKET*/
 const io = require('socket.io')(server);
@@ -122,49 +153,40 @@ io.on('connection', function(socket) {
 	})
   });
 
-  const index = new Supercluster({
-    radius: 40,
-    maxZoom: 17
-  });
-
   socket.on('get_clusters', (box) => {
 
     console.log('get_clusters', box);
-
+    const type = box.class;
 
     if (box.getClusterExpansionZoom) {
        
         let data = {
-            expansionZoom: index.getClusterExpansionZoom(box.getClusterExpansionZoom),
-            center: box.center
+          expansionZoom: index[type].getClusterExpansionZoom(box.getClusterExpansionZoom),
+          center: box.center
         };
-         console.log('get_zoomed_clusters', data);
+        console.log('get_zoomed_clusters', data);
         socket.emit('get_clusters', data);
 
     } else {
-
-  	Studio.find({}).then(function(studios) { 
-      index.load(studios);
       // ([westLng, southLat, eastLng, northLat])
-      index.getClusters(box.bounds, box.zoom);
-	  console.log('get_clusters_index', index);
-
-      socket.emit('get_clusters', index.getClusters(box.bounds, box.zoom));
-	});
-
+      // index.all.getClusters(box.bounds, box.zoom);
+	  // console.log('get_clusters_index', index.all);
+      socket.emit('get_clusters', index[type].getClusters(box.bounds, box.zoom));
     }
 
   });
 
-    socket.on('get_children', (clusterId) => {
+  
+  /*Utility socket functions*/
+  socket.on('get_children', (clusterId) => {
 
-  	let children = index.getChildren(clusterId);
+  	let children = index.all.getChildren(clusterId);
   	socket.emit('get_children', children);
   });
 
   socket.on('get_leaves', (clusterId) => {
     
-    let leaves = index.getLeaves(clusterId, limit = 10, offset = 0);
+    let leaves = index.asll.getLeaves(clusterId, limit = 10, offset = 0);
     socket.emit('get_leaves', leaves);
   });
 

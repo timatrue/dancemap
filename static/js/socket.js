@@ -2,6 +2,7 @@
 
 
 this.dancemap.socket = (function(){
+let self = this;
 const socket = io();
 
 
@@ -22,12 +23,14 @@ function getClusters(e) {
   // ([westLng, southLat, eastLng, northLat])
   let box = {
     bounds: [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()],
-    zoom: zoom
+    zoom: zoom,
+    class: self.dancemap.ui.class
   } 
   socket.emit('get_clusters', box);
 }
 
 function getZoomedClusters(box) {
+  box.class = self.dancemap.ui.class;
 
   socket.emit('get_clusters', box);
 }

@@ -7,7 +7,8 @@ function getStudioTemplate() {
       },
       "properties": {
         "name": "",
-        "address":""
+        "address":"",
+        "classes":{}
       }
     }
     return studio;

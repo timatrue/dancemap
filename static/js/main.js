@@ -2,6 +2,19 @@ this.dancemap.initMap = (function(){
   let self = this; 
 
 
+  /**/
+  this.dancemap.ui = {};
+  this.dancemap.ui.class = 'all'
+  document.getElementById('classSelector').addEventListener('change', function (event) {
+
+    self.dancemap.ui.class = this.value;
+    self.dancemap.socket.getClusters();
+    console.log(this.value)
+
+  }, false);
+  /**/
+
+
   let map = L.map('map-box', {
     	geoLocationHandler: true,
       })
@@ -123,7 +136,8 @@ this.dancemap.initMap = (function(){
 
       let clusterData = {
           getClusterExpansionZoom: e.layer.feature.properties.cluster_id,
-          center: e.latlng
+          center: e.latlng,
+          class: self.dancemap.ui.class
       }
         
       self.dancemap.socket.getZoomedClusters(clusterData);
