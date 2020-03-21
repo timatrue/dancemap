@@ -55,8 +55,6 @@ socket.on('get_leaves', function (clusters) {
   console.log('get_leaves_server', clusters);
 });
 
-
-
 socket.on('get_clusters', function (clusters) {
 
   //testCluster.getClusterExpansionZoom(e.data.getClusterExpansionZoom)
@@ -70,6 +68,9 @@ socket.on('get_clusters', function (clusters) {
   }
 });
 
+socket.on('reload', (res) => console.log(res));
+
+
 function postStudio(studio) {
   console.log('postStudio', studio);
   socket.emit('post_studio', studio);
@@ -79,6 +80,11 @@ function setAllDocuments(propUpdate) {
   socket.emit('set_all_documents', propUpdate);
 }
 
+function reload(secret) {
+
+  socket.emit('reload', secret);
+}
+
   return {
     getStudios: getStudios,
     postStudio: postStudio,
@@ -86,7 +92,8 @@ function setAllDocuments(propUpdate) {
     setAllDocuments: setAllDocuments,
     getZoomedClusters: getZoomedClusters,
     getClusterChildren: getClusterChildren,
-    getClusterLeaves: getClusterLeaves
+    getClusterLeaves: getClusterLeaves,
+    reload: reload
 
   }
 

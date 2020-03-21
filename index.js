@@ -64,19 +64,9 @@ index.all = new Supercluster({
   maxZoom: 17
 });
 
-Studio.find({}).then(function(studios) { 
-  index.all.load(studios);
-  console.log('index_all', index.all);
-});
-
 index.hustle = new Supercluster({
   radius: 40,
   maxZoom: 17
-});
-
-Studio.find({'properties.classes.hustle': true}).then(function(studios) { 
-  index.hustle.load(studios);
-  console.log('index_hustle', index.hustle);
 });
 
 index.zouk = new Supercluster({
@@ -84,10 +74,26 @@ index.zouk = new Supercluster({
     maxZoom: 17
 });
 
-Studio.find({'properties.classes.zouk': true}).then(function(studios) { 
-  index.zouk.load(studios);
-  console.log('indexZouk', index.zouk);
-});
+
+getData().catch(error => console.log('getData',error.stack));
+
+async function getData() {
+
+  await Studio.find({}).then(function(studios) { 
+    index.all.load(studios);
+    console.log('index_all', index.all);
+  });
+  await Studio.find({'properties.classes.hustle': true}).then(function(studios) { 
+    index.hustle.load(studios);
+    console.log('index_hustle', index.hustle);
+  });
+  await Studio.find({'properties.classes.zouk': true}).then(function(studios) { 
+    index.zouk.load(studios);
+    console.log('indexZouk', index.zouk);
+  });
+
+}
+
 
 
 /*SOCKET*/
@@ -171,7 +177,7 @@ io.on('connection', function(socket) {
       // ([westLng, southLat, eastLng, northLat])
       // index.all.getClusters(box.bounds, box.zoom);
 	  // console.log('get_clusters_index', index.all);
-	  
+
 	  /*check if user sent correct property from front*/
       if(index.hasOwnProperty(type)) {
         socket.emit('get_clusters', index[type].getClusters(box.bounds, box.zoom));
@@ -194,10 +200,27 @@ io.on('connection', function(socket) {
     socket.emit('get_leaves', leaves);
   });
 
+  socket.on('reload', (secret) => {
+    if(isObject(secret) && secret) {
+      if(secret.secret === 'covid19') {
+        getData().catch(error => console.log('getData', error.stack));
+        socket.emit('reload', {reload: true});
+      }
+    }
+    
+  });
+
   console.log('a user connected');
 });
 
 
+function isObject(val) {
+    return (typeof val === 'object');
+}
+
+function isUndefined(val) {
+    return (typeof x === "undefined");
+}
 
 function getCrendetialsSSL() {
   
