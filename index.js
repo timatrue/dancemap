@@ -171,7 +171,11 @@ io.on('connection', function(socket) {
       // ([westLng, southLat, eastLng, northLat])
       // index.all.getClusters(box.bounds, box.zoom);
 	  // console.log('get_clusters_index', index.all);
-      socket.emit('get_clusters', index[type].getClusters(box.bounds, box.zoom));
+	  
+	  /*check if user sent correct property from front*/
+      if(index.hasOwnProperty(type)) {
+        socket.emit('get_clusters', index[type].getClusters(box.bounds, box.zoom));
+      }
     }
 
   });

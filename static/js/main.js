@@ -4,8 +4,9 @@ this.dancemap.initMap = (function(){
 
   /**/
   this.dancemap.ui = {};
-  this.dancemap.ui.class = 'all'
-  document.getElementById('classSelector').addEventListener('change', function (event) {
+  this.dancemap.ui.class = 'all';
+  let classSelector = document.getElementById('classSelector');
+  classSelector.addEventListener('change', function (event) {
 
     self.dancemap.ui.class = this.value;
     self.dancemap.socket.getClusters();
@@ -100,6 +101,8 @@ this.dancemap.initMap = (function(){
 
   map.addHandler('geoLocationHandler', L.GeoLocationHandler);
   map.on('moveend', self.dancemap.socket.getClusters);
+  map.on("zoomstart", function (e) { classSelector.disabled = true; });
+  map.on("zoomend", function (e) { classSelector.disabled = false; });
 
   self.dancemap.geojson = L.geoJSON(null, {
     onEachFeature: onEachFeature,
