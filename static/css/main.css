@@ -93,7 +93,7 @@ header > * {
 
 
 
-.leaflet-control-location a{
+.leaflet-control-location a {
   cursor: pointer; 
 }
 
@@ -107,9 +107,19 @@ header > * {
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
 }
- 
+.studio-title {
+  font-weight:bold;
+}
 
 /* Show popups on hover so hide the close link
 .leaflet-popup-close-button {
   display:none;
 } */
+
+.leaflet-container a.leaflet-popup-close-button { 
+  font: 20px/18px Tahoma, Verdana, sans-serif;
+}
+
+.leaflet-container {
+    font: 14px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+}

@@ -32,6 +32,11 @@ const StudioScheme = new Schema({
     vk: {
       type: String
     },
+    speciality: {
+    	type: [String],
+    	enum: ["Хастл","Зук","Сальса", "Бачата", "ВКС"],
+    	required: [true, 'speciality field required']
+    },
     classes: {
     	hustle: {type: Boolean},
     	zouk: {type: Boolean},

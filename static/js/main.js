@@ -154,7 +154,7 @@ this.dancemap.initMap = (function(){
   function onEachFeature(feature, layer) {
     // does this feature have a property named popupContent?
     if (feature.properties && feature.properties.popupContent) {
-      layer.bindPopup(feature.properties.popupContent);
+      layer.bindPopup(feature.properties.popupContent, {keepInView:true});
     }
   }
     
@@ -213,10 +213,15 @@ this.dancemap.initMap = (function(){
       if(!studio.properties.cluster) {
         studio.properties.popupContent =
         `
-          ${studio.properties.name ?  `<div> ${studio.properties.name} </div>` : ''} 
+          ${studio.properties.name ?  `<div class='studio-title'> ${studio.properties.name} </div>` : ''} 
+          <hr>
+
+          <div class='speciality-container'>
+            <span>Направления: </span>${studio.properties.speciality ?  `${studio.properties.speciality.join(', ')}` : ''}
+          </div>
         
           <div class='info-container'>
-            ${self.dancemap.icons.marker} ${studio.properties.address ? `<div> ${studio.properties.address} </div>` : ''} 
+            ${self.dancemap.icons.marker} ${studio.properties.address ? `<div> ${studio.properties.city}, ${studio.properties.address} </div>` : ''} 
           </div>
           
           ${studio.properties.vk ? `<div class=''><a href='${studio.properties.vk}'> ${self.dancemap.icons.vk} </a></div>` : ''} 

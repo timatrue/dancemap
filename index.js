@@ -116,7 +116,7 @@ io.on('connection', function(socket) {
   socket.on('set_all_documents', function (msg) {
     
     console.log ('set_all_documents', msg);
-    let path = msg.path;
+    //let path = msg.path;
     let value = '';
 
 /*    const agg = [
@@ -127,7 +127,7 @@ io.on('connection', function(socket) {
   }
 ];*/
     /*firstly you have to define new property in studio.js */
-    Studio.updateMany({}, {$set: { 'properties.classes': {'hustle':true} }} ).then(function(result) {
+    Studio.updateMany({}, {$set: { 'properties.speciality': ["Хастл"] }} ).then(function(result) {
 		console.log('set_all_documents', result);
 	});
   
