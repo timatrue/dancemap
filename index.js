@@ -156,7 +156,7 @@ io.on('connection', function(socket) {
     if(msg.bachata) studio.properties.classes.bachata = true;
     if(msg.salsa) studio.properties.classes.salsa = true;
     if(msg.wcs) studio.properties.classes.wcs = true;
-    
+    studio.properties.speciality = msg.speciality.split(',');
     
     studio["type"] = "Feature";
     
@@ -171,15 +171,18 @@ io.on('connection', function(socket) {
     const type = box.class;
 
     
-    try {
-      if (box.getClusterExpansionZoom) {
 
+      if (box.getClusterExpansionZoom) {
+        try {
           let data = {
             expansionZoom: index[type].getClusterExpansionZoom(box.getClusterExpansionZoom),
             center: box.center
           };
           console.log('get_zoomed_clusters', data);
           socket.emit('get_clusters', data);
+        } catch (e) {
+          console.error(e, 'socket.on_get_clusters if (box.getClusterExpansionZoom)');
+        }
 
       } else {
         // ([westLng, southLat, eastLng, northLat])
@@ -187,14 +190,15 @@ io.on('connection', function(socket) {
 	    // console.log('get_clusters_index', index.all);
 
 	    /*check if user sent correct property from front*/
-        if(index.hasOwnProperty(type)) {
-          socket.emit('get_clusters', index[type].getClusters(box.bounds, box.zoom));
+	    try {
+          if(index.hasOwnProperty(type)) {
+            socket.emit('get_clusters', index[type].getClusters(box.bounds, box.zoom));
+          }
+        } catch (e) {
+          console.error(e, 'socket.on_get_clusters  if(index.hasOwnProperty(type)');
         }
       }
-    } catch (e) {
 
-      console.error(e, 'socket.on_get_clusters');
-    }
 
   });
 
