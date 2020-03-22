@@ -7,6 +7,12 @@ const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
 const fs = require('fs');
+
+/**/
+const Telegraf = require('telegraf')
+const bot = new Telegraf("1054222010:AAFXOJVR2jgqF-ddaM7gEWuPhwP0EtEeOws")
+bot.command('server_ping', (ctx) => ctx.reply('Hello'))
+bot.launch()
 //Mongo cloud
 //const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://dancemap:Yy4UqOE9bihpePZc@cluster0-kkgwk.gcp.mongodb.net/dancemap?retryWrites=true&w=majority";
@@ -164,24 +170,30 @@ io.on('connection', function(socket) {
     console.log('get_clusters', box);
     const type = box.class;
 
-    if (box.getClusterExpansionZoom) {
-       
-        let data = {
-          expansionZoom: index[type].getClusterExpansionZoom(box.getClusterExpansionZoom),
-          center: box.center
-        };
-        console.log('get_zoomed_clusters', data);
-        socket.emit('get_clusters', data);
+    
+    try {
+      if (box.getClusterExpansionZoom) {
 
-    } else {
-      // ([westLng, southLat, eastLng, northLat])
-      // index.all.getClusters(box.bounds, box.zoom);
-	  // console.log('get_clusters_index', index.all);
+          let data = {
+            expansionZoom: index[type].getClusterExpansionZoom(box.getClusterExpansionZoom),
+            center: box.center
+          };
+          console.log('get_zoomed_clusters', data);
+          socket.emit('get_clusters', data);
 
-	  /*check if user sent correct property from front*/
-      if(index.hasOwnProperty(type)) {
-        socket.emit('get_clusters', index[type].getClusters(box.bounds, box.zoom));
+      } else {
+        // ([westLng, southLat, eastLng, northLat])
+        // index.all.getClusters(box.bounds, box.zoom);
+	    // console.log('get_clusters_index', index.all);
+
+	    /*check if user sent correct property from front*/
+        if(index.hasOwnProperty(type)) {
+          socket.emit('get_clusters', index[type].getClusters(box.bounds, box.zoom));
+        }
       }
+    } catch (e) {
+
+      console.error(e, 'socket.on_get_clusters');
     }
 
   });
@@ -196,7 +208,7 @@ io.on('connection', function(socket) {
 
   socket.on('get_leaves', (clusterId) => {
     
-    let leaves = index.asll.getLeaves(clusterId, limit = 10, offset = 0);
+    let leaves = index.all.getLeaves(clusterId, limit = 10, offset = 0);
     socket.emit('get_leaves', leaves);
   });
 
