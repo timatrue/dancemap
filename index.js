@@ -80,6 +80,10 @@ index.zouk = new Supercluster({
     maxZoom: 17
 });
 
+index.bachata = new Supercluster({
+    radius: 40,
+    maxZoom: 17
+});
 
 getData().catch(error => console.log('getData',error.stack));
 
@@ -95,9 +99,12 @@ async function getData() {
   });
   await Studio.find({'properties.classes.zouk': true}).then(function(studios) { 
     index.zouk.load(studios);
-    console.log('indexZouk', index.zouk);
+    console.log('index_zouk', index.zouk);
   });
-
+  await Studio.find({'properties.classes.bachata': true}).then(function(studios) { 
+    index.bachata.load(studios);
+    console.log('index_bachata', index.bachata);
+  });
 }
 
 
@@ -161,6 +168,7 @@ io.on('connection', function(socket) {
     studio["type"] = "Feature";
     
     Studio.create(studio).then(function(result) {
+    	reload();
 		console.log('post_studio', result);
 	})
   });
@@ -219,7 +227,7 @@ io.on('connection', function(socket) {
   socket.on('reload', (secret) => {
     if(isObject(secret) && secret) {
       if(secret.secret === 'covid19') {
-        getData().catch(error => console.log('getData', error.stack));
+        reload();
         socket.emit('reload', {reload: true});
       }
     }
@@ -229,6 +237,9 @@ io.on('connection', function(socket) {
   console.log('a user connected');
 });
 
+function reload() {
+  getData().catch(error => console.log('getData', error.stack));
+}
 
 function isObject(val) {
     return (typeof val === 'object');

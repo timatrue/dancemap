@@ -224,7 +224,7 @@ this.dancemap.initMap = (function(){
             ${self.dancemap.icons.marker} ${studio.properties.address ? `<div> ${studio.properties.city}, ${studio.properties.address} </div>` : ''} 
           </div>
           
-          ${studio.properties.vk ? `<div class=''><a href='${studio.properties.vk}'> ${self.dancemap.icons.vk} </a></div>` : ''} 
+          ${studio.properties.vk ? `<div class=''><a href='${studio.properties.vk}' target="_blank"> ${self.dancemap.icons.vk} </a></div>` : ''} 
         `
 
       }

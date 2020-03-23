@@ -6,7 +6,7 @@ html, body {
 }
 	
 * {
-  font-family: Helvetica, Arial,Tahoma,sans-serif;
+  font-family: 'Roboto', Helvetica, Arial,Tahoma,sans-serif;
 }
 	
 header {
@@ -23,7 +23,17 @@ header {
 header > * {
  padding: 10px
 }
-	
+
+select {
+    cursor:pointer;
+    display:inline-block;
+    position:relative;
+    font:normal 14px/22px 'Roboto', Helvetica, Arial,Tahoma,sans-serif;
+    color:black;
+    border:1px solid #ccc;
+    border-radius: 5px;
+}
+
 #logo {
   display: inline-block;
 }
