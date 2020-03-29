@@ -9,6 +9,7 @@ this.dancemap.initMap = (function(){
   classSelector.addEventListener('change', function (event) {
 
     self.dancemap.ui.class = this.value;
+    self.dancemap.initMap.getMap().closePopup();
     self.dancemap.socket.getClusters();
     console.log(this.value)
 
@@ -103,6 +104,16 @@ this.dancemap.initMap = (function(){
   map.on('moveend', self.dancemap.socket.getClusters);
   map.on("zoomstart", function (e) { classSelector.disabled = true; });
   map.on("zoomend", function (e) { classSelector.disabled = false; });
+  map.on("popupopen", function(e) {
+    
+    console.log("popupopen", e);
+  })
+  map.on("popupclose", function (e) {
+    console.log("popupclose")
+  })
+  map.on("autopanstart", function(e) {
+    console.log("autopanstart")
+  })
 
   self.dancemap.geojson = L.geoJSON(null, {
     onEachFeature: onEachFeature,
@@ -145,7 +156,8 @@ this.dancemap.initMap = (function(){
         
       self.dancemap.socket.getZoomedClusters(clusterData);
       console.log('click cluster', clusterData);
-      }
+    }
+    console.log('e.layer.feature.properties', e.layer.feature.properties)
   }); 
 
   
@@ -154,13 +166,12 @@ this.dancemap.initMap = (function(){
   function onEachFeature(feature, layer) {
     // does this feature have a property named popupContent?
     if (feature.properties && feature.properties.popupContent) {
-      layer.bindPopup(feature.properties.popupContent, {keepInView:true});
+      layer.bindPopup(feature.properties.popupContent);
     }
   }
     
   function pointToLayer(feature, latlng) {
     //return L.marker(latlng, {icon: fontAwesomeIcon});
-
 
     if (!feature.properties.cluster) return L.marker(latlng, {icon: fontAwesomeIcon});
 
@@ -171,7 +182,7 @@ this.dancemap.initMap = (function(){
     const icon = L.divIcon({
         html: `<div><span>${  feature.properties.point_count_abbreviated  }</span></div>`,
         className: `marker-cluster marker-cluster-${size}`,
-        iconSize: L.point(40, 40)
+        iconSize: L.point(0, 0)
     });
 
     return L.marker(latlng, {icon});
@@ -193,16 +204,26 @@ this.dancemap.initMap = (function(){
   }
 
   function flyToClusters(data) {
-
     map.flyTo(data.center, data.expansionZoom);
   }
 
   function addClusters(data) {
+
     self.dancemap.cluster = data;
-    self.dancemap.geojson.clearLayers();
+    self.dancemap.geojson.eachLayer((layer) => {
+      if(!layer.isPopupOpen()) {
+        self.dancemap.geojson.removeLayer(layer);
+      } 
+    })
     self.dancemap.geojson.addData(addPopupContent(data));
   }
- 
+
+  function checkClass(layer) {
+    let currentClass = this.dancemap.ui.class;
+    let speciality = layer.feature.properties.speciality;
+    return speciality.includes(currentClass);
+  }
+
   function getMap() {
     return map;
   }
