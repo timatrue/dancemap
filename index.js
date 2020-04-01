@@ -234,6 +234,14 @@ io.on('connection', function(socket) {
     
   });
 
+  socket.on('find_studio', (query) => {
+  	console.log('findStudio',query)
+    
+    Studio.find({ "properties.name" : { $regex: new RegExp('^' + query + '$', 'i') } })
+      .then((res) => socket.emit('find_studio', res))
+
+  });
+
   console.log('a user connected');
 });
 

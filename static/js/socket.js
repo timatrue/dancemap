@@ -51,6 +51,15 @@ function getClusterLeaves(clusterId) {
   socket.emit('get_leaves', clusterId);
 }
 
+function findStudio(query) {
+
+  socket.emit('find_studio', query);
+}
+
+socket.on('find_studio', function (studio) {
+  console.log('find_studio', studio);
+});
+
 socket.on('get_leaves', function (clusters) {
   console.log('get_leaves_server', clusters);
 });
@@ -58,7 +67,6 @@ socket.on('get_leaves', function (clusters) {
 socket.on('get_clusters', function (clusters) {
 
   //testCluster.getClusterExpansionZoom(e.data.getClusterExpansionZoom)
-  
   if (clusters.expansionZoom) {
     dancemap.initMap.flyToClusters(clusters);
   } else {
@@ -67,6 +75,8 @@ socket.on('get_clusters', function (clusters) {
     console.log('clusters_server', clusters); 
   }
 });
+
+
 
 socket.on('reload', (res) => console.log(res));
 
@@ -93,6 +103,7 @@ function reload(secret) {
     getZoomedClusters: getZoomedClusters,
     getClusterChildren: getClusterChildren,
     getClusterLeaves: getClusterLeaves,
+    findStudio: findStudio,
     reload: reload
 
   }
