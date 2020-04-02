@@ -51,8 +51,9 @@ function getClusterLeaves(clusterId) {
   socket.emit('get_leaves', clusterId);
 }
 
-function findStudio(query) {
-
+function findStudio(studio) {
+  let category = self.dancemap.ui.class
+  let query = {studio, category};
   socket.emit('find_studio', query);
 }
 

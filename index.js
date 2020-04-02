@@ -235,11 +235,16 @@ io.on('connection', function(socket) {
   });
 
   socket.on('find_studio', (query) => {
-  	console.log('findStudio',query)
-    
-    Studio.find({ "properties.name" : { $regex: new RegExp('^' + query + '$', 'i') } })
-      .then((res) => socket.emit('find_studio', res))
-
+  	
+    let category = query.category === 'all' ? null : 'properties.classes.' + query.category;
+    console.log('findStudio', query, category)
+    if(category) {
+      Studio.find({ "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }, [category] : "true"})
+        .then((res) => socket.emit('find_studio', res))
+    } else {
+      Studio.find({ "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }})
+        .then((res) => socket.emit('find_studio', res))
+    }
   });
 
   console.log('a user connected');
