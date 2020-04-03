@@ -5,6 +5,9 @@ this.dancemap.initMap = (function(){
   /**/
   this.dancemap.ui = {};
   this.dancemap.ui.class = 'all';
+  this.dancemap.ui.radius = 5000;
+  this.dancemap.ui.within = true;
+
   let classSelector = document.getElementById('classSelector');
   classSelector.addEventListener('change', function (event) {
 

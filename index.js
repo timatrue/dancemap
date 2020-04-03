@@ -237,13 +237,46 @@ io.on('connection', function(socket) {
   socket.on('find_studio', (query) => {
   	
     let category = query.category === 'all' ? null : 'properties.classes.' + query.category;
-    console.log('findStudio', query, category)
-    if(category) {
-      Studio.find({ "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }, [category] : "true"})
-        .then((res) => socket.emit('find_studio', res))
+    
+    if(query.within) {
+      console.log('findStudio all', query, category)
+      if(category) {
+        Studio.find({ "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }, [category] : "true"})
+          .then((res) => socket.emit('find_studio', res))
+      } else {
+        Studio.find({ "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }})
+          .then((res) => socket.emit('find_studio', res))
+      }
     } else {
-      Studio.find({ "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }})
-        .then((res) => socket.emit('find_studio', res))
+      console.log('findStudio within', query, category)
+      if(category) {
+      	
+        Studio.find({ 
+        	"properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') },
+        	[category] : "true"
+        	//loc : { $near : [yourLat,yourLon] , $maxDistance : query.radius }
+        })
+          //.where('loc').within({ center: [query.center.lng,query.center.lat], radius: query.radius, unique: true, spherical: true })
+          .then((res) => socket.emit('find_studio', res))
+      } else {
+        Studio.find({
+         "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') },
+         "geometry" : {
+         "$near": {
+         "$geometry": {
+          "type": "Point" ,
+          "coordinates": [query.center.lng, query.center.lat]
+          },
+         "$maxDistance": query.radius,
+       //$minDistance: <distance in meters>
+     }
+   } 
+         
+ 
+        })
+          //.where('loc').within({ center: [query.center.lng, query.center.lat], radius: query.radius, unique: true, spherical: true })
+          .then((res) => socket.emit('find_studio', res))
+      }
     }
   });
 
