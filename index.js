@@ -238,7 +238,7 @@ io.on('connection', function(socket) {
   	
     let category = query.category === 'all' ? null : 'properties.classes.' + query.category;
     
-    if(query.within) {
+    if(!query.type) {
       console.log('findStudio all', query, category)
       if(category) {
         Studio.find({ "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }, [category] : "true"})
@@ -247,37 +247,68 @@ io.on('connection', function(socket) {
         Studio.find({ "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }})
           .then((res) => socket.emit('find_studio', res))
       }
-    } else {
-      console.log('findStudio within', query, category)
+    }
+
+    if(query.type === "near") {
+      console.log('findStudio $near', query, category)
       if(category) {
       	
         Studio.find({ 
         	"properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') },
-        	[category] : "true"
-        	//loc : { $near : [yourLat,yourLon] , $maxDistance : query.radius }
+        	[category] : "true",
+        	"geometry" : {
+            "$near": {
+              "$geometry": {
+                 "type": "Point" ,
+                 "coordinates": [query.center.lng, query.center.lat]
+               },
+              "$maxDistance": query.radius,
+               //"$minDistance": <distance in meters>
+            }} 
+
         })
-          //.where('loc').within({ center: [query.center.lng,query.center.lat], radius: query.radius, unique: true, spherical: true })
-          .then((res) => socket.emit('find_studio', res))
+        .then((res) => socket.emit('find_studio', res))
       } else {
         Studio.find({
-         "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') },
-         "geometry" : {
-         "$near": {
-         "$geometry": {
-          "type": "Point" ,
-          "coordinates": [query.center.lng, query.center.lat]
-          },
-         "$maxDistance": query.radius,
-       //$minDistance: <distance in meters>
-     }
-   } 
-         
- 
+          "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') },
+          "geometry" : {
+          "$near": {
+            "$geometry": {
+               "type": "Point" ,
+               "coordinates": [query.center.lng, query.center.lat]
+             },
+            "$maxDistance": query.radius,
+             //"$minDistance": <distance in meters>
+          }} 
         })
-          //.where('loc').within({ center: [query.center.lng, query.center.lat], radius: query.radius, unique: true, spherical: true })
-          .then((res) => socket.emit('find_studio', res))
+        .then((res) => socket.emit('find_studio', res))
       }
     }
+    if(query.type === "geoWithin") {
+      console.log('findStudio $geoWithin', query, category)
+      if(category) {
+      	
+        Studio.find({ 
+        	"properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') },
+        	[category] : "true",
+        	"geometry" : {
+            "$geoWithin": {
+              "$box": query.box
+            }} 
+
+        })
+        .then((res) => socket.emit('find_studio', res))
+      } else {
+        Studio.find({
+          "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') },
+          "geometry" : {
+          "$geoWithin": {
+            "$box": query.box
+          }} 
+        })
+        .then((res) => socket.emit('find_studio', res))
+      }
+    }    
   });
 
   console.log('a user connected');

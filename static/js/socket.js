@@ -52,12 +52,16 @@ function getClusterLeaves(clusterId) {
 }
 
 function findStudio(studio) {
-  let category = self.dancemap.ui.class
+  let map = dancemap.initMap.getMap();
+  let category = dancemap.ui.class
   let radius = dancemap.ui.radius;
-  let center = dancemap.initMap.getMap().getCenter();
-  let query = {studio, category, center, radius};
-  
+  let type = dancemap.ui.queryType;
+  let center = map.getCenter();
+  let sw = map.getBounds().getSouthWest();
+  let ne = map.getBounds().getNorthEast();
+  let box = [[sw.lng,sw.lat], [ne.lng,ne.lat]];
 
+  let query = {studio, category, center, radius, type, box};
   socket.emit('find_studio', query);
 }
 
