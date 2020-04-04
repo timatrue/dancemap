@@ -8,7 +8,7 @@ this.dancemap.initMap = (function(){
   this.dancemap.ui.radius = 5000;
   this.dancemap.ui.queryType = 'near';
 
-  let classSelector = document.getElementById('classSelector');
+  let classSelector = document.getElementById('class-selector');
   classSelector.addEventListener('change', function (event) {
 
     self.dancemap.ui.class = this.value;

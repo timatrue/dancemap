@@ -5,63 +5,10 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <meta name="Description" content="Добавить школу, событие на карту Dancemap.online"/>
-  <meta name="yandex-verification" content="e73d49b4298f11ea" />
+    <meta name="yandex-verification" content="e73d49b4298f11ea" />
+    <link href='/css/main.css' rel='stylesheet' />
   
   <style>
-
-    html, body {
-      height: 100%;
-      width: 100%;
-	  margin:0;
-	  padding:0;
-    }
-	
-    * {
-	
-      font-family: Helvetica, Arial,Tahoma,sans-serif;
-    }
-	
-	header {
-	  height: auto;
-      min-height: 55px;
-      background: #333;
-	  display: inline-flex;
-	  flex-direction: row;
-      align-items: center;
-	  justify-content: space-between;
-      width: 100%;
-	}
-	
-    header > * {
-	  padding: 10px
-	}
-	
-	#logo {
-      display: inline-block;
-	}
-	
-    #logo div {
-      margin: 0;
-	  color: #f2f2f2;
-	}
-	
-	.nav {
-	  display: inline-block;
-	  
-    }
-	
-    .nav a {
-      display: inline-block;
-      color: #f2f2f2;
-      text-decoration: none;
-      font-size: 16px;
-   }
-   
-   .content {
-      display: flex;
-	  justify-content: center;
-   }
-
 
     
 
@@ -83,27 +30,29 @@
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/55886317" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   <!-- /Yandex.Metrika counter -->
-
+  <script  src="/js/dancemap.js"></script>
+  <script  src="/js/nav.js"></script>
   </head>
   
   <body>
-    
-  <header style="">
-    <div id="logo" class="nav">
-	  <a  href="/">Dancemap.online</a>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="dancemap.nav.closeNav()">&times;</a>
+      <a href="/add.html">Добавить студию</a>
     </div>
-	<div class="nav">
-        <a href="/add.html">Добавить школу</a>
-   </div>
-  </header>
+    <div class="container-header__nav"> 
+      <header class="">
+        <div class="nav">   
+          <span class="burger-menu" onclick="dancemap.nav.openNav()">&#9776;</span>
+        </div>
+        <div class="nav">   
+          <a href="/" style="color:rgb(242, 80, 80)"> Dancemap.online</a>
+        </div>
+      </header>
+    </div>    
     <div class='content'>
       <p>Для добавления школы на карту пишите в личку https://vk.com/id475340870 </p>
     </div>
     <script>
-      
-   
-
-    </script>
-    
+    </script>  
   </body>
 </html>
