@@ -61,14 +61,13 @@ select {
 
 
 
+
 /* search input field */
-.container-pseudo {
-  display: flex;
+.container-input__pseudo {
   position: relative;
-  min-width: 30vw;
 }
 
-.container-pseudo:before {
+.container-input__pseudo:before {
   color: #fff;
   content: "";
   position: absolute;
@@ -77,8 +76,7 @@ select {
   bottom: 0;
   width: 20px;
   background: url(../images/search-solid.svg) center / contain no-repeat;
-  filter: alpha(opacity=50);
-  opacity: 0.55;
+  opacity: 0.50;
 }
 
 input[type=search] {
@@ -111,13 +109,20 @@ input::-webkit-input-placeholder {
 }
 
 @media only screen and (max-width: 480px) {
-  input[type=search] {min-width: 30vw;}
+  input[type=search] {min-width: 70vw;}
+
+  #class-selector {
+  -webkit-appearance: none; 
+  background: url(../images/filter.svg) no-repeat right;
+  width:22px;
+}
+
 }
 @media only screen and (min-width: 480px) {
-  input[type=search] {min-width: 40vw;}
+  input[type=search] {min-width: 60vw;}
 }
 @media only screen and (min-width: 600px) {
-  input[type=search] {min-width: 40vw;}
+  input[type=search] {min-width: 50vw;}
 }
 @media only screen and (min-width: 900px) {
   input[type=search] {min-width: 30vw;}
