@@ -113,7 +113,7 @@ input::-webkit-input-placeholder {
 
   #class-selector {
   -webkit-appearance: none; 
-  background: url(../images/filter.svg) no-repeat right;
+  background: url(../images/filter-solid.svg) no-repeat right;
   width:22px;
 }
 
@@ -125,7 +125,7 @@ input::-webkit-input-placeholder {
   input[type=search] {min-width: 50vw;}
 }
 @media only screen and (min-width: 900px) {
-  input[type=search] {min-width: 30vw;}
+  input[type=search] {min-width: 30vw; }
   input[type=search]:focus {min-width: 40vw;}
 }
 
