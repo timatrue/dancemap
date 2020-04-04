@@ -109,9 +109,13 @@ input::-webkit-input-placeholder {
   color: #999;
 }
 
-@media only screen and (max-width: 600px) {
-  input[type=search] {min-width: 50vw;}
-  input[type=search]:focus {min-width: 60vw;}
+@media only screen and (max-width: 480px) {
+  input[type=search] {min-width: 20vw;}
+  input[type=search]:focus {min-width: 30vw;}
+}
+@media only screen and (min-width: 480px) {
+  input[type=search] {min-width: 40vw;}
+  input[type=search]:focus {min-width: 50vw;}
 }
 @media only screen and (min-width: 600px) {
   input[type=search] {min-width: 40vw;}
