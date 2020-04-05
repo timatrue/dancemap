@@ -1,73 +1,62 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Танцевальная карта - Dancemap.online</title>
+    <title>Студии и школы танцев, танцевальные события и вечеринки на онлайн карте Dancemap.online</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-    <meta name="Description" content="Школы танцев, танцевальные события и вечеринки"/>
-  <meta name="yandex-verification" content="e73d49b4298f11ea" />
+    <meta name="Description" content="Студии и школы танцев, танцевальные события и вечеринки на онлайн карте Dancemap.online"/>
+    <meta name="yandex-verification" content="e73d49b4298f11ea" />
   
-  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-  <script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
-  <!--<script src="https://kit.fontawesome.com/3d2fe1a67d.js" crossorigin="anonymous"></script>-->
-  <link href='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
-  <!--Leaflet-->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="crossorigin=""/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+    <!--<script src="https://kit.fontawesome.com/3d2fe1a67d.js" crossorigin="anonymous"></script>-->
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
+    <!--Leaflet-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="crossorigin=""/>
     <!-- Make sure you put this AFTER Leaflet's CSS -->
-  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="crossorigin=""></script>
+    <link href='https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css' rel='stylesheet' />
+    <link href='https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css' rel='stylesheet' />
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <!-- Dancemap-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script  src="/js/dancemap.js"></script>
+    <script  src="/js/nav.js"></script>
+    <link href='/css/main.css' rel='stylesheet' />
   
-  <link href='https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css' rel='stylesheet' />
-  <link href='https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css' rel='stylesheet' />
-
-
-  <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script  src="/js/dancemap.js"></script>
-  <script  src="/js/nav.js"></script>
-
   
-  <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
-
-<!-- Bootstrap JS
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
--->
-
-
-  <link href='/css/main.css' rel='stylesheet' />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+       m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
+       ym(55886317, "init", {
+         clickmap:true,
+         trackLinks:true,
+         accurateTrackBounce:true
+       });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/55886317" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114689083-3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-
-  <style>
-
-  </style>
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  
-  <!-- Yandex.Metrika counter -->
-  <script type="text/javascript" >
-     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-     m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-     (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-     ym(55886317, "init", {
-      clickmap:true,
-      trackLinks:true,
-      accurateTrackBounce:true
-     });
-  </script>
-  <noscript><div><img src="https://mc.yandex.ru/watch/55886317" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-  <!-- /Yandex.Metrika counter -->
-
+      gtag('config', 'UA-114689083-3');
+    </script>
   </head>
   
   <body>
 
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="dancemap.nav.closeNav()">&times;</a>
-    <a href="/add.html">Добавить студию</a>
+    <a href="/add.html">Добавить школу танцев на карту</a>
   </div>
   <div class="container-header__nav"> 
     <header class="">

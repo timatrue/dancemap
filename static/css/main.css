@@ -10,7 +10,7 @@ html, body {
 }
 
 .container-header__nav {
-  border-top:  rgb(242, 80, 80) solid 4px;
+  border-top:  #D91A3D solid 4px;
   
 }
 header {
@@ -58,9 +58,6 @@ select {
   font-size: 16px;
   margin: 4px;
 }
-
-
-
 
 /* search input field */
 .container-input__pseudo {
@@ -147,13 +144,13 @@ input::-webkit-input-placeholder {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 18px;
-  color: rgb(242, 80, 80);
+  color: #D91A3D;
   display: block;
   transition: 0.3s;
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
+  color: #F20505;
 }
 
 .sidenav .closebtn {
@@ -163,12 +160,18 @@ input::-webkit-input-placeholder {
   font-size: 36px;
   margin-left: 50px;
 }
+
 .burger-menu {
   font-size: 24px;
   cursor: pointer;
-  color: rgb(242, 80, 80);
+  color: #D91A3D;
   padding: 0;
 }
+
+.burger-menu a:hover {
+  color: #F20505;;
+}
+
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
@@ -253,3 +256,25 @@ input::-webkit-input-placeholder {
 .leaflet-container {
     font: 14px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
+
+
+/* Color Theme Swatches in Hex */
+.Графический-дизайн-1-hex { color: #D91A3D; }
+.Графический-дизайн-2-hex { color: #0339A6; }
+.Графический-дизайн-3-hex { color: #034AA6; }
+.Графический-дизайн-4-hex { color: #1261A6; }
+.Графический-дизайн-5-hex { color: #F20505; }
+
+/* Color Theme Swatches in RGBA */
+.Графический-дизайн-1-rgba { color: rgba(216, 26, 60, 1); }
+.Графический-дизайн-2-rgba { color: rgba(3, 57, 165, 1); }
+.Графический-дизайн-3-rgba { color: rgba(3, 73, 165, 1); }
+.Графический-дизайн-4-rgba { color: rgba(18, 96, 165, 1); }
+.Графический-дизайн-5-rgba { color: rgba(242, 4, 4, 1); }
+
+/* Color Theme Swatches in HSLA */
+.Графический-дизайн-1-hsla { color: hsla(348, 78, 47, 1); }
+.Графический-дизайн-2-hsla { color: hsla(219, 96, 33, 1); }
+.Графический-дизайн-3-hsla { color: hsla(213, 96, 33, 1); }
+.Графический-дизайн-4-hsla { color: hsla(208, 80, 36, 1); }
+.Графический-дизайн-5-hsla { color: hsla(0, 96, 48, 1); }
