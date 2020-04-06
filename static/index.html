@@ -20,8 +20,6 @@
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
     <!-- Dancemap-->
     <script src="/socket.io/socket.io.js"></script>
-    <script  src="/js/dancemap.js"></script>
-    <script  src="/js/nav.js"></script>
     <link href='/css/main.css' rel='stylesheet' />
   
   
@@ -73,6 +71,7 @@
       </div>
       <div class="nav container-input__pseudo">
         <input type="search" placeholder="Искать студию">
+        <input type="button" value="" class="btn-close" id="btn-close"/>
       </div>
     </header>
   </div>
@@ -80,19 +79,14 @@
 
   <div id="map-box"></div>
   
-
+  <script  src="/js/dancemap.js"></script>
+  <script  src="/js/nav.js"></script>
   <script  src="/js/socket.js"></script>
   <script  src="/js/main.js"></script>
   <script>
-  //https://learn.javascript.ru/async-await
-  /*this.dancemap.socket.getStudios((data) => {
-  	this.dancemap.data = data
-  	this.dancemap.initMap.plotStudios(data);
-  })*/
 
   this.dancemap.socket.getClusters();
-
-
+  this.dancemap.nav.searchSetup();
 
   </script>
 

@@ -11,10 +11,33 @@ this.dancemap.nav = (function(){
     document.getElementById("mySidenav").style.width = "0";
   }
 
+  function searchSetup() {
+    onSearch();
+    onClear();
+  }
+  
+  function onSearch() {
+    const input = document.querySelector('input[type="search"]');
+    input.addEventListener('search', () => {
+      console.log("The term searched for was " + input.value);
+    })
+  }
+
+  function onClear() {
+    const btnClear = document.querySelector('#btn-close');
+    const input = document.querySelector('input[type="search"]');
+
+    btnClear.addEventListener('click', () => {
+      input.value = '';
+      console.log("The input cleared: " + input.value);
+    })
+  }
+
+
   return {
     openNav : openNav,
-    closeNav : closeNav
-
+    closeNav : closeNav,
+    searchSetup: searchSetup,
   }
 
 })();
