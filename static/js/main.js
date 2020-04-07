@@ -6,14 +6,15 @@ this.dancemap.initMap = (function(){
   this.dancemap.ui = {};
   this.dancemap.ui.class = 'all';
   this.dancemap.ui.radius = 5000;
-  this.dancemap.ui.queryType = 'near';
+  this.dancemap.ui.queryType = 'geoWithin';
 
   let classSelector = document.getElementById('class-selector');
   classSelector.addEventListener('change', function (event) {
 
     self.dancemap.ui.class = this.value;
     self.dancemap.initMap.getMap().closePopup();
-    self.dancemap.socket.getClusters();
+    //self.dancemap.socket.getClusters();
+    moveEnd();
     console.log(this.value)
 
   }, false);
@@ -104,7 +105,7 @@ this.dancemap.initMap = (function(){
   });
 
   map.addHandler('geoLocationHandler', L.GeoLocationHandler);
-  map.on('moveend', self.dancemap.socket.getClusters);
+  map.on('moveend', moveEnd);
   map.on("zoomstart", function (e) { classSelector.disabled = true; });
   map.on("zoomend", function (e) { classSelector.disabled = false; });
   map.on("popupopen", function(e) {
@@ -123,7 +124,11 @@ this.dancemap.initMap = (function(){
     pointToLayer: pointToLayer
   }).addTo(map)
 
-  
+  function moveEnd() {
+    const input = document.querySelector('input[type="search"]');
+    input.value ? dancemap.socket.findStudio(input.value) : self.dancemap.socket.getClusters();
+  }
+
   function plotStudios(studios) {
 
     self.dancemap.studios = {
@@ -211,7 +216,8 @@ this.dancemap.initMap = (function(){
   }
 
   function addClusters(data) {
-
+    
+    self.dancemap.nav.togglePrompt(data);
     self.dancemap.cluster = data;
     self.dancemap.geojson.eachLayer((layer) => {
       if(!layer.isPopupOpen()) {
@@ -226,6 +232,8 @@ this.dancemap.initMap = (function(){
     let speciality = layer.feature.properties.speciality;
     return speciality.includes(currentClass);
   }
+
+
 
   function getMap() {
     return map;

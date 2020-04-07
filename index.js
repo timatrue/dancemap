@@ -297,7 +297,9 @@ io.on('connection', function(socket) {
             }} 
 
         })
-        .then((res) => socket.emit('find_studio', res))
+        //.then((res) => socket.emit('find_studio', res))
+        .then((res) => socket.emit('get_clusters', res))
+        
       } else {
         Studio.find({
           "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') },
@@ -306,7 +308,8 @@ io.on('connection', function(socket) {
             "$box": query.box
           }} 
         })
-        .then((res) => socket.emit('find_studio', res))
+        //.then((res) => socket.emit('find_studio', res))
+        .then((res) => socket.emit('get_clusters', res))
       }
     }    
   });
