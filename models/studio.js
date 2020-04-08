@@ -34,15 +34,16 @@ const StudioScheme = new Schema({
     },
     speciality: {
     	type: [String],
-    	enum: ["Хастл","Зук","Сальса", "Бачата", "ВКС"],
+    	enum: ["Хастл","Зук","Сальса", "Бачата", "WCS"],
     	required: [true, 'speciality field required']
     },
     classes: {
     	hustle: {type: Boolean},
     	zouk: {type: Boolean},
+    	wcs: {type: Boolean},
     	bachata: {type: Boolean},
-    	salsa: {type: Boolean},
-    	wcs: {type: Boolean}
+    	salsa: {type: Boolean}
+    	
     }
   },/*
   city: {

@@ -80,7 +80,17 @@ index.zouk = new Supercluster({
     maxZoom: 17
 });
 
+index.wcs = new Supercluster({
+    radius: 40,
+    maxZoom: 17
+});
+
 index.bachata = new Supercluster({
+    radius: 40,
+    maxZoom: 17
+});
+
+index.salsa = new Supercluster({
     radius: 40,
     maxZoom: 17
 });
@@ -101,9 +111,18 @@ async function getData() {
     index.zouk.load(studios);
     console.log('index_zouk', index.zouk);
   });
+  await Studio.find({'properties.classes.wcs': true}).then(function(studios) { 
+    index.wcs.load(studios);
+    console.log('index_wcs', index.wcs);
+  });
   await Studio.find({'properties.classes.bachata': true}).then(function(studios) { 
     index.bachata.load(studios);
     console.log('index_bachata', index.bachata);
+  });
+
+  await Studio.find({'properties.classes.salsa': true}).then(function(studios) { 
+    index.salsa.load(studios);
+    console.log('index_salsa', index.salsa);
   });
 }
 
@@ -158,11 +177,12 @@ io.on('connection', function(socket) {
     studio.properties.address = msg.address;
     studio.properties.city = msg.city;
     studio.properties.vk = msg.vk;
-    if(msg.zouk) studio.properties.classes.zouk = true;
     if(msg.hustle) studio.properties.classes.hustle = true;
+    if(msg.zouk) studio.properties.classes.zouk = true;
+    if(msg.wcs) studio.properties.classes.wcs = true;
     if(msg.bachata) studio.properties.classes.bachata = true;
     if(msg.salsa) studio.properties.classes.salsa = true;
-    if(msg.wcs) studio.properties.classes.wcs = true;
+    
     studio.properties.speciality = msg.speciality.split(',');
     
     studio["type"] = "Feature";
