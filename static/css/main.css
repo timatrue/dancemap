@@ -23,7 +23,7 @@ header {
   width: 100%;
 }
 
-header > * {
+header .container-select__pseudo {
  padding: 10px
 }
 
@@ -59,6 +59,10 @@ select {
   margin: 4px;
 }
 
+.nav .burger-menu {
+  margin: 17px 7px 17px 17px;
+}
+
 /* search input field */
 .container-input__pseudo {
   position: relative;
@@ -70,7 +74,7 @@ select {
   color: #fff;
   content: "";
   position: absolute;
-  left: 16px;
+  left: 8px;
   top: 0;
   bottom: 0;
   width: 20px;
@@ -145,6 +149,7 @@ input::-webkit-input-placeholder {
   z-index: 9999;
   overflow-x: hidden;
   cursor: pointer;
+  visibility: hidden;
 
 }
 .search-prompt button {
@@ -157,7 +162,6 @@ input::-webkit-input-placeholder {
   font-weight: 500;
   box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.3);
   margin: auto;
-
 }
 
 @media only screen and (max-width: 480px) {
@@ -168,6 +172,10 @@ input::-webkit-input-placeholder {
   background: url(../images/filter-solid.svg) no-repeat right;
   width:22px;
 }
+
+  header .container-select__pseudo {
+    padding: 7px
+  }
 
 }
 @media only screen and (min-width: 480px) {
@@ -186,33 +194,43 @@ input::-webkit-input-placeholder {
   width: 0;
   position: fixed;
   z-index: 9999;
-  top: 0;
+  top: 4px;
   left: 0;
   background-color: #FFF;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
+  opacity: 0.85;
+  box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.5);
 }
 
-.sidenav a {
-  padding: 8px 8px 8px 32px;
+.sidenav a{
+  padding: 8px 8px 8px 10px;
   text-decoration: none;
   font-size: 18px;
-  color: #D91A3D;
+  color: #1261A6;
   display: block;
   transition: 0.3s;
 }
 
-.sidenav a:hover {
-  color: #F20505;
+
+.sidenav .side-nav__link:hover {
+  text-decoration: underline;
+  color: #034AA6;
 }
+
 
 .sidenav .closebtn {
   position: absolute;
   top: 0;
-  right: 25px;
+  right: 0px;
   font-size: 36px;
   margin-left: 50px;
+  color: #F20505;
+}
+
+.sidenav .closebtn:hover {
+  color: #D91A3D;
 }
 
 .burger-menu {
@@ -223,7 +241,7 @@ input::-webkit-input-placeholder {
 }
 
 .burger-menu a:hover {
-  color: #F20505;;
+  color: #F20505;
 }
 
 @media screen and (max-height: 450px) {
@@ -313,10 +331,14 @@ input::-webkit-input-placeholder {
 
 
 /* Color Theme Swatches in Hex */
+/*Dark red*/
 .Графический-дизайн-1-hex { color: #D91A3D; }
 .Графический-дизайн-2-hex { color: #0339A6; }
+/*Dark blue*/
 .Графический-дизайн-3-hex { color: #034AA6; }
+/*URL blue*/
 .Графический-дизайн-4-hex { color: #1261A6; }
+/*Normal red*/
 .Графический-дизайн-5-hex { color: #F20505; }
 
 /* Color Theme Swatches in RGBA */
