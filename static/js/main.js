@@ -96,7 +96,14 @@ this.dancemap.initMap = (function(){
        };
        
       navigator.geolocation.getCurrentPosition((pos)=> {
-        map.flyTo([pos.coords.latitude, pos.coords.longitude], map.getZoom())
+        let lat = pos.coords.latitude;
+        let lng = pos.coords.longitude;
+
+        let marker = L.marker([lat, lng]).bindPopup('Your are here :)');
+
+        map.flyTo([lat, lng], map.getZoom())
+        map.addLayer(marker);
+        
         console.log(pos.coords)
       }, (err) => {
         console.warn(`ERROR(${err.code}): ${err.message}`)
@@ -118,7 +125,24 @@ this.dancemap.initMap = (function(){
   map.on("autopanstart", function(e) {
     console.log("autopanstart")
   })
-
+/*
+    map.locate({setView: true, watch: true}) 
+        .on('locationfound', function(e){
+            var marker = L.marker([e.latitude, e.longitude]).bindPopup('Your are here :)');
+            var circle = L.circle([e.latitude, e.longitude], e.accuracy/4, {
+                weight: 1,
+                color: 'blue',
+                fillColor: '#cacaca',
+                fillOpacity: 0.2
+            });
+            map.addLayer(marker);
+            map.addLayer(circle);
+        })
+       .on('locationerror', function(e){
+            console.log(e);
+            alert("Location access denied.");
+        });  
+*/
   self.dancemap.geojson = L.geoJSON(null, {
     onEachFeature: onEachFeature,
     pointToLayer: pointToLayer
@@ -174,7 +198,9 @@ this.dancemap.initMap = (function(){
   function onEachFeature(feature, layer) {
     // does this feature have a property named popupContent?
     if (feature.properties && feature.properties.popupContent) {
-      layer.bindPopup(feature.properties.popupContent);
+      layer
+        .bindPopup(feature.properties.popupContent)
+        .bindTooltip( (layer) => layer.feature.properties.name, {permanent: false, opacity: 0.75});
     }
   }
     
