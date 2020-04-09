@@ -178,6 +178,7 @@ this.dancemap.initMap = (function(){
   
   
   self.dancemap.geojson.on('click', (e) => {
+    e.layer.closeTooltip();
     if (e.layer.feature.properties.cluster_id) {
 
       let clusterData = {
