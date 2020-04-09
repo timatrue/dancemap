@@ -21,6 +21,10 @@ const StudioScheme = new Schema({
   	  type: String,
   	  required: [true, 'name field required']
     },
+    altername: {
+  	  type: String,
+  	  required: [true, 'name field required']
+    },
     address: {
   	  type: String,
   	  required: [true, 'address field required']

@@ -145,23 +145,16 @@ io.on('connection', function(socket) {
   });
 
 
-  socket.on('set_all_documents', function (msg) {
-    
-    console.log ('set_all_documents', msg);
-    //let path = msg.path;
-    let value = '';
+  socket.on('set_all_documents', function (secret) {
 
-/*    const agg = [
-  {
-    '$addFields': {
-      'properties.vk': ''
+    if(isObject(secret) && secret) {
+      if(secret.secret === 'Covid19!') {
+        /*firstly you have to define new property in studio.js */
+        Studio.updateMany({}, {$set: { 'properties.altername': ""}} ).then(function(result) {
+	      console.log('set_all_documents', result);
+	    });
+      }
     }
-  }
-];*/
-    /*firstly you have to define new property in studio.js */
-    Studio.updateMany({}, {$set: { 'properties.speciality': ["Хастл"] }} ).then(function(result) {
-		console.log('set_all_documents', result);
-	});
   
   });
 
@@ -246,7 +239,7 @@ io.on('connection', function(socket) {
 
   socket.on('reload', (secret) => {
     if(isObject(secret) && secret) {
-      if(secret.secret === 'covid19') {
+      if(secret.secret === 'Covid19!') {
         reload();
         socket.emit('reload', {reload: true});
       }
@@ -308,8 +301,9 @@ io.on('connection', function(socket) {
       console.log('findStudio $geoWithin', query, category)
       if(category) {
       	
-        Studio.find({ 
-        	"properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') },
+        Studio.find({
+        	$or: [ {"properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }},
+            {"properties.altername" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }}],
         	[category] : "true",
         	"geometry" : {
             "$geoWithin": {
@@ -322,7 +316,8 @@ io.on('connection', function(socket) {
         
       } else {
         Studio.find({
-          "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') },
+          $or: [{"properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }},
+          {"properties.altername" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }}],
           "geometry" : {
           "$geoWithin": {
             "$box": query.box

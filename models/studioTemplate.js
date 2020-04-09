@@ -7,6 +7,7 @@ function getStudioTemplate() {
       },
       "properties": {
         "name": "",
+        "altername":"",
         "address":"",
         "classes":{},
         "speciality":[]
