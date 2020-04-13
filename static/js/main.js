@@ -91,15 +91,21 @@ this.dancemap.initMap = (function(){
     _getLocation: function(ev) {
       var options = {
         enableHighAccuracy: true,
-        timeout: 5000,
+        //timeout: 5000,
         maximumAge: 0
        };
-       
-      navigator.geolocation.getCurrentPosition((pos)=> {
+
+
+     //map.locate({setView: true})
+     /*const id = navigator.geolocation.watchPosition(pos => {
+       console.log(pos)
+     })*/
+
+      navigator.geolocation.getCurrentPosition(pos => {
         let lat = pos.coords.latitude;
         let lng = pos.coords.longitude;
 
-        let marker = L.marker([lat, lng]).bindPopup('Your are here :)');
+        let marker = L.marker([lat, lng]).bindTooltip( (layer) => 'Ты здесь!', {permanent: false, opacity: 0.75});
 
         map.flyTo([lat, lng], map.getZoom())
         map.addLayer(marker);
@@ -125,8 +131,8 @@ this.dancemap.initMap = (function(){
   map.on("autopanstart", function(e) {
     console.log("autopanstart")
   })
-/*
-    map.locate({setView: true, watch: true}) 
+
+    /*map.locate({watch: true}) 
         .on('locationfound', function(e){
             var marker = L.marker([e.latitude, e.longitude]).bindPopup('Your are here :)');
             var circle = L.circle([e.latitude, e.longitude], e.accuracy/4, {
@@ -141,8 +147,8 @@ this.dancemap.initMap = (function(){
        .on('locationerror', function(e){
             console.log(e);
             alert("Location access denied.");
-        });  
-*/
+        });  */
+
   self.dancemap.geojson = L.geoJSON(null, {
     onEachFeature: onEachFeature,
     pointToLayer: pointToLayer

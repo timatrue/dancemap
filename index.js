@@ -26,10 +26,12 @@ const portHTTP = 8080;
 const portHTTPS = 8443;
 const port = isWin ? portHTTP : portHTTPS;
 
-
+app.set('view engine', 'ejs');
 app.use(express.json({ extended: false }));
-app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
+app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
 app.use('/api', require('./routes/api'));
+app.use('/studios', require('./routes/studios'));
+//app.use('/studios', require('./routes/api'));
 
 //Mongo connect
 /*const client = new MongoClient(uri, { useNewUrlParser: true });

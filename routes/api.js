@@ -17,6 +17,19 @@ router.get('/mongo', function(req, res) {
 
 })
 
+router.get('/studios/:id', function(req, res) {
+    console.log('GET /studio', req.params);  
+    if(req.params.id) {
+      const id = req.params.id
+	  Studio.find({"_id": id}).then(function(studio) { 
+	    console.log('GET /studio',studio);      
+        //res.sendFile('/mongo.html', {root: __dirname })
+        res.send(studio);
+	  });
+
+    }
+})
+
 router.post('/mongo', function(req, res) {
 	/*var studio = new Studio(req.body);
 	studio.save();*/

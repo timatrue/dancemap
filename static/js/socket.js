@@ -17,16 +17,20 @@ function getStudios(fn) {
 }
 
 function getClusters(e) {
-  let map = dancemap.initMap.getMap();
-  let bounds = map.getBounds();
-  let zoom = map.getZoom();
-  // ([westLng, southLat, eastLng, northLat])
-  let box = {
-    bounds: [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()],
-    zoom: zoom,
-    class: self.dancemap.ui.class
-  } 
-  socket.emit('get_clusters', box);
+
+
+    let map = dancemap.initMap.getMap();
+    let bounds = map.getBounds();
+    let zoom = map.getZoom();
+    // ([westLng, southLat, eastLng, northLat])
+    let box = {
+      bounds: [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()],
+      zoom: zoom,
+      class: self.dancemap.ui.class
+    } 
+    socket.emit('get_clusters', box);
+  
+  
 }
 
 function getZoomedClusters(box) {
@@ -64,6 +68,14 @@ function findStudio(studio) {
   let query = {studio, category, center, radius, type, box};
   socket.emit('find_studio', query);
 }
+
+function isStudioIdValid(studio) {
+  socket.emit('check_id', id);
+}
+
+socket.on('find_studio', function (validity) {
+  console.log('check_id', validity);
+});
 
 socket.on('find_studio', function (studio) {
   console.log('find_studio', studio);
@@ -113,6 +125,7 @@ function reload(secret) {
     getClusterChildren: getClusterChildren,
     getClusterLeaves: getClusterLeaves,
     findStudio: findStudio,
+    isStudioIdValid,
     reload: reload
 
   }

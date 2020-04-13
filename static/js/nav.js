@@ -13,6 +13,7 @@ this.dancemap.nav = (function(){
   }
 
   function searchSetup() {
+    setURLID();
     onSearch();
     onClear();
   }
@@ -41,12 +42,21 @@ this.dancemap.nav = (function(){
      array.length ?  prompt.style.visibility = 'hidden' : prompt.style.visibility = 'visible'; 
   }
 
+  function setURLID () {
+    const path = window.location.pathname.split('/');
+    if(path.length) {
+      const id = path[path.length - 1]
+      dancemap.nav.urlId = id ? id : null;
+    }
+  }
+
 
   return {
     openNav : openNav,
     closeNav : closeNav,
     searchSetup: searchSetup,
-    togglePrompt: togglePrompt
+    togglePrompt: togglePrompt,
+    setURLID: setURLID
   }
 
 })();
