@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Школа танцев <%= title %></title>
+
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <meta name="Description" content="Студии и школы танцев, танцевальные события и вечеринки на онлайн карте Dancemap.online"/>
@@ -78,7 +79,9 @@
 
     </header>
     
-    <div class="search-prompt" id="search-prompt"><button>В этой части карты ничего не нашел</button></div>
+    <div class="search-prompt" id="search-prompt" data-res=<%= studio %>>
+      <button>В этой части карты ничего не нашел</button>
+    </div>
   </div>
 
 
@@ -89,7 +92,8 @@
   <script  src="/js/socket.js"></script>
   <script  src="/js/main.js"></script>
   <script>
-
+  
+  this.dancemap.initMap.openByURL();
   this.dancemap.socket.getClusters();
   this.dancemap.nav.searchSetup();
 

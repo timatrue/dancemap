@@ -132,22 +132,22 @@ this.dancemap.initMap = (function(){
     console.log("autopanstart")
   })
 
-    /*map.locate({watch: true}) 
-        .on('locationfound', function(e){
-            var marker = L.marker([e.latitude, e.longitude]).bindPopup('Your are here :)');
-            var circle = L.circle([e.latitude, e.longitude], e.accuracy/4, {
-                weight: 1,
-                color: 'blue',
-                fillColor: '#cacaca',
-                fillOpacity: 0.2
-            });
-            map.addLayer(marker);
-            map.addLayer(circle);
-        })
-       .on('locationerror', function(e){
-            console.log(e);
-            alert("Location access denied.");
-        });  */
+  /*map.locate({watch: true}) 
+      .on('locationfound', function(e){
+          var marker = L.marker([e.latitude, e.longitude]).bindPopup('Your are here :)');
+          var circle = L.circle([e.latitude, e.longitude], e.accuracy/4, {
+              weight: 1,
+              color: 'blue',
+              fillColor: '#cacaca',
+              fillOpacity: 0.2
+          });
+          map.addLayer(marker);
+          map.addLayer(circle);
+      })
+     .on('locationerror', function(e){
+          console.log(e);
+          alert("Location access denied.");
+      });  */
 
   self.dancemap.geojson = L.geoJSON(null, {
     onEachFeature: onEachFeature,
@@ -157,6 +157,41 @@ this.dancemap.initMap = (function(){
   function moveEnd() {
     const input = document.querySelector('input[type="search"]');
     input.value ? dancemap.socket.findStudio(input.value) : self.dancemap.socket.getClusters();
+  }
+  
+  function openByURL() {
+    let studio = parseEncodedStudio();
+    if(studio) {
+      addStudioToMap(studio);  
+    }
+  }
+
+  function parseEncodedStudio() {
+    const dataContainer = document.getElementById("search-prompt");
+    let json, studio;
+    if(dataContainer.dataset.res) {
+      json = decodeURIComponent(dataContainer.dataset.res);
+      studio = JSON.parse(json);
+    } 
+    return studio ? studio : null;
+  } 
+  
+  function addStudioToMap(studio) {
+    let id, ll;
+    id = studio.properties._id;
+    ll = studio.geometry.coordinates;
+    self.dancemap.geojson.addData(addPopupContent([studio]));
+    map.setView([ll[1],ll[0]]);
+    openPopupByID(id);  
+  }
+
+  function openPopupByID(id) {
+    self.dancemap.geojson.eachLayer(function(layer){
+       if(id === layer.feature.properties._id) {
+        layer.openPopup();
+        return;
+      }
+    });
   }
 
   function plotStudios(studios) {
@@ -255,9 +290,14 @@ this.dancemap.initMap = (function(){
     self.dancemap.geojson.eachLayer((layer) => {
       if(!layer.isPopupOpen()) {
         self.dancemap.geojson.removeLayer(layer);
-      } 
+      }
     })
     self.dancemap.geojson.addData(addPopupContent(data));
+  }
+  
+  function isMarkerInSearch(marker) {
+    
+    return;
   }
 
   function checkClass(layer) {
@@ -301,7 +341,8 @@ this.dancemap.initMap = (function(){
     plotStudios : plotStudios,
     getMap: getMap,
     addClusters: addClusters,
-    flyToClusters: flyToClusters
+    flyToClusters: flyToClusters,
+    openByURL: openByURL
   }
 
 })();

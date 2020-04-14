@@ -11,8 +11,11 @@ router.get('/:id', function(req, res) {
       const id = req.params.id
 
 	  Studio.find({"_id": id}).then(function(studio) { 
-	    console.log('GET /studio',studio); 
-        res.render('../static/views/index',{title: studio[0].properties.name}) ;
+	    console.log('GET /studio', studio); 
+        res.render('../static/views/index',{
+        	title: studio[0].properties.name,
+        	studio: encodeURIComponent(JSON.stringify(studio[0]))
+        });
 
         //res.sendFile(path.join(__dirname, '../static', 'index.html'));
         //res.send(studio);
