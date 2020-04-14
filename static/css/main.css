@@ -24,7 +24,7 @@ header {
 }
 
 header .container-select__pseudo {
- padding: 10px
+  padding: 10px
 }
 
 select {
@@ -38,14 +38,23 @@ select {
     padding: 4px 10px 4px 10px;
 }
 
-#logo {
+#container-logo {
+  padding: 4px 17px 0px 4px;
+  margin-left: auto;
+}
+
+
+#container-logo span {
+  color: #D91A3D;
+  font-size: 20px;
   display: inline-block;
 }
 	
-#logo div {
-  margin: 0;
-  color: #f2f2f2;
+#container-logo span:nth-child(2) {
+  color: #034AA6;
 }
+
+
 	
 .nav {
   display: inline-block;  
@@ -180,9 +189,13 @@ input::-webkit-input-placeholder {
 }
 @media only screen and (min-width: 480px) {
   input[type=search] {min-width: 55vw;}
+
 }
 @media only screen and (min-width: 600px) {
   input[type=search] {min-width: 45vw;}
+}
+@media only screen and (max-width: 700px) {
+  #container-logo{display: none;}
 }
 @media only screen and (min-width: 900px) {
   input[type=search] {min-width: 30vw; }
