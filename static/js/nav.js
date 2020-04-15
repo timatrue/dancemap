@@ -20,17 +20,28 @@ this.dancemap.nav = (function(){
   
   function onSearch() {
     const input = document.querySelector('input[type="search"]');
-    input.addEventListener('search', () => {
-      dancemap.socket.findStudio(input.value);
+    input.addEventListener('search', (e) => {
+      //dancemap.socket.findStudio(input.value);
       console.log("The term searched for was " + input.value);
     })
+
+    input.addEventListener("keyup", function(event) {
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        dancemap.socket.findStudio(input.value);
+        console.log("The term searched for was " + input.value);
+      }
+    });
   }
 
   function onClear() {
     const btnClear = document.querySelector('#btn-clear');
     const input = document.querySelector('input[type="search"]');
 
-    btnClear.addEventListener('click', () => {
+    btnClear.addEventListener('click', (e) => {
       input.value = '';
       dancemap.socket.getClusters()
       console.log("The input cleared: " + input.value);

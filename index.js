@@ -31,15 +31,6 @@ app.use(express.json({ extended: false }));
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
 app.use('/api', require('./routes/api'));
 app.use('/studios', require('./routes/studios'));
-//app.use('/studios', require('./routes/api'));
-
-//Mongo connect
-/*const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});*/
 
 //Mongoose connect
 ;(async () => {
@@ -50,9 +41,10 @@ client.connect(err => {
 
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
 app.get('/', function (req, res) {
-   //res.send('dancemap here');
-   console.log('get /');
-   res.sendFile('static/index.html', {root: __dirname })
+    //res.send('dancemap here');
+    //res.sendFile('static/index.html', {root: __dirname })
+    res.render('../static/views/index',{title:null,classes:null,studio:null});
+    console.log('get /');
 })
 
 app.get('/add', function (req, res) {

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    
-    <%- include('./partials/seotitle', title); -%>
+    <title>1Студии и школы танцев, танцевальные события и вечеринки на онлайн карте Dancemap.online</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
+    <meta name="Description" content="Студии и школы танцев, танцевальные события и вечеринки на онлайн карте Dancemap.online"/>
     <meta name="yandex-verification" content="e73d49b4298f11ea" />
+  
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
     <!--<script src="https://kit.fontawesome.com/3d2fe1a67d.js" crossorigin="anonymous"></script>-->
@@ -51,7 +52,35 @@
   
   <body>
 
-  <%- include('./partials/header', studio); -%>
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="dancemap.nav.closeNav()">&times;</a>
+    <a class="side-nav__link" href="/add.html">Добавить школу танцев на карту</a>
+  </div>
+  <div class="container-header__nav"> 
+    <header class="">
+      <div class="nav">   
+        <span class="burger-menu" onclick="dancemap.nav.openNav()">&#9776;</span>
+      </div>
+      <div class="nav container-select__pseudo">
+        <select class="form-control" id="class-selector">
+          <option value="all">Все студии</option>
+          <option value="hustle">Хастл</option>
+          <option value="zouk">Зук</option>
+          <option value="wcs">WCS</option>
+          <option value="bachata">Бачата</option>
+          <!--<option value="salsa">Сальса</option>-->
+        </select>
+      </div>
+      <div class="nav container-input__pseudo">
+        <input type="search" placeholder="Название студии">
+        <input type="button" value="" class="btn-clear" id="btn-clear"/>
+      </div>
+      <a class="nav" id="container-logo" href="/" title="Танцевальная карта dancemap">
+        <span>dance</span><span>map</span>
+      </a>
+    </header>
+    <div class="search-prompt" id="search-prompt"><button>В этой части карты ничего не нашел</button></div>
+  </div>
 
 
   <div id="map-box"></div>
@@ -61,8 +90,7 @@
   <script  src="/js/socket.js"></script>
   <script  src="/js/main.js"></script>
   <script>
-  
-  this.dancemap.initMap.openByURL();
+
   this.dancemap.socket.getClusters();
   this.dancemap.nav.searchSetup();
 
