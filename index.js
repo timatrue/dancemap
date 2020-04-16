@@ -20,6 +20,7 @@ const Studio = require('./models/studio');
 const studioTemplate = require('./models/studioTemplate');
 const Supercluster = require('supercluster');
 
+
 const mongoose = require('mongoose');
 //Ports
 const portHTTP = 8080;
@@ -184,8 +185,6 @@ io.on('connection', function(socket) {
 
     console.log('get_clusters', box);
     const type = box.class;
-
-    
 
       if (box.getClusterExpansionZoom) {
         try {

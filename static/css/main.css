@@ -143,7 +143,11 @@ input[type=search]:focus {
 .btn-clear:focus { 
   outline:0 !important;
 }
-
+.btn-back {
+  font-size: 20px;
+  color: #D91A3D;
+  margin-left: 17px;
+}
 /* placeholder */
 input:-moz-placeholder {
   color: #999;
