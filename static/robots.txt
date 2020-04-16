@@ -1,0 +1,7 @@
+User-agent: *
+Host: https://dancemap.online
+Sitemap: https://dancemap.online/sitemap.xml
+
+# Yandex-only
+Clean-param: utm_medium&utm_campaign&utm_source&utm_content&utm_term
+
