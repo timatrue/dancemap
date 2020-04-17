@@ -60,6 +60,19 @@ this.dancemap.nav = (function(){
       dancemap.nav.urlId = id ? id : null;
     }
   }
+  
+  function getMainCatURL () {
+    const path = window.location.pathname.split('/');
+    console.log(path);
+    return path[1] ? "" : "/studios/"; 
+  }
+
+  function changeLocalURL(params) {
+    document.title = params.title;
+    let mainCat = getMainCatURL();
+    let url = mainCat ? mainCat + params.url : params.url;
+    history.pushState({}, params.title , url);
+  }
 
 
   return {
@@ -67,7 +80,8 @@ this.dancemap.nav = (function(){
     closeNav : closeNav,
     searchSetup: searchSetup,
     togglePrompt: togglePrompt,
-    setURLID: setURLID
+    setURLID: setURLID,
+    changeLocalURL: changeLocalURL
   }
 
 })();

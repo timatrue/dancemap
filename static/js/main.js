@@ -122,7 +122,11 @@ this.dancemap.initMap = (function(){
   map.on("zoomstart", function (e) { classSelector.disabled = true; });
   map.on("zoomend", function (e) { classSelector.disabled = false; });
   map.on("popupopen", function(e) {
-    
+    let marker = e.popup._source.feature
+    let url = marker._id
+    let title = marker.properties.name
+    dancemap.nav.changeLocalURL({url, title})
+
     console.log("popupopen", e);
   })
   map.on("popupclose", function (e) {
@@ -231,7 +235,7 @@ this.dancemap.initMap = (function(){
       self.dancemap.socket.getZoomedClusters(clusterData);
       console.log('click cluster', clusterData);
     }
-    console.log('e.layer.feature.properties', e.layer.feature.properties)
+    console.log('geojson.on click -> e.layer.feature.properties ', e.layer.feature.properties)
   }); 
 
   
