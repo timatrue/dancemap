@@ -1,12 +1,13 @@
 //win32 is development
-const isWin = process.platform === 'win32';
+const isWin = process.platform === 'win32'
 //Server
-const http = require('http');
-const https = require('https');
-const express = require('express');
-const app = express();
-const bodyParser = require("body-parser");
-const fs = require('fs');
+const http = require('http')
+const https = require('https')
+const express = require('express')
+const app = express()
+const favicon = require('serve-favicon')
+const bodyParser = require("body-parser")
+const fs = require('fs')
 
 /**/
 const Telegraf = require('telegraf')
@@ -16,22 +17,23 @@ bot.launch()
 //Mongo cloud
 //const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://dancemap:Yy4UqOE9bihpePZc@cluster0-kkgwk.gcp.mongodb.net/dancemap?retryWrites=true&w=majority";
-const Studio = require('./models/studio');
-const studioTemplate = require('./models/studioTemplate');
-const Supercluster = require('supercluster');
+const Studio = require('./models/studio')
+const studioTemplate = require('./models/studioTemplate')
+const Supercluster = require('supercluster')
 
 
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 //Ports
-const portHTTP = 8080;
-const portHTTPS = 8443;
-const port = isWin ? portHTTP : portHTTPS;
+const portHTTP = 8080
+const portHTTPS = 8443
+const port = isWin ? portHTTP : portHTTPS
 
 app.set('view engine', 'ejs');
+app.use(favicon(__dirname + '/static/favicon.ico'))
 app.use(express.json({ extended: false }));
-app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
-app.use('/api', require('./routes/api'));
-app.use('/studios', require('./routes/studios'));
+app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
+app.use('/api', require('./routes/api'))
+app.use('/studios', require('./routes/studios'))
 
 //Mongoose connect
 ;(async () => {
