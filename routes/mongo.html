@@ -31,7 +31,8 @@
       <input type="text" name="lat" id="lat"  minlength="1" maxlength="10" required>
       <label for="lon">Longitude:</label>
       <input type="text" name="lon" id="lon"  minlength="1" maxlength="10" required>
-      
+      <label for="img">Image:</label>
+      <input type="file" id="img" name="img" accept="image/png, image/jpeg">
       <div>
         <input type="checkbox" name="hustle" id="hustle">
         <label for="hustle">hustle</label>
@@ -49,7 +50,7 @@
         <label for="bachata">bachata</label>
       </div>
       
-      <label for="speciality">Speciality</label>
+      <label for="speciality">Speciality: (Хастл,etc without spaces)</label>
       <input type="text" name="speciality" id="speciality"  required>
 
       <input type="submit" name="Submit">
@@ -79,8 +80,13 @@
     const data = Array.from(formData.entries()).reduce((memo, pair) => ({
       ...memo,
       [pair[0]]:pair[1],
-
     }), {})
+    
+    getImg64(data.img).then( img64 => {
+      //console.log(img64)
+      data.img64 = img64
+      console.log(img64.split(",")[1])
+    });
     
     if(!dancemap.util.isObjEmpty(data)) {
        console.log(data);
@@ -90,6 +96,19 @@
     else console.error('formStudio data is empty');
     
   })
+
+
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+ 
+  async function getImg64(img) {
+    return await toBase64(img);   
+  }
+
 
   /*document.querySelector("#formSetAllDocuments").addEventListener("submit", function(e) {
     e.preventDefault();

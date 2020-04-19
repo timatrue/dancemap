@@ -46,7 +46,7 @@ app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
 app.get('/', function (req, res) {
     //res.send('dancemap here');
     //res.sendFile('static/index.html', {root: __dirname })
-    res.render('../static/views/index',{title:null,classes:null,studio:null});
+    res.render('../static/views/index',{title:null,classes:null,studio:null,marker:null});
     console.log('get /');
 })
 
@@ -167,11 +167,17 @@ io.on('connection', function(socket) {
     studio.properties.address = msg.address;
     studio.properties.city = msg.city;
     studio.properties.vk = msg.vk;
+    studio.properties.altername = msg.altername;
     if(msg.hustle) studio.properties.classes.hustle = true;
     if(msg.zouk) studio.properties.classes.zouk = true;
     if(msg.wcs) studio.properties.classes.wcs = true;
     if(msg.bachata) studio.properties.classes.bachata = true;
     if(msg.salsa) studio.properties.classes.salsa = true;
+    if(msg.img64) {
+    	console.log(studio.properties)
+    	studio.properties.seoimage.data = new Buffer(msg.img64.split(",")[1],"base64"),
+    	studio.properties.seoimage.contentType = 'image/png'
+    }
     
     studio.properties.speciality = msg.speciality.split(',');
     

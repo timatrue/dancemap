@@ -15,7 +15,10 @@
    version="1.1"
    id="svg970"
    sodipodi:docname="logo-solid.svg"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:export-filename="E:\js\yacloud\app\dancemap\static\images\logo.png"
+   inkscape:export-xdpi="98.654488"
+   inkscape:export-ydpi="98.654488">
   <defs
      id="defs964" />
   <sodipodi:namedview
@@ -35,9 +38,9 @@
      inkscape:guide-bbox="true"
      inkscape:window-width="1920"
      inkscape:window-height="1138"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1">
+     inkscape:window-x="-32000"
+     inkscape:window-y="-32000"
+     inkscape:window-maximized="0">
     <sodipodi:guide
        position="99.023358,175.99699"
        orientation="1,0"

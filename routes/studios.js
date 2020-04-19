@@ -18,6 +18,7 @@ router.get('/:id', function(req, res) {
           res.render('../static/views/index',{
         	title: studio[0].properties.name,
         	classes: studio[0].properties.speciality.join(', '),
+        	marker: studio[0],
         	studio: encodeURIComponent(JSON.stringify(studio[0]))
         });
 

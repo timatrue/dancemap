@@ -48,7 +48,8 @@ const StudioScheme = new Schema({
     	bachata: {type: Boolean},
     	salsa: {type: Boolean}
     	
-    }
+    },
+    seoimage: { data: Buffer, contentType: String }
   },/*
   city: {
   	type: String,

@@ -1,0 +1,73 @@
+<% if (marker) { -%>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "DanceEvent",
+  "name": "Школа танцев <%= marker.properties.name %>",
+  "description": "Занятия по: <%= marker.properties.speciality.join(', ') %>",
+  "eventSchedule": [
+    {
+      "@type": "Schedule",
+      "repeatFrequency": "P1M",
+      "byDay": [
+        "http://schema.org/Monday",
+        "http://schema.org/Tuesday",
+        "http://schema.org/Wednesday",
+        "http://schema.org/Thursday",
+        "http://schema.org/Friday"
+      ],
+      "startTime": "18:00",
+      "endTime": "22:00"
+    }
+  ],
+  "location": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "<%= marker.properties.address %>",
+      "addressLocality": "<%= marker.properties.city %>",
+      "addressCountry": "Россия"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "<%= marker.geometry.coordinates[1] %>",
+      "longitude": "<%= marker.geometry.coordinates[0] %>"
+    }
+  },
+  "additionalType": "https://schema.org/LeisureTimeActivity"
+},
+{
+  "@context": "http://schema.org",
+  "@type": "PhysicalActivity",
+  "category": {
+    "@type":"PhysicalActivityCategory",
+    "supersededBy": ["https://schema.org/LeisureTimeActivity"]
+  }
+},
+{
+  "@context": "http://www.schema.org",
+  "@type": "SportsActivityLocation",
+  "name": "<%= marker.properties.name %>",
+  "url": "<%= marker.properties.vk %>",
+  "priceRange": "$",
+  "description": "Школа танцев: <%= marker.properties.speciality.join(', ') %>",
+  "address": {
+     "@type": "PostalAddress",
+     "streetAddress": "<%= marker.properties.address %>",
+     "addressLocality": "<%= marker.properties.city %>",
+     "addressCountry": "Россия"
+  },
+  "geo": {
+     "@type": "GeoCoordinates",
+     "latitude": "<%= marker.geometry.coordinates[1] %>",
+     "longitude": "<%= marker.geometry.coordinates[0] %>"
+  },
+   "openingHours": "Mo 19:00-23:00 Tu 19:00-23:00 We 19:00-23:00 Th 19:00-23:00 Fr 19:00-23:00"
+}
+
+</script>
+
+<% } -%>
+
+
+
