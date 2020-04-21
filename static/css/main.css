@@ -294,11 +294,30 @@ input::-webkit-input-placeholder {
   background:#bbb;
 }
 
-.info-container {
+.container-info__address {
   display: inline-flex;
   justify-content: center;
   margin-top: 5px;
 }
+.container-info__url {
+  
+}
+.container-info__url button {
+  border: 0;
+  padding: 0;
+  background: #fff;
+  font-style: italic;
+  color:#1261A6;
+  border-bottom:1px dashed #1261A6;
+  cursor: pointer;
+}
+
+.container-info__url button:hover {
+  color:#034AA6;
+  border-bottom:1px dashed #034AA6;
+}
+
+
 
 .container-icon {
   display: inline-block;

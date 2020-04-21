@@ -15,7 +15,7 @@ this.dancemap.initMap = (function(){
     self.dancemap.initMap.getMap().closePopup();
     //self.dancemap.socket.getClusters();
     moveEnd();
-    console.log(this.value)
+    console.log(this.value);
 
   }, false);
   /**/
@@ -161,12 +161,16 @@ this.dancemap.initMap = (function(){
   function moveEnd() {
     const input = document.querySelector('input[type="search"]');
     input.value ? dancemap.socket.findStudio(input.value) : self.dancemap.socket.getClusters();
+    dancemap.nav.addLatLngToURL(map.getCenter());
   }
   
   function openByURL() {
     let studio = parseEncodedStudio();
     if(studio) {
       addStudioToMap(studio);  
+    } else {
+      let ll = dancemap.nav.getLatLngURL();
+      if(ll) map.setView([ll[0],ll[1]]);
     }
   }
 
@@ -325,15 +329,16 @@ this.dancemap.initMap = (function(){
           ${studio.properties.name ?  `<div class='studio-title'> ${studio.properties.name} </div>` : ''} 
           <hr>
 
-          <div class='speciality-container'>
+          <div class='container-info__speciality'>
             <span>Направления: </span>${studio.properties.speciality ?  `${studio.properties.speciality.join(', ')}` : ''}
           </div>
         
-          <div class='info-container'>
+          <div class='container-info__address'>
             ${self.dancemap.icons.marker} ${studio.properties.address ? `<div> ${studio.properties.city}, ${studio.properties.address} </div>` : ''} 
           </div>
           
           ${studio.properties.vk ? `<div class=''><a href='${studio.properties.vk}' target="_blank"> ${self.dancemap.icons.vk} </a></div>` : ''} 
+          <div class="container-info__url"><button onclick="dancemap.nav.copyPopupURL()">копировать ссылку</button></div>
         `
 
       }

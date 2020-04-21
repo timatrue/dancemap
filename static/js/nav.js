@@ -1,6 +1,3 @@
-//59.921104 | Longitude: 30.359772
-
-
 this.dancemap.nav = (function(){
   let self = this;
 
@@ -74,6 +71,32 @@ this.dancemap.nav = (function(){
     history.pushState({}, params.title , url);
   }
 
+  function addLatLngToURL(center) {
+    let pageUrl = '?ll=' + center.lat + ',' + center.lng;
+    window.history.pushState('', '', pageUrl);
+  }
+
+  function getLatLngURL () {
+    let searchParams = new URLSearchParams(window.location.search);
+    let ll;
+    if(searchParams.get('ll')) {
+      ll = searchParams.get('ll').split(',').map(el => +el);
+    }
+
+    console.log('ll', ll);
+    return ll;
+  }
+
+  function copyPopupURL() {
+    let url = window.location.href;
+    let dummyInput = document.createElement('input');
+    dummyInput.setAttribute('type', 'text');
+    dummyInput.value = url;
+    document.body.appendChild(dummyInput);
+    dummyInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummyInput);
+  }
 
   return {
     openNav : openNav,
@@ -81,7 +104,10 @@ this.dancemap.nav = (function(){
     searchSetup: searchSetup,
     togglePrompt: togglePrompt,
     setURLID: setURLID,
-    changeLocalURL: changeLocalURL
+    changeLocalURL: changeLocalURL,
+    addLatLngToURL: addLatLngToURL,
+    getLatLngURL: getLatLngURL,
+    copyPopupURL: copyPopupURL
   }
 
 })();
