@@ -338,7 +338,7 @@ this.dancemap.initMap = (function(){
           </div>
           
           ${studio.properties.vk ? `<div class=''><a href='${studio.properties.vk}' target="_blank"> ${self.dancemap.icons.vk} </a></div>` : ''} 
-          <div class="container-info__url"><button onclick="dancemap.nav.copyPopupURL()">копировать ссылку</button></div>
+          <div class="container-info__url"><button onclick="dancemap.nav.copyPopupURL()">копировать ссылку </button></div>
         `
 
       }

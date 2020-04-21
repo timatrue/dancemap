@@ -310,6 +310,7 @@ input::-webkit-input-placeholder {
   color:#1261A6;
   border-bottom:1px dashed #1261A6;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .container-info__url button:hover {
@@ -317,6 +318,12 @@ input::-webkit-input-placeholder {
   border-bottom:1px dashed #034AA6;
 }
 
+.container-info__url button:active {
+  color:#034AA6;
+  border-bottom:1px dashed #034AA6;
+  background-color: #f1f1f1;
+  transform: scale(1.01)
+}
 
 
 .container-icon {
