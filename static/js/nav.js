@@ -29,6 +29,7 @@ this.dancemap.nav = (function(){
         event.preventDefault();
         // Trigger the button element with a click
         dancemap.socket.findStudio(input.value);
+        input.blur();
         console.log("The term searched for was " + input.value);
       }
     });
