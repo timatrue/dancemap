@@ -25,15 +25,16 @@
       <span>dance</span><span>map</span>
     </a>
   </header>
-  <% if (studio) { -%>
-    <div class="search-prompt" id="search-prompt" data-res=<%= studio %>>
-      <button>В этой части карты ничего не нашел</button>
-    </div>
-  <% } else { -%>
-    <div class="search-prompt" id="search-prompt" >
-      <button>В этой части карты ничего не нашел</button>
-    </div>	
-  <% } -%>
-
+  <noindex>
+    <% if (studio) { -%>
+      <div class="search-prompt" id="search-prompt" data-res=<%= studio %>>
+        <button>В этой части карты ничего не нашел</button>
+      </div>
+    <% } else { -%>
+      <div class="search-prompt" id="search-prompt" >
+        <button>В этой части карты ничего не нашел</button>
+      </div>	
+    <% } -%>
+  </noindex>
 
 </div>
