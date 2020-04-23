@@ -47,7 +47,13 @@ app.get('/', function (req, res) {
     //res.send('dancemap here');
     //res.sendFile('static/index.html', {root: __dirname })
     res.render('../static/views/index',{title:null,classes:null,studio:null,marker:null});
-    console.log('get /');
+    //console.log('get /');
+})
+
+app.get('/testmenu', function (req, res) {
+   //res.send('dancemap here');
+   console.log('get /testmenu');
+   res.render('../static/views/indextestmenu',{title:null,classes:null,studio:null,marker:null});
 })
 
 app.get('/add', function (req, res) {

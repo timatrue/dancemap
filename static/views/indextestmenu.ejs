@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <%- include('./partials/seotitle', title); -%>
+    <link rel="icon" href="https://dancemap.online/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="yandex-verification" content="e73d49b4298f11ea" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js'></script>
+    <!--<script src="https://kit.fontawesome.com/3d2fe1a67d.js" crossorigin="anonymous"></script>-->
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
+    <!--Leaflet-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="crossorigin=""/>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="crossorigin=""></script>
+    <link href='https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css' rel='stylesheet' />
+    <link href='https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css' rel='stylesheet' />
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <!-- Dancemap-->
+    <script src="/socket.io/socket.io.js"></script>
+    <link href='/css/maintest.css' rel='stylesheet' />
+  
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+       m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+       ym(55886317, "init", {
+         clickmap:true,
+         trackLinks:true,
+         accurateTrackBounce:true
+       });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/55886317" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114689083-3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-114689083-3');
+    </script>
+    <%- include('./partials/json-ld', marker); -%>
+  </head>
+  
+  <body>
+ 
+    <%- include('./partials/headertest', studio); -%>
+
+
+    <div id="map-box"></div>
+  
+    <script  src="/js/dancemap.js"></script>
+    <script  src="/js/nav.js"></script>
+    <script  src="/js/socket.js"></script>
+    <script  src="/js/main.js"></script>
+    <script>
+  
+      this.dancemap.initMap.openByURL();
+      this.dancemap.socket.getClusters();
+      this.dancemap.nav.searchSetup();
+
+    </script>
+
+    <%- include('./partials/footertest', marker); -%>
+  </body>
+</html>
