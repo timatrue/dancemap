@@ -277,13 +277,14 @@ input::-webkit-input-placeholder {
 }
 
 .container-filters input[type=date] {
+  -webkit-appearance: none;
   background-size: 19px;
   border: none;
   background-color: #fff;
   padding: 1px 0px;
   font:normal 16px/24px 'Roboto', Helvetica, Arial,Tahoma,sans-serif;
   cursor: pointer;
-  width: 90px;
+  width: 100px;
 }
 
 [type="date"]::-webkit-inner-spin-button {
@@ -326,6 +327,11 @@ input::-webkit-input-placeholder {
   transform: scale(1);
   margin: 2px;
 }
+#date-icon {
+  width: 20px;
+  height: 20px;
+  margin: 2px;
+}
 #date-left {
   background: url(/images/chevron-left-solid.svg) center / contain no-repeat;
 }
@@ -351,7 +357,7 @@ input::-webkit-input-placeholder {
 
 @media screen and (max-width: 480px) {
   
-  .container-filters input[type=date] {width: 90px;}  
+  .container-filters input[type=date] {width: 100px;}  
   .container-filters .filter-dance {
     padding: 0px 5px;
     background-color: white;
