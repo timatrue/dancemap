@@ -297,6 +297,7 @@ input::-webkit-input-placeholder {
 [type="date"]::-webkit-inner-spin-button {
   display: none;
   -webkit-appearance: none;
+  
 }
 
 [type="date"]::-webkit-calendar-picker-indicator {
