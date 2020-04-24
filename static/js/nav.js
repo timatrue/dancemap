@@ -1,5 +1,12 @@
 this.dancemap.nav = (function(){
   let self = this;
+  
+  function setInputDate(date) {
+    let input = document.getElementById("datepicker");
+    if(input) {
+      input.value = new Date().toDateInputValue();
+    }
+  }
 
   function openNav() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -10,6 +17,7 @@ this.dancemap.nav = (function(){
   }
 
   function searchSetup() {
+    setInputDate();
     setURLID();
     onSearch();
     onClear();
@@ -100,6 +108,7 @@ this.dancemap.nav = (function(){
   }
 
   return {
+    setInputDate : setInputDate,
     openNav : openNav,
     closeNav : closeNav,
     searchSetup: searchSetup,

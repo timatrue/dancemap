@@ -161,7 +161,7 @@ input::-webkit-input-placeholder {
   background: url(../images/filter-solid.svg) no-repeat right;
   width:20px;
   background-color: white;
-  
+
   line-height: 1.3em;
 }
   header .container-select__pseudo {padding: 7px}
@@ -267,11 +267,11 @@ input::-webkit-input-placeholder {
   color:black;
   padding: 4px 10px 4px 10px;
   border: none;
-  box-sizing: border-box;
+  background-color: white;
 }
 
 
-.container-filters .filter-types select{
+.container-filters .filter-types select {
     cursor:pointer;
     display:inline-block;
     position:relative;
@@ -280,6 +280,7 @@ input::-webkit-input-placeholder {
     border:1px solid #ccc;
     border-radius: 5px;
     padding: 4px 10px 4px 10px;
+    background-color: white;
 }
 
 .container-filters input[type=date] {
@@ -292,7 +293,7 @@ input::-webkit-input-placeholder {
   box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
   font:normal 16px/24px 'Roboto', Helvetica, Arial,Tahoma,sans-serif;
   cursor: pointer;
-
+  width: 120px;
 }
 
 [type="date"]::-webkit-inner-spin-button {
@@ -323,7 +324,7 @@ input::-webkit-input-placeholder {
   .container-filters {padding: 5px 11px;}
   .container-filters .filter-types select{width:150px;}
   .container-filters input[type=date] { 
-    width: 110px;}   
+    width: 120px;}   
 }
 
 .search-prompt {
