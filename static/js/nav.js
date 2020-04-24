@@ -4,7 +4,7 @@ this.dancemap.nav = (function(){
   function setInputDate(date) {
     let input = document.getElementById("datepicker");
     if(input) {
-      input.value = new Date().toDateInputValue();
+      input.value = new Date().toISOString().split('T')[0];
     }
   }
 

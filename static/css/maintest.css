@@ -158,11 +158,12 @@ input::-webkit-input-placeholder {
   input[type=search] {min-width: 70vw;}
   #class-selector {
   -webkit-appearance: none; 
+  -moz-appearance : none;
   background: url(../images/filter-solid.svg) no-repeat right;
   width:20px;
   background-color: white;
-
   line-height: 1.3em;
+  text-indent: 5px;
 }
   header .container-select__pseudo {padding: 7px}
 }
@@ -295,10 +296,12 @@ input::-webkit-input-placeholder {
 
 [type="date"]::-webkit-inner-spin-button {
   display: none;
+  -webkit-appearance: none;
 }
 
 [type="date"]::-webkit-calendar-picker-indicator {
   display: none;
+  -webkit-appearance: none;
   opacity: 0;
   position: absolute;
   top: 0;
@@ -312,6 +315,7 @@ input::-webkit-input-placeholder {
 }
 [type="date"]::-webkit-clear-button { 
   display: none;
+  -webkit-appearance: none;
 }
 /* change color of symbol on hover */
 [type="date"]:hover:after {
