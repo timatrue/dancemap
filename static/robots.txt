@@ -2,6 +2,9 @@ User-agent: *
 Host: https://dancemap.online
 Sitemap: https://dancemap.online/sitemap.xml
 
+Disallow: /testmenu
+Disallow: /*ll=
+
 # Yandex-only
 Clean-param: utm_medium&utm_campaign&utm_source&utm_content&utm_term
 
