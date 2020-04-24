@@ -7,16 +7,6 @@
     <div class="nav">   
       <span class="burger-menu" onclick="dancemap.nav.openNav()">&#9776;</span>
     </div>
-    <div class="nav container-select__pseudo">
-      <select class="form-control" id="class-selector">
-        <option value="all">Все студии</option>
-        <option value="hustle">Хастл</option>
-        <option value="zouk">Зук</option>
-        <option value="wcs">WCS</option>
-        <option value="bachata">Бачата</option>
-        <!--<option value="salsa">Сальса</option>-->
-      </select>
-    </div>
     <div class="nav container-input__pseudo">
       <input type="search" placeholder="Название студии">
       <input type="button" value="" class="btn-clear" id="btn-clear"/>
@@ -28,13 +18,19 @@
   
   <div class='container-filters'>
     <div class="filter-dance">
-      <select>
-        <option value="0">Все студии:</option>
+      <select class="form-control" id="class-selector">
+        <option value="all">Все студии</option>
+        <option value="hustle">Хастл</option>
+        <option value="zouk">Зук</option>
+        <option value="wcs">WCS</option>
+        <option value="bachata">Бачата</option>
+        <!--<option value="salsa">Сальса</option>-->
       </select>
+
     </div>
     <div class="filter-types">
       <select>
-        <option value="0">Вечеринки</option>
+        <option value="0">Мастерклассы</option>
       </select>
     </div>
     <div class="filter-date">
