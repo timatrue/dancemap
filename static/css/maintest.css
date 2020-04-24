@@ -262,7 +262,7 @@ input::-webkit-input-placeholder {
   border: 1px solid #c4c4c4;
   border-radius: 5px;
   background-color: white;
-  display: flex;
+  display: inline-flex;
   align-items: center;
 }
 .container-filters select {
