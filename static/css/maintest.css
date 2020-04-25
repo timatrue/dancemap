@@ -277,7 +277,7 @@ input::-webkit-input-placeholder {
 }
 
 .container-filters input[type=date] {
-  -webkit-appearance: none;
+  /*-webkit-appearance: none;*/
   background-size: 19px;
   border: none;
   background-color: #fff;
