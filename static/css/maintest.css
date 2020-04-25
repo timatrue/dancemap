@@ -259,9 +259,10 @@ input::-webkit-input-placeholder {
 
 }
 .container-filters .filter-date span {
-  margin-left: -20px;
+  margin-left: 0px;
 }
-.container-filters .filter-date {
+.container-filters .filter-date, .filter-date__nav {
+  position: relative;
   border: 1px solid #c4c4c4;
   border-radius: 5px;
   background-color: white;
@@ -335,7 +336,7 @@ input::-webkit-input-placeholder {
   border-color: #FFF;
   opacity: 0.6;
   transform: scale(1);
-  margin: 2px;
+  margin: 2px 0px;
 }
 #date-icon {
   width: 20px;
