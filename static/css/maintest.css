@@ -245,7 +245,7 @@ input::-webkit-input-placeholder {
 /*TEST HEADER FOR STUDIOS AND EVENTS*/
 .container-filters {
   position: relative;
-  z-index: 9999;
+  z-index: 999;
   padding: 5px 43px;
   overflow-x: hidden;
   display: inline-flex;
@@ -257,6 +257,9 @@ input::-webkit-input-placeholder {
 
 .container-filters .filter-dance {
 
+}
+.container-filters .filter-date span {
+  margin-left: -20px;
 }
 .container-filters .filter-date {
   border: 1px solid #c4c4c4;
@@ -277,14 +280,21 @@ input::-webkit-input-placeholder {
 }
 
 .container-filters input[type=date] {
+  width: 100%;
   /*-webkit-appearance: none;*/
+  -webkit-appearance: textfield;
+  /* Safari/Chrome, other WebKit */
+  -webkit-box-sizing: border-box; 
+  /* Firefox, other Gecko */
+  -moz-box-sizing: border-box;    
+  box-sizing: border-box;
   background-size: 19px;
   border: none;
   background-color: #fff;
   padding: 1px 0px;
   font:normal 16px/24px 'Roboto', Helvetica, Arial,Tahoma,sans-serif;
   cursor: pointer;
-  width: 120px;
+  
 }
 
 [type="date"]::-webkit-inner-spin-button {
@@ -357,16 +367,15 @@ input::-webkit-input-placeholder {
 
 @media screen and (max-width: 480px) {
   
-  .container-filters input[type=date] {width: 120px;}  
+  .container-filters input[type=date] {}  
   .container-filters .filter-dance {
     padding: 0px 5px;
     background-color: white;
     border-radius: 5px;
     border: 1px solid #ccc;
   }
-  .container-filters .filter-dance select {
-    border: none;
-  }
+  .container-filters .filter-dance select {border: none;}
+  #date-icon { display: none;}
 
 }
 @media screen and (max-width: 600px) {
@@ -489,7 +498,9 @@ input::-webkit-input-placeholder {
 .studio-title {
   font-weight:bold;
 }
-
+.leaflet-popup-pane{
+  z-index: 9999;
+}
 /* Show popups on hover so hide the close link
 .leaflet-popup-close-button {
   display:none;
