@@ -1,11 +1,36 @@
 this.dancemap.nav = (function(){
   let self = this;
   
-  function setInputDate(date) {
-    let input = document.getElementById("datepicker");
+  function setInputDate(input) {
     if(input) {
-      input.value = new Date().toISOString().split('T')[0];
+      //input.value = new Date().toISOString().split('T')[0];
+      input.valueAsDate = new Date();
     }
+  }
+
+  function setInputDateListener(input) {
+    input.addEventListener('change',(e) => { 
+      let date = new Date(e.target.value);
+      console.log('datepicker', date);
+    })
+  }
+
+  function downDay(settings) {
+    settings.down.addEventListener('click',(e)=> {
+      let date = new Date(settings.datepicker.value);
+      date.setDate(date.getDate() - 1);
+      settings.datepicker.valueAsDate = date;
+      console.log('downDay', settings.datepicker.value);
+    }) 
+  }
+
+  function upDay(settings) {
+    settings.up.addEventListener('click',(e)=> {
+      let date = new Date(settings.datepicker.value);
+      date.setDate(date.getDate() + 1);
+      settings.datepicker.valueAsDate = date;
+      console.log('upDay',settings.datepicker.value);
+    }) 
   }
 
   function openNav() {
@@ -16,8 +41,16 @@ this.dancemap.nav = (function(){
     document.getElementById("mySidenav").style.width = "0";
   }
 
-  function searchSetup() {
-    setInputDate();
+  function navSetup(settings) {
+    if(settings.event) {
+      let input = settings.datepicker;
+
+      setInputDate(input);
+      setInputDateListener(input);
+      upDay(settings);
+      downDay(settings);
+    }
+
     setURLID();
     onSearch();
     onClear();
@@ -111,7 +144,7 @@ this.dancemap.nav = (function(){
     setInputDate : setInputDate,
     openNav : openNav,
     closeNav : closeNav,
-    searchSetup: searchSetup,
+    navSetup: navSetup,
     togglePrompt: togglePrompt,
     setURLID: setURLID,
     changeLocalURL: changeLocalURL,

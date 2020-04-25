@@ -282,7 +282,7 @@ input::-webkit-input-placeholder {
 .container-filters input[type=date] {
   width: 100%;
   /*-webkit-appearance: none;*/
-  -webkit-appearance: textfield;
+  /*-webkit-appearance: textfield;*/
   /* Safari/Chrome, other WebKit */
   -webkit-box-sizing: border-box; 
   /* Firefox, other Gecko */
@@ -303,7 +303,7 @@ input::-webkit-input-placeholder {
 }
 
 [type="date"]::-webkit-calendar-picker-indicator {
-  display: none;
+  /*display: none;*/
   -webkit-appearance: none;
   opacity: 0;
   position: absolute;

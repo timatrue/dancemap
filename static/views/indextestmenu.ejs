@@ -63,10 +63,15 @@
     <script  src="/js/socket.js"></script>
     <script  src="/js/main.js"></script>
     <script>
-  
+      const settings = {
+        event: true,
+        datepicker: document.querySelector('input[type="date"]'),
+        up: document.getElementById('date-right'),
+        down: document.getElementById('date-left')
+      }
       this.dancemap.initMap.openByURL();
       this.dancemap.socket.getClusters();
-      this.dancemap.nav.searchSetup();
+      this.dancemap.nav.navSetup(settings);
 
     </script>
 
