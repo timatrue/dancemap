@@ -329,11 +329,26 @@ this.dancemap.initMap = (function(){
           ${studio.properties.vk ? `<div class=''><a href='${studio.properties.vk}' target="_blank"> ${self.dancemap.icons.vk} </a></div>` : ''} 
           <div class="container-info__url"><button onclick="dancemap.nav.copyPopupURL()">копировать ссылку </button></div>
         `
-
       }
     })
     return studios;
   }
+  /*https://github.com/Leaflet/Leaflet/blob/master/src/layer/Popup.js
+   https://github.com/mapshakers/leaflet-control-window/blob/master/src/L.Control.Window.js
+   https://github.com/yafred/leaflet-responsive-popup/blob/master/leaflet.responsive.popup.js
+  */
+  L.MobilePopup = L.Popup.extend({
+    mobileTest: function() {
+      console.log('MobilePopup')
+    },
+    _initLayout: function () {
+      console.log('_initLayout', this)
+    }
+  })
+
+  L.mobilePopup = function () {
+    return new L.MobilePopup();
+  };
 
   return {
     plotStudios : plotStudios,

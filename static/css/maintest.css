@@ -213,7 +213,7 @@ input::-webkit-input-placeholder {
 }
 
 
-.sidenav .closebtn {
+.sidenav .btn-close {
   position: absolute;
   top: 0;
   right: 0px;
@@ -222,7 +222,7 @@ input::-webkit-input-placeholder {
   color: #F20505;
 }
 
-.sidenav .closebtn:hover {
+.sidenav .btn-close:hover {
   color: #D91A3D;
 }
 
@@ -242,7 +242,7 @@ input::-webkit-input-placeholder {
   .sidenav a {font-size: 18px;}
 }
 
-/*TEST HEADER FOR STUDIOS AND EVENTS*/
+/*TEST NAV HEADER FOR STUDIOS AND EVENTS*/
 .container-filters {
   position: relative;
   z-index: 999;
@@ -268,6 +268,10 @@ input::-webkit-input-placeholder {
   background-color: white;
   display: inline-flex;
   align-items: center;
+}
+
+.filter-date {
+  background-color: transparent;
 }
 .container-filters select {
   cursor:pointer;
@@ -365,7 +369,6 @@ input::-webkit-input-placeholder {
   background:#fff url(/images/calendar-regular.svg)  95% 50% no-repeat;
 }
 
-
 @media screen and (max-width: 480px) {
   
   .container-filters input[type=date] {}  
@@ -377,13 +380,93 @@ input::-webkit-input-placeholder {
   }
   .container-filters .filter-dance select {border: none;}
   #date-icon { display: none;}
-
+  .container-filters > div {margin:0px 2px 0px 0px;}
 }
 @media screen and (max-width: 600px) {
   .container-filters .filter-types select{width:130px;}
   .container-filters {padding: 5px 11px;}
 }
+/*MODAL-MOBILE*/
 
+/* The Modal (background) */
+.modal {
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s
+}
+/* Modal Content */
+.modal-content {
+  position: fixed;
+  bottom: 0;
+  background-color: #fefefe;
+  width: 100%;
+  -webkit-animation-name: slideIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slideIn;
+  animation-duration: 0.4s
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+/* Add Animation */
+@-webkit-keyframes slideIn {
+  from {bottom: -300px; opacity: 0} 
+  to {bottom: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+  from {bottom: -300px; opacity: 0}
+  to {bottom: 0; opacity: 1}
+}
+
+@-webkit-keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+}
+/*SEARCH-PROMPT*/
 .search-prompt {
   position: absolute;
   bottom: 40px;

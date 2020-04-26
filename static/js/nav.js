@@ -34,11 +34,16 @@ this.dancemap.nav = (function(){
   }
 
   function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("sidenav").style.width = "250px";
   } 
 
   function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("sidenav").style.width = "0";
+  }
+
+  function openModalMobile() {
+    let modal = document.getElementById("modal-mobile");
+    modal.style.display = "block";
   }
 
   function navSetup(settings) {
@@ -150,7 +155,8 @@ this.dancemap.nav = (function(){
     changeLocalURL: changeLocalURL,
     addLatLngToURL: addLatLngToURL,
     getLatLngURL: getLatLngURL,
-    copyPopupURL: copyPopupURL
+    copyPopupURL: copyPopupURL,
+    openModalMobile: openModalMobile
   }
 
 })();
