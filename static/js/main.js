@@ -1,8 +1,7 @@
 this.dancemap.initMap = (function(){
   let self = this; 
-
-
-  /**/
+ 
+   /**/
   this.dancemap.ui = {};
   this.dancemap.ui.class = 'all';
   this.dancemap.ui.radius = 5000;
@@ -23,6 +22,8 @@ this.dancemap.initMap = (function(){
     	geoLocationHandler: true,
       })
       .setView([55.746181, 37.625372], 12);
+
+  
     
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGltYXRydWUiLCJhIjoiY2p4cmQwem8wMDcxdDNtcWpndWhjOTMwbiJ9.SoBmmbCYNBwXFXuZFRcgHw', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -111,10 +112,18 @@ this.dancemap.initMap = (function(){
   map.on("zoomstart", function (e) { classSelector.disabled = true; });
   map.on("zoomend", function (e) { classSelector.disabled = false; });
   map.on("popupopen", function(e) {
+
+    if (window.matchMedia('screen and (max-width: 360px)').matches) {
+      e.target.closePopup();
+      showMobilePopup(e.popup._source.feature.properties.popupContent)
+    }
+    
     let marker = e.popup._source.feature
     let url = marker._id
     let title = marker.properties.name
     dancemap.nav.changeLocalURL({url, title})
+
+
 
     console.log("popupopen", e);
   })
@@ -232,15 +241,22 @@ this.dancemap.initMap = (function(){
   }); 
 
   
-
-
+  function showMobilePopup(content) {
+    L.control.popupMobile(map, 
+      {content: content}
+      ).show();
+  }
+    
+  
   function onEachFeature(feature, layer) {
     // does this feature have a property named popupContent?
     if (feature.properties && feature.properties.popupContent) {
       layer
         .bindPopup(feature.properties.popupContent)
+        //.bindPopup(L.mobilePopup().setContent(feature.properties.popupContent))
         .bindTooltip( (layer) => layer.feature.properties.name, {permanent: false, opacity: 0.75});
     }
+    
   }
     
   function pointToLayer(feature, latlng) {
@@ -333,22 +349,7 @@ this.dancemap.initMap = (function(){
     })
     return studios;
   }
-  /*https://github.com/Leaflet/Leaflet/blob/master/src/layer/Popup.js
-   https://github.com/mapshakers/leaflet-control-window/blob/master/src/L.Control.Window.js
-   https://github.com/yafred/leaflet-responsive-popup/blob/master/leaflet.responsive.popup.js
-  */
-  L.MobilePopup = L.Popup.extend({
-    mobileTest: function() {
-      console.log('MobilePopup')
-    },
-    _initLayout: function () {
-      console.log('_initLayout', this)
-    }
-  })
 
-  L.mobilePopup = function () {
-    return new L.MobilePopup();
-  };
 
   return {
     plotStudios : plotStudios,
