@@ -11,6 +11,7 @@ L.Control.PopupMobile = L.Control.extend({
         content: 'undefined',
         prompt: 'undefined',
         maxWidth: 360,
+        minWidth: 300,
         modal: true,
         position: 'center'
     },
@@ -33,11 +34,12 @@ L.Control.PopupMobile = L.Control.extend({
 
         this._container = L.DomUtil.create('div', 'leaflet-control leaflet-popup-mobile '+this.options.className,this._wrapper);
         this._container.setAttribute('style','max-width:'+this.options.maxWidth+'px');
+        this._container.setAttribute('style','min-width:'+this.options.minWidth+'px');
 
-        this._containerTitleBar = L.DomUtil.create('div', 'titlebar',this._container);
-        this.titleContent = L.DomUtil.create('h2', 'title',this._containerTitleBar);
-        this._containerContent =  L.DomUtil.create('div', 'content' ,this._container);
-        this._containerPromptButtons =  L.DomUtil.create('div', 'promptButtons' ,this._container);
+        this._containerTitleBar = L.DomUtil.create('div', 'titlebar', this._container);
+        //this.titleContent = L.DomUtil.create('h2', 'title', this._containerTitleBar);
+        this._containerContent =  L.DomUtil.create('div', 'content', this._container);
+        this._containerPromptButtons =  L.DomUtil.create('div', 'promptButtons', this._container);
 
         if (this.options.closeButton) {
             this._closeButton = L.DomUtil.create('a', 'close',this._containerTitleBar);

@@ -640,7 +640,7 @@ input::-webkit-input-placeholder {
 .leaflet-popup-mobile {
     position: absolute;
     z-index: 2000;
-    border-radius: 2px;
+    border-radius: 4px;
     margin: 8px;
 
     /** BOX SHADOW **/
@@ -656,8 +656,8 @@ input::-webkit-input-placeholder {
 }
 
 
-.leaflet-popup-mobile .titlebar{
-    min-height: 38px;
+.leaflet-popup-mobile .titlebar {
+    min-height: 0px;
     cursor: grab;
     cursor: -webkit-grab;
     cursor: -moz-grab;
@@ -670,18 +670,16 @@ input::-webkit-input-placeholder {
     right: 8px;
     width: 28px;
     height: 28px;
-    border-radius: 100%;
+
     font: 16px/14px Tahoma, Verdana, sans-serif;
     cursor: pointer;
     z-index:30;
 
-    background-color: rgba(0, 0, 0, 0.40);
     transition-property: background;
     transition-duration: 0.2s;
     transition-timing-function: linear;
 
 
-    color: #e4e4e4;
     font-size: 22pt;
     text-align: center;
     line-height: 0.9em;

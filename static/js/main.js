@@ -247,7 +247,6 @@ this.dancemap.initMap = (function(){
       ).show();
   }
     
-  
   function onEachFeature(feature, layer) {
     // does this feature have a property named popupContent?
     if (feature.properties && feature.properties.popupContent) {
@@ -329,11 +328,18 @@ this.dancemap.initMap = (function(){
 
     studios.forEach((studio) => {
       if(!studio.properties.cluster) {
-        studio.properties.popupContent =
-        `
-          ${studio.properties.name ?  `<div class='studio-title'> ${studio.properties.name} </div>` : ''} 
-          <hr>
+        getPopupContentDekstop(studio);
+      }
+    })
+    return studios;
+  }
 
+  function getPopupContentDekstop(studio) {
+       studio.properties.popupContent =
+        `
+          ${studio.properties.name ?  `<div class='studio-title'> ${studio.properties.name} <hr></div>` : ''} 
+          
+          <div class='studio-content'>
           <div class='container-info__speciality'>
             <span>Направления: </span>${studio.properties.speciality ?  `${studio.properties.speciality.join(', ')}` : ''}
           </div>
@@ -344,11 +350,10 @@ this.dancemap.initMap = (function(){
           
           ${studio.properties.vk ? `<div class=''><a href='${studio.properties.vk}' target="_blank"> ${self.dancemap.icons.vk} </a></div>` : ''} 
           <div class="container-info__url"><button onclick="dancemap.nav.copyPopupURL()">копировать ссылку </button></div>
-        `
-      }
-    })
-    return studios;
+        </div>
+        ` 
   }
+
 
 
   return {

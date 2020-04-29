@@ -15,9 +15,16 @@ this.dancemap.util = (function(){
     return isEmpty;
   }
 
+  function htmlToElements(html) {
+    var template = document.createElement('template');
+    template.innerHTML = html;
+    return template.content.childNodes;
+  }
+
   return {
     isObjEmpty : isObjEmpty,
-    isObjPropNotEmpty : isObjPropNotEmpty
+    isObjPropNotEmpty : isObjPropNotEmpty,
+    htmlToElements : htmlToElements
 
   }
 
