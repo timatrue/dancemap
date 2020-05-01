@@ -55,6 +55,11 @@ function getClusterLeaves(clusterId) {
   socket.emit('get_leaves', clusterId);
 }
 
+function getMemoryUsage() {
+
+  socket.emit('get_memory_usage', {});
+}
+
 function findStudio(studio) {
   let map = dancemap.initMap.getMap();
   let category = dancemap.ui.class
@@ -126,7 +131,8 @@ function reload(secret) {
     getClusterLeaves: getClusterLeaves,
     findStudio: findStudio,
     isStudioIdValid,
-    reload: reload
+    reload: reload,
+    getMemoryUsage: getMemoryUsage
 
   }
 

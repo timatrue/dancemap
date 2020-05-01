@@ -68,6 +68,21 @@ server.listen(port, () => {
 });
 
 let index = {};
+
+/*memory usage debug*/
+index.all1 = new Supercluster({radius: 40,maxZoom: 17});
+index.all2 = new Supercluster({radius: 40,maxZoom: 17});
+index.all3 = new Supercluster({radius: 40,maxZoom: 17});
+index.all4 = new Supercluster({radius: 40,maxZoom: 17});
+index.all5 = new Supercluster({radius: 40,maxZoom: 17});
+index.all6 = new Supercluster({radius: 40,maxZoom: 17});
+index.all7 = new Supercluster({radius: 40,maxZoom: 17});
+index.all8 = new Supercluster({radius: 40,maxZoom: 17});
+index.all9 = new Supercluster({radius: 40,maxZoom: 17});
+index.all10 = new Supercluster({radius: 40,maxZoom: 17});
+index.all11 = new Supercluster({radius: 40,maxZoom: 17});
+
+
 index.all = new Supercluster({
   radius: 40,
   maxZoom: 17
@@ -104,6 +119,20 @@ async function getData() {
 
   await Studio.find({}).then(function(studios) { 
     index.all.load(studios);
+    
+    /*memory usage debug*/
+    index.all1.load(studios);
+    index.all2.load(studios);
+    index.all3.load(studios);
+    index.all4.load(studios);
+    index.all5.load(studios);
+    index.all6.load(studios);
+    index.all7.load(studios);
+    index.all9.load(studios);
+    index.all9.load(studios);
+    index.all10.load(studios);
+    index.all11.load(studios);
+
     console.log('index_all', index.all);
   });
   await Studio.find({'properties.classes.hustle': true}).then(function(studios) { 
@@ -335,7 +364,9 @@ io.on('connection', function(socket) {
       }
     }    
   });
-
+  socket.on('get_memory_usage', function () {
+    getMemoryUsage();
+  });
   console.log('a user connected');
 });
 
@@ -365,9 +396,12 @@ function getCrendetialsSSL() {
   return credentials;
 }
 
-
-
-
+function getMemoryUsage() {
+  const used = process.memoryUsage();
+    for (let key in used) {
+	console.log(`${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
+  }
+}
 
   /*
 	Congratulations! Your certificate and chain have been saved at:
