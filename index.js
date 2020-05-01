@@ -69,7 +69,7 @@ server.listen(port, () => {
 
 let index = {};
 
-/*memory usage debug*/
+/*memory usage debug
 index.all1 = new Supercluster({radius: 40,maxZoom: 17});
 index.all2 = new Supercluster({radius: 40,maxZoom: 17});
 index.all3 = new Supercluster({radius: 40,maxZoom: 17});
@@ -79,8 +79,8 @@ index.all6 = new Supercluster({radius: 40,maxZoom: 17});
 index.all7 = new Supercluster({radius: 40,maxZoom: 17});
 index.all8 = new Supercluster({radius: 40,maxZoom: 17});
 index.all9 = new Supercluster({radius: 40,maxZoom: 17});
-index.all10 = new Supercluster({radius: 40,maxZoom: 17});
-index.all11 = new Supercluster({radius: 40,maxZoom: 17});
+index.all10 = new Supercluster({radius: 40,maxZoom: 17});*/
+
 
 
 index.all = new Supercluster({
@@ -120,7 +120,7 @@ async function getData() {
   await Studio.find({}).then(function(studios) { 
     index.all.load(studios);
     
-    /*memory usage debug*/
+    /*memory usage debug
     index.all1.load(studios);
     index.all2.load(studios);
     index.all3.load(studios);
@@ -130,8 +130,8 @@ async function getData() {
     index.all7.load(studios);
     index.all9.load(studios);
     index.all9.load(studios);
-    index.all10.load(studios);
-    index.all11.load(studios);
+    index.all10.load(studios);*/
+
 
     console.log('index_all', index.all);
   });
