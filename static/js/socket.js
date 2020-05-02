@@ -121,7 +121,7 @@ function postStudio(studio) {
 }
 
 function postEvent(event) {
-  console.log('postEvent', studio);
+  console.log('postEvent', event);
   socket.emit('post_event', event);
 }
 

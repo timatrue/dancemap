@@ -213,9 +213,9 @@ io.on('connection', function(socket) {
     if(msg.bachata) studio.properties.classes.bachata = true;
     if(msg.salsa) studio.properties.classes.salsa = true;
     if(msg.img64) {
-    	console.log(studio.properties)
+    	/*console.log(studio.properties)
     	studio.properties.seoimage.data = new Buffer(msg.img64.split(",")[1],"base64"),
-    	studio.properties.seoimage.contentType = 'image/png'
+    	studio.properties.seoimage.contentType = 'image/png'*/
     }
     
     studio.properties.speciality = msg.speciality.split(',');
@@ -235,27 +235,32 @@ io.on('connection', function(socket) {
     event.geometry.coordinates.push(msg.lon);
     event.geometry.coordinates.push(msg.lat);
     
+    //event.properties.type = 'event';
+
     event.properties.name = msg.name;
     event.properties.address = msg.address;
     event.properties.city = msg.city;
     event.properties.vk = msg.vk;
     event.properties.altername = msg.altername;
+    event.properties.start = msg.start;
+    event.properties.end = msg.end;
+
     if(msg.hustle) event.properties.classes.hustle = true;
     if(msg.zouk) event.properties.classes.zouk = true;
     if(msg.wcs) event.properties.classes.wcs = true;
     if(msg.bachata) event.properties.classes.bachata = true;
     if(msg.salsa) event.properties.classes.salsa = true;
     if(msg.img64) {
-    	console.log(event.properties)
+    	/*console.log(event.properties)
     	event.properties.seoimage.data = new Buffer(msg.img64.split(",")[1],"base64"),
-    	event.properties.seoimage.contentType = 'image/png'
+    	event.properties.seoimage.contentType = 'image/png'*/
     }
     
     event.properties.speciality = msg.speciality.split(',');
     
     event["type"] = "Feature";
     
-    Event.create(studio).then(function(result) {
+    Event.create(event).then(function(result) {
     	//reload();
 		console.log('post_event', result);
 	})

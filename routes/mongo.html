@@ -124,11 +124,16 @@
     });
     
     if(!dancemap.util.isObjEmpty(data)) {
-       console.log(data);
-       if(dancemap.util.isObjPropNotEmpty(data)) dancemap.socket.postStudio(data);
+       
+       console.log('data from form', data);
+
+       if(dancemap.util.isObjPropNotEmpty(data)) {
+         if(data.recordType === 'studio') dancemap.socket.postStudio(data);
+         if(data.recordType === 'event') dancemap.socket.postEvent(data);
+       }
        return; 
     }
-    else console.error('formStudio data is empty');
+    else console.error('form data is empty');
     
   })
 
@@ -143,24 +148,6 @@
   async function getImg64(img) {
     return await toBase64(img);   
   }
-
-
-  /*document.querySelector("#formSetAllDocuments").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const data = Array.from(formData.entries()).reduce((memo, pair) => ({
-      ...memo,
-      [pair[0]]:pair[1],
-
-    }), {})
-    
-    if(!dancemap.util.isObjEmpty(data)) {
-       if(dancemap.util.isObjPropNotEmpty(data)) dancemap.socket.setAllDocuments(data);
-       return; 
-    }
-    else console.error('formSetAllDocuments data is empty');
-    
-  })*/
 
 
 
