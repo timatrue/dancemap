@@ -19,7 +19,7 @@ function getStudios(fn) {
 function getClusters(e) {
 
 
-    let map = dancemap.initMap.getMap();
+    let map = dancemap.mapcontrol.getMap();
     let bounds = map.getBounds();
     let zoom = map.getZoom();
     // ([westLng, southLat, eastLng, northLat])
@@ -28,9 +28,9 @@ function getClusters(e) {
       zoom: zoom,
       class: self.dancemap.ui.class
     } 
+    console.log('getClusters', box)
     socket.emit('get_clusters', box);
-  
-  
+
 }
 
 function getZoomedClusters(box) {
@@ -61,7 +61,7 @@ function getMemoryUsage() {
 }
 
 function findStudio(studio) {
-  let map = dancemap.initMap.getMap();
+  let map = dancemap.mapcontrol.getMap();
   let category = dancemap.ui.class
   let radius = dancemap.ui.radius;
   let type = dancemap.ui.queryType;
@@ -76,6 +76,10 @@ function findStudio(studio) {
 
 function isStudioIdValid(studio) {
   socket.emit('check_id', id);
+}
+
+function getSupercluster(studio) {
+  socket.emit('get_supercluster', {});
 }
 
 socket.on('find_studio', function (validity) {
@@ -94,14 +98,18 @@ socket.on('get_clusters', function (clusters) {
 
   //testCluster.getClusterExpansionZoom(e.data.getClusterExpansionZoom)
   if (clusters.expansionZoom) {
-    dancemap.initMap.flyToClusters(clusters);
+    dancemap.mapcontrol.flyToClusters(clusters);
   } else {
 
-    dancemap.initMap.addClusters(clusters);
+    dancemap.mapcontrol.addClusters(clusters);
     console.log('clusters_server', clusters); 
   }
 });
 
+socket.on('get_supercluster', function (supercluster) {
+  dancemap.supercluster =  supercluster;
+  console.log('get_supercluster', supercluster); 
+});
 
 
 socket.on('reload', (res) => console.log(res));
@@ -110,6 +118,11 @@ socket.on('reload', (res) => console.log(res));
 function postStudio(studio) {
   console.log('postStudio', studio);
   socket.emit('post_studio', studio);
+}
+
+function postEvent(event) {
+  console.log('postEvent', studio);
+  socket.emit('post_event', event);
 }
 
 function setAllDocuments(propUpdate) {
@@ -124,6 +137,7 @@ function reload(secret) {
   return {
     getStudios: getStudios,
     postStudio: postStudio,
+    postEvent: postEvent,
     getClusters: getClusters,
     setAllDocuments: setAllDocuments,
     getZoomedClusters: getZoomedClusters,
@@ -132,7 +146,8 @@ function reload(secret) {
     findStudio: findStudio,
     isStudioIdValid,
     reload: reload,
-    getMemoryUsage: getMemoryUsage
+    getMemoryUsage: getMemoryUsage,
+    getSupercluster: getSupercluster
 
   }
 

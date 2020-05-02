@@ -17,8 +17,13 @@ bot.launch()
 //Mongo cloud
 //const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://dancemap:Yy4UqOE9bihpePZc@cluster0-kkgwk.gcp.mongodb.net/dancemap?retryWrites=true&w=majority";
+const uri2 = "mongodb+srv://dancemap:Yy4UqOE9bihpePZc@cluster0-kkgwk.gcp.mongodb.net/sample_geospatial?retryWrites=true&w=majority";
+
+
 const Studio = require('./models/studio')
+const Event = require('./models/event')
 const studioTemplate = require('./models/studioTemplate')
+const eventTemplate = require('./models/eventTemplate')
 const Supercluster = require('supercluster')
 
 
@@ -39,7 +44,6 @@ app.use('/studios', require('./routes/studios'))
 ;(async () => {
   const connector = mongoose.connect(uri);
 })();
-
 
 
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
@@ -80,7 +84,6 @@ index.all7 = new Supercluster({radius: 40,maxZoom: 17});
 index.all8 = new Supercluster({radius: 40,maxZoom: 17});
 index.all9 = new Supercluster({radius: 40,maxZoom: 17});
 index.all10 = new Supercluster({radius: 40,maxZoom: 17});*/
-
 
 
 index.all = new Supercluster({
@@ -158,8 +161,6 @@ async function getData() {
   });
 }
 
-
-
 /*SOCKET*/
 const io = require('socket.io')(server);
 io.on('connection', function(socket) {
@@ -189,7 +190,10 @@ io.on('connection', function(socket) {
     }
   
   });
+  socket.on('get_supercluster', function () {
 
+    socket.emit('get_supercluster', index);
+  });
 
   socket.on('post_studio', function (msg) {
 
@@ -223,6 +227,41 @@ io.on('connection', function(socket) {
 		console.log('post_studio', result);
 	})
   });
+  
+  socket.on('post_event', function (msg) {
+
+  	let event = eventTemplate.getEventTemplate();
+    
+    event.geometry.coordinates.push(msg.lon);
+    event.geometry.coordinates.push(msg.lat);
+    
+    event.properties.name = msg.name;
+    event.properties.address = msg.address;
+    event.properties.city = msg.city;
+    event.properties.vk = msg.vk;
+    event.properties.altername = msg.altername;
+    if(msg.hustle) event.properties.classes.hustle = true;
+    if(msg.zouk) event.properties.classes.zouk = true;
+    if(msg.wcs) event.properties.classes.wcs = true;
+    if(msg.bachata) event.properties.classes.bachata = true;
+    if(msg.salsa) event.properties.classes.salsa = true;
+    if(msg.img64) {
+    	console.log(event.properties)
+    	event.properties.seoimage.data = new Buffer(msg.img64.split(",")[1],"base64"),
+    	event.properties.seoimage.contentType = 'image/png'
+    }
+    
+    event.properties.speciality = msg.speciality.split(',');
+    
+    event["type"] = "Feature";
+    
+    Event.create(studio).then(function(result) {
+    	//reload();
+		console.log('post_event', result);
+	})
+  });
+
+
 
   socket.on('get_clusters', (box) => {
 

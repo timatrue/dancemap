@@ -1,4 +1,4 @@
-this.dancemap.initMap = (function(){
+this.dancemap.mapcontrol = (function(){
   let self = this; 
  
    /**/
@@ -11,7 +11,7 @@ this.dancemap.initMap = (function(){
   classSelector.addEventListener('change', function (event) {
 
     self.dancemap.ui.class = this.value;
-    self.dancemap.initMap.getMap().closePopup();
+    self.dancemap.mapcontrol.getMap().closePopup();
 
     moveEnd();
     console.log(this.value);
@@ -37,7 +37,6 @@ this.dancemap.initMap = (function(){
     className: "count-icon",
     html: ""
   });
-
 
   this.dancemap.icons = {};
   this.dancemap.icons.marker = "<div class='container-icon'><svg  height='16' width='12' viewBox='0 0 384 512'><path class='icon--grey' d='M172.268 501.67C26.97 291.031 0 269.413 0 192 0 85.961 85.961 0 192 0s192 85.961 192 192c0 77.413-26.97 99.031-172.268 309.67-9.535 13.774-29.93 13.773-39.464 0zM192 272c44.183 0 80-35.817 80-80s-35.817-80-80-80-80 35.817-80 80 35.817 80 80 80z'></path></svg></div>";
@@ -113,7 +112,7 @@ this.dancemap.initMap = (function(){
   map.on("zoomend", function (e) { classSelector.disabled = false; });
   map.on("popupopen", function(e) {
 
-    if (window.matchMedia('screen and (max-width: 360px)').matches) {
+    if (window.matchMedia('screen and (max-width: 480px)').matches) {
       e.target.closePopup();
       showMobilePopup(e.popup._source.feature.properties.popupContent)
     }
@@ -122,8 +121,6 @@ this.dancemap.initMap = (function(){
     let url = marker._id
     let title = marker.properties.name
     dancemap.nav.changeLocalURL({url, title})
-
-
 
     console.log("popupopen", e);
   })
@@ -199,19 +196,6 @@ this.dancemap.initMap = (function(){
       }
     });
   }
-
-  function plotStudios(studios) {
-
-    self.dancemap.studios = {
-      "type": "FeatureCollection",
-      "features": []
-    };
-
-    self.dancemap.studios.features = addPopupContent(studios);
-
-    addMarkersMap(self.dancemap.studios.features); 
-    console.log('plotStudios', self.dancemap.studios);
-  }
    
   function addMarkersMap(studios) {
     self.dancemap.geojson = L.geoJSON(studios, {
@@ -242,9 +226,7 @@ this.dancemap.initMap = (function(){
 
   
   function showMobilePopup(content) {
-    L.control.popupMobile(map, 
-      {content: content}
-      ).show();
+    L.control.popupMobile(map, {content: content}).show();
   }
     
   function onEachFeature(feature, layer) {
@@ -285,7 +267,6 @@ this.dancemap.initMap = (function(){
   }
 
   function clusterMarkers() {
-    //https://github.com/Leaflet/Leaflet.markercluster/blob/master/example/marker-clustering-geojson.html
     let markers = L.markerClusterGroup();
     markers.addLayer(self.dancemap.geojson);
     map.addLayer(markers);
@@ -307,18 +288,11 @@ this.dancemap.initMap = (function(){
     self.dancemap.geojson.addData(addPopupContent(data));
   }
   
-  function isMarkerInSearch(marker) {
-    
-    return;
-  }
-
   function checkClass(layer) {
     let currentClass = this.dancemap.ui.class;
     let speciality = layer.feature.properties.speciality;
     return speciality.includes(currentClass);
   }
-
-
 
   function getMap() {
     return map;
@@ -350,14 +324,11 @@ this.dancemap.initMap = (function(){
           
           ${studio.properties.vk ? `<div class=''><a href='${studio.properties.vk}' target="_blank"> ${self.dancemap.icons.vk} </a></div>` : ''} 
           <div class="container-info__url"><button onclick="dancemap.nav.copyPopupURL()">копировать ссылку </button></div>
-        </div>
-        ` 
+        </div>` 
   }
 
-
-
   return {
-    plotStudios : plotStudios,
+    
     getMap: getMap,
     addClusters: addClusters,
     flyToClusters: flyToClusters,

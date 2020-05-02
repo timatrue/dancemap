@@ -62,7 +62,7 @@
   <script  src="/js/dancemap.js"></script>
   <script  src="/js/nav.js"></script>
   <script  src="/js/socket.js"></script>
-  <script  src="/js/main.js"></script>
+  <script  src="/js/mapcontrol.js"></script>
   <script>
   const settings = {
     event: false,
@@ -70,7 +70,7 @@
     up: document.getElementById('date-right'),
     down: document.getElementById('date-left')
   }
-  this.dancemap.initMap.openByURL();
+  this.dancemap.mapcontrol.openByURL();
   this.dancemap.socket.getClusters();
   this.dancemap.nav.navSetup(settings);
 

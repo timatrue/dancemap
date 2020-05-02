@@ -6,17 +6,36 @@
     <meta charset="utf-8">
     <meta name="Description" content=""/>
     <script src="/socket.io/socket.io.js"></script>
-    <style></style>
+    <style>
+      #eventBlock {
+        display: block;
+      }
+      form > div > *{
+        margin-top: 5px;
+      }
+      #containerForm, #eventBlock {
+        display:flex;
+        flex-direction: column;
+      }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
     </head>
   
   <body>
     
   <header style=""></header>
 
-  
+  <h1>Post Studio</h1>
   <form  id="formStudio">
-    <div style="display:flex;flex-direction: column;">
+    <div id="containerForm" style="">
+      <div>
+        <label for="eventRecord">Event</label>
+        <input type="radio" id="eventRecord" name="recordType" value="event" checked>
+        <label for="studioRecord">Studio</label>
+        <input type="radio" id="studioRecord" name="recordType" value="studio">
+      </div>
+
       <label for="name">Name:</label>
       <input type="text" name="name" id="name" minlength="1" maxlength="30" required>
       <label for="altername">Altername:</label>
@@ -50,21 +69,21 @@
         <label for="bachata">bachata</label>
       </div>
       
-      <label for="speciality">Speciality: (Хастл,etc without spaces)</label>
+      <label for="speciality">Speciality: (Хастл,etc - without spaces!)</label>
       <input type="text" name="speciality" id="speciality"  required>
+
+      <div id="eventBlock">
+        <label for="start">Start: ()</label>
+        <input type="date" name="start" id="start"  required>
+        <label for="end">End: ()</label>
+        <input type="date" name="end" id="end"  required>
+        <label for="nestedgroup">Nested group: (id1,id2,etc - without spaces!)</label>
+        <input type="text" name="nestedgroup" id="nestedgroup" >        
+      </div>
 
       <input type="submit" name="Submit">
     </div>
   </form>
-
-
-  <!--<form  id="formSetAllDocuments">
-    <div style="display:flex;flex-direction: column;">
-      <label for="path">Path:</label>
-      <input type="text" name="path" id="path" minlength="1" maxlength="30" required>
-      <input type="submit" name="Submit">
-    </div>
-  </form>-->
 
   
   <script  src="/js/dancemap.js"></script>
@@ -72,6 +91,22 @@
   <script  src="/js/socket.js"></script>
 
   <script>
+
+  let radios = document.querySelectorAll('input[type=radio][name="recordType"]');
+
+  function radioHandler(event) {
+    let eventBlock = document.getElementById('eventBlock');
+    if(this.value === 'event' ) {
+      eventBlock.style.display = 'flex';
+    }else if ( this.value === 'studio' ) {
+       eventBlock.style.display = 'none';
+    }  
+  }
+
+  Array.prototype.forEach.call(radios, function(radio) {
+    radio.addEventListener('change', radioHandler);
+  });
+
   //https://learn.javascript.ru/async-await
   let dancemap = this.dancemap;
   document.querySelector("#formStudio").addEventListener("submit", function(e) {
