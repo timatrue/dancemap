@@ -118,7 +118,7 @@ this.dancemap.mapcontrol = (function(){
     }
     
     let marker = e.popup._source.feature
-    let url = marker._id
+    let url = "/" + marker._id
     let title = marker.properties.name
     dancemap.nav.changeLocalURL({url, title})
 

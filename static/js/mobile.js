@@ -23,10 +23,10 @@ L.Control.PopupMobile = L.Control.extend({
         options.element = container;
         L.setOptions(this, options);
 
-        var modality = 'nonmodal';
+        var modality = 'nonmodal-marker';
 
         if (this.options.modal){
-            modality = 'modal'
+            modality = 'modal-marker'
         }
 
         // Create popupMobile container

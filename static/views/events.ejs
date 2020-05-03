@@ -21,7 +21,7 @@
     <!-- Dancemap-->
     <script  src="/js/mobile.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-    <link href='/css/maintest.css' rel='stylesheet' />
+    <link href='/css/main.css' rel='stylesheet' />
   
   
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -54,7 +54,7 @@
   
   <body>
  
-    <%- include('./partials/headertest', studio); -%>
+    <%- include('./partials/header-events', studio); -%>
 
 
     <div id="map-box"></div>
@@ -76,7 +76,7 @@
       this.dancemap.nav.navSetup(settings);
 
     </script>
-    <%- include('./partials/marker-modal-mobile', marker); -%>
+
     <%- include('./partials/footertest', marker); -%>
   </body>
 </html>

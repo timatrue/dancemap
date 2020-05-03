@@ -108,14 +108,19 @@ this.dancemap.nav = (function(){
   function getMainCatURL () {
     const path = window.location.pathname.split('/');
     console.log(path);
-    return path[1] ? "" : "/studios/"; 
+    return path;
+    /*if(path[1] == "studios" ) return path[1];
+    if(path[1] == "events" ) return path[1];
+    if(path[1] == "" ) return path[1]; */
   }
 
   function changeLocalURL(params) {
     document.title = params.title;
-    let mainCat = getMainCatURL();
-    let url = mainCat ? mainCat + params.url : params.url;
-    history.pushState({}, params.title , url);
+    let path = getMainCatURL();
+    let url = path[1] ? path[1] + params.url : params.url;
+   
+    if(path[2]) history.pushState({}, params.title , '/' + url);
+    if(!path[2]) history.pushState({}, params.title , url);
   }
 
   function addLatLngToURL(center) {

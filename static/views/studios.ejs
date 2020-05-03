@@ -54,7 +54,6 @@
   
   <body>
  
-   <%- include('./partials/modal-main', studio); -%>
   <%- include('./partials/header-studios', studio); -%>
 
 
@@ -65,7 +64,15 @@
   <script  src="/js/socket.js"></script>
   <script  src="/js/mapcontrol.js"></script>
   <script>
-
+  const settings = {
+    event: false,
+    datepicker: document.querySelector('input[type="date"]'),
+    up: document.getElementById('date-right'),
+    down: document.getElementById('date-left')
+  }
+  this.dancemap.mapcontrol.openByURL();
+  this.dancemap.socket.getClusters();
+  this.dancemap.nav.navSetup(settings);
 
   </script>
 

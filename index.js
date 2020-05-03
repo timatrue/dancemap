@@ -39,6 +39,7 @@ app.use(express.json({ extended: false }));
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
 app.use('/api', require('./routes/api'))
 app.use('/studios', require('./routes/studios'))
+app.use('/events', require('./routes/events'))
 
 //Mongoose connect
 ;(async () => {
@@ -47,6 +48,7 @@ app.use('/studios', require('./routes/studios'))
 
 
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
+
 app.get('/', function (req, res) {
     //res.send('dancemap here');
     //res.sendFile('static/index.html', {root: __dirname })
@@ -54,10 +56,17 @@ app.get('/', function (req, res) {
     //console.log('get /');
 })
 
-app.get('/testmenu', function (req, res) {
+app.get('/studios', function (req, res) {
+    //res.send('dancemap here');
+    //res.sendFile('static/index.html', {root: __dirname })
+    res.render('../static/views/studios',{title:null,classes:null,studio:null,marker:null});
+    //console.log('get /');
+})
+
+app.get('/events', function (req, res) {
    //res.send('dancemap here');
-   console.log('get /testmenu');
-   res.render('../static/views/indextestmenu',{title:null,classes:null,studio:null,marker:null});
+   console.log('get /events');
+   res.render('../static/views/events',{title:null,classes:null,studio:null,marker:null});
 })
 
 app.get('/add', function (req, res) {

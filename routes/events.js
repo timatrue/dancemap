@@ -14,8 +14,8 @@ router.get('/:id', function(req, res) {
       const id = req.params.id
 	  Studio.find({"_id": id})
 	    .then(function(studio) { 
-	      console.log('GET /studio', studio); 
-          res.render('../static/views/indextestmenu',{
+	      console.log('GET /event', studio); 
+          res.render('../static/views/events',{
         	title: studio[0].properties.name,
         	classes: studio[0].properties.speciality.join(', '),
         	marker: studio[0],

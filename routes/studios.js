@@ -15,7 +15,7 @@ router.get('/:id', function(req, res) {
 	  Studio.find({"_id": id})
 	    .then(function(studio) { 
 	      console.log('GET /studio', studio); 
-          res.render('../static/views/index',{
+          res.render('../static/views/studios',{
         	title: studio[0].properties.name,
         	classes: studio[0].properties.speciality.join(', '),
         	marker: studio[0],
