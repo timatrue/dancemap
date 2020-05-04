@@ -6,6 +6,7 @@ function getEventTemplate() {
         "coordinates": []
       },
       "properties": {
+        "type" : "",
         "name" : "",
         "altername" : "",
         "address" : "",

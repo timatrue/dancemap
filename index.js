@@ -52,21 +52,21 @@ app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
 app.get('/', function (req, res) {
     //res.send('dancemap here');
     //res.sendFile('static/index.html', {root: __dirname })
-    res.render('../static/views/index',{title:null,classes:null,studio:null,marker:null});
+    res.render('../static/views/index',{page:'main', marker: null, markerEncoded: null});
     //console.log('get /');
 })
 
 app.get('/studios', function (req, res) {
     //res.send('dancemap here');
     //res.sendFile('static/index.html', {root: __dirname })
-    res.render('../static/views/studios',{title:null,classes:null,studio:null,marker:null});
+    res.render('../static/views/studios',{page:'studios', marker: null, markerEncoded: null});
     //console.log('get /');
 })
 
 app.get('/events', function (req, res) {
    //res.send('dancemap here');
    console.log('get /events');
-   res.render('../static/views/events',{title:null,classes:null,studio:null,marker:null});
+   res.render('../static/views/events',{page:'events', marker: null, markerEncoded: null});
 })
 
 app.get('/add', function (req, res) {
@@ -192,7 +192,10 @@ io.on('connection', function(socket) {
     if(isObject(secret) && secret) {
       if(secret.secret === 'Covid19!') {
         /*firstly you have to define new property in studio.js */
-        Studio.updateMany({}, {$set: { 'properties.altername': ""}} ).then(function(result) {
+        Studio.updateMany({}, {$set: { 'properties.type': "studio"}} ).then(function(result) {
+	      console.log('set_all_documents', result);
+	    });
+	    Event.updateMany({}, {$set: { 'properties.type': "event"}} ).then(function(result) {
 	      console.log('set_all_documents', result);
 	    });
       }
@@ -211,6 +214,7 @@ io.on('connection', function(socket) {
     studio.geometry.coordinates.push(msg.lon);
     studio.geometry.coordinates.push(msg.lat);
     
+    studio.properties.type = msg.recordType;
     studio.properties.name = msg.name;
     studio.properties.address = msg.address;
     studio.properties.city = msg.city;
@@ -229,7 +233,7 @@ io.on('connection', function(socket) {
     
     studio.properties.speciality = msg.speciality.split(',');
     
-    studio["type"] = "Feature";
+    //studio["type"] = "Feature";
     
     Studio.create(studio).then(function(result) {
     	reload();
@@ -246,6 +250,7 @@ io.on('connection', function(socket) {
     
     //event.properties.type = 'event';
 
+    event.properties.type = msg.recordType;
     event.properties.name = msg.name;
     event.properties.address = msg.address;
     event.properties.city = msg.city;
@@ -267,7 +272,7 @@ io.on('connection', function(socket) {
     
     event.properties.speciality = msg.speciality.split(',');
     
-    event["type"] = "Feature";
+    //event["type"] = "Feature";
     
     Event.create(event).then(function(result) {
     	//reload();

@@ -6,6 +6,7 @@ function getStudioTemplate() {
         "coordinates": []
       },
       "properties": {
+        "type": "",
         "name": "",
         "altername":"",
         "address":"",

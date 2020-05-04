@@ -17,6 +17,11 @@ const StudioScheme = new Schema({
   	required: [true, 'type field required']
   },
   properties: {
+    type: {
+      type: String,
+      enum: "studio",
+      required: [true, 'type marker field required']
+    },
     name: {
   	  type: String,
   	  required: [true, 'name field required']

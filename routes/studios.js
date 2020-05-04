@@ -16,10 +16,9 @@ router.get('/:id', function(req, res) {
 	    .then(function(studio) { 
 	      console.log('GET /studio', studio); 
           res.render('../static/views/studios',{
-        	title: studio[0].properties.name,
-        	classes: studio[0].properties.speciality.join(', '),
         	marker: studio[0],
-        	studio: encodeURIComponent(JSON.stringify(studio[0]))
+          page: null,
+          markerEncoded: encodeURIComponent(JSON.stringify(studio[0]))
         });
 
         //res.sendFile(path.join(__dirname, '../static', 'index.html'));

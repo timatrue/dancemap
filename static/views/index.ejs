@@ -2,7 +2,7 @@
 <html>
   <head>
     
-    <%- include('./partials/seotitle', title); -%>
+    <%- include('./partials/seotitle-main', page); -%>
     <link rel="icon" href="https://dancemap.online/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
@@ -49,13 +49,13 @@
 
       gtag('config', 'UA-114689083-3');
     </script>
-    <%- include('./partials/json-ld', marker); -%>
+    
   </head>
   
   <body>
  
-   <%- include('./partials/modal-main', studio); -%>
-  <%- include('./partials/header-studios', studio); -%>
+   <%- include('./partials/modal-main', marker); -%>
+  <%- include('./partials/header-studios', marker); -%>
 
 
   <div id="map-box"></div>
