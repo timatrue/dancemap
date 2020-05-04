@@ -105,4 +105,14 @@
     <lastmod>2020-01-01</lastmod>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://dancemap.online/studios</loc>
+    <lastmod>2020-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://dancemap.online/events</loc>
+    <lastmod>2020-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>

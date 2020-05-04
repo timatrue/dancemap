@@ -250,6 +250,7 @@ input::-webkit-input-placeholder {
   font-size: 36px;
   margin-left: auto;
   color: #F20505;
+  line-height: 1.1em;
 }
 
 .sidenav .closebtn:hover {
@@ -269,6 +270,12 @@ input::-webkit-input-placeholder {
   filter: invert(20%);
 }
 
+.sidenav #nav-back:hover:before {
+  transform: scale(1.1);
+  -webkit-filter: invert(50%); /* Safari/Chrome */
+  filter: invert(50%);
+}
+
 .sidenav #nav-add:before{
   content: "";
   display: inline-block;
@@ -282,17 +289,29 @@ input::-webkit-input-placeholder {
   filter: invert(20%);
 }
 
+.sidenav #nav-add:hover:before {
+  transform: scale(1.1);
+  -webkit-filter: invert(50%); /* Safari/Chrome */
+  filter: invert(50%);  
+}
+
 .sidenav #nav-studios:before {
   content: "";
   display: inline-block;
   background: url(../images/location-arrow-solid.svg) no-repeat center left;
   vertical-align: middle;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   margin-right: 10px;
   opacity: 1;
   -webkit-filter: invert(20%); /* Safari/Chrome */
   filter: invert(20%);
+}
+
+.sidenav #nav-studios:hover:before {
+  transform: scale(1.1);
+  -webkit-filter: invert(50%); /* Safari/Chrome */
+  filter: invert(50%);
 }
 
 .sidenav #nav-events:before {
@@ -306,6 +325,12 @@ input::-webkit-input-placeholder {
   opacity: 1;
   -webkit-filter: invert(20%); /* Safari/Chrome */
   filter: invert(20%);
+}
+
+.sidenav #nav-events:hover:before {
+  transform: scale(1.1);
+  -webkit-filter: invert(50%); /* Safari/Chrome */
+  filter: invert(50%);
 }
 
 .burger-menu {
@@ -397,8 +422,6 @@ input::-webkit-input-placeholder {
   fill: #4680C2;
 }
 
-
-
 .leaflet-control-location a {
   cursor: pointer; 
 }
@@ -428,6 +451,9 @@ input::-webkit-input-placeholder {
 
 .leaflet-container {
     font: 14px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+.leaflet-top {
+    top: 40px;
 }
 /*NAV HEADER FOR EVENTS*/
 .container-filters {
@@ -476,10 +502,10 @@ input::-webkit-input-placeholder {
   /*-webkit-appearance: none;*/
   /*-webkit-appearance: textfield;*/
   /* Safari/Chrome, other WebKit */
-  -webkit-box-sizing: border-box; 
+  /*-webkit-box-sizing: border-box;*/
   /* Firefox, other Gecko */
-  -moz-box-sizing: border-box;    
-  box-sizing: border-box;
+  /*-moz-box-sizing: border-box;*/    
+  /*box-sizing: border-box;*/
   background-size: 19px;
   border: none;
   background-color: #fff;
@@ -722,7 +748,7 @@ input::-webkit-input-placeholder {
 
 .modal-main .modal-content {
   position: relative;
-  background-color: rgba(255,255,255, 0.8);
+  background-color: rgba(255,255,255, 0.75);
   margin: auto;
   padding: 0;
   border: 0px solid #c3c3c3;
@@ -783,13 +809,14 @@ input::-webkit-input-placeholder {
   display: inline-block;
   background: url(../images/location-arrow-solid.svg) no-repeat top right;
   vertical-align: middle;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   margin-right: 10px;
   opacity: 1;
   -webkit-filter: invert(100%); /* Safari/Chrome */
   filter: invert(100%);
 }
+
 
 #btn-events:before {
   content: "";

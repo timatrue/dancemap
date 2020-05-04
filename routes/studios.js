@@ -36,6 +36,9 @@ router.get('/:id/generatesitemap', function(req, res) {
         })
         return urls; })
       .then(urls => {
+        urls.push({url:'/studios', changeFreq: 'monthly', lastMod: new Date('2020-01-01')})
+        urls.push({url:'/events', changeFreq: 'monthly', lastMod: new Date('2020-01-01')})
+        
         const sitemaps = buildSitemaps(urls,'https://dancemap.online')
         return sitemaps
       })
