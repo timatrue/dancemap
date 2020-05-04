@@ -1,12 +1,9 @@
-<div id="sidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="dancemap.nav.closeNav()">&times;</a>
-  <a class="side-nav__link" href="/add.html">Добавить школу танцев на карту</a>
-</div>
+<%- include('./sidenav', {'nav':'studio'}); -%>
 <div class="container-header__nav"> 
   <header class="">
     <div class="nav">   
       <span class="burger-menu" onclick="dancemap.nav.openNav()">&#9776;</span>
-    </div>
+    </div> 
     <div class="nav container-select__pseudo">
       <select class="form-control" id="class-selector">
         <option value="all">Все студии</option>

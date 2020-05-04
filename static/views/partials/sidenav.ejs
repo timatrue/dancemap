@@ -1,14 +1,24 @@
-<% if (marker) { %>
+<% if (nav === 'event') { %>
   <div id="sidenav" class="sidenav">
-    <a href="javascript:void(0)" class="btn-close" onclick="dancemap.nav.closeNav()">&times;</a>
-    <a class="side-nav__link" href="/add.html">Добавить школу танцев на карту</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="dancemap.nav.closeNav()">&times;</a>
+    <a class="side-nav__link" id="nav-back" href="/">назад на главную</a>
+    <a class="side-nav__link" id="nav-studios" href="/studios">искать студии</a>
+    <a class="side-nav__link" id="nav-add" href="/add.html">добавить событие</a>
   </div>
-<% } else { %>
-  <div id="sidenav" class="sidenav">
-    <a href="javascript:void(0)" class="btn-close" onclick="dancemap.nav.closeNav()">&times;</a>
-    <a class="side-nav__link" href="/add.html">Добавить школу танцев на карту</a>
-  </div>
+
 <% } %>
+	
+<% if (nav === 'studio') { %>
+  <div id="sidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="dancemap.nav.closeNav()">&times;</a>
+    <a class="side-nav__link" id="nav-back" href="/">назад на главную</a>
+    <a class="side-nav__link" id="nav-events" href="/events">искать события</a>
+    <a class="side-nav__link" id="nav-add" href="/add.html">добавить студию</a>
+  </div>
+
+<% } %>
+
+
 
 
 

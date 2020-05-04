@@ -1,11 +1,12 @@
-<%- include('./sidenav', marker); -%>
+
+<%- include('./sidenav', {'nav':'event'}); -%>
 <div class="container-header__nav"> 
   <header class="">
     <div class="nav">   
       <span class="burger-menu" onclick="dancemap.nav.openNav()">&#9776;</span>
     </div>
     <div class="nav container-input__pseudo">
-      <input type="search" placeholder="Название студии">
+      <input type="search" placeholder="Название события">
       <input type="button" value="" class="btn-clear" id="btn-clear"/>
     </div>
     <a class="nav" id="container-logo" href="/" title="Танцевальная карта dancemap">
@@ -16,7 +17,7 @@
   <div class='container-filters'>
     <div class="filter-dance">
       <select class="form-control" id="class-selector">
-        <option value="all">Все студии</option>
+        <option value="all">Все события</option>
         <option value="hustle">Хастл</option>
         <option value="zouk">Зук</option>
         <option value="wcs">WCS</option>
