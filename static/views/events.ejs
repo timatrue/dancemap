@@ -18,9 +18,11 @@
     <link href='https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css' rel='stylesheet' />
     <link href='https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css' rel='stylesheet' />
     <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/locale/ru.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <!-- Dancemap-->
     <script  src="/js/mobile.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
     <link href='/css/main.css' rel='stylesheet' />
   
   
@@ -65,15 +67,25 @@
     <script  src="/js/mapcontrol.js"></script>
 
     <script>
-      const settings = {
+      dayjs.locale('ru');
+      const navSettings = {
         event: true,
         datepicker: document.querySelector('input[type="date"]'),
         up: document.getElementById('date-right'),
         down: document.getElementById('date-left')
       }
+      const searchSettings = {
+        type: 'event',
+        category: 'all',
+        radius: 5000,
+        queryType: 'geoWithin'
+      }
+
+      this.dancemap.mapcontrol.searchSetup(searchSettings);
+      this.dancemap.nav.navSetup(navSettings);
       this.dancemap.mapcontrol.openByURL();
       this.dancemap.socket.getClusters();
-      this.dancemap.nav.navSetup(settings);
+      
 
     </script>
   </body>

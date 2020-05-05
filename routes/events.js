@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Studio = require('../models/studio')
+const Event = require('../models/event')
 const path = require('path')
 const { buildSitemaps } = require('express-sitemap-xml')
 const fs = require('fs')
@@ -12,13 +12,13 @@ router.get('/:id', function(req, res) {
     console.log('GET /events', req.params);  
     if(req.params.id) {
       const id = req.params.id
-	  Studio.find({"_id": id})
-	    .then(function(studio) { 
-	      console.log('GET /event', studio); 
+	    Event.find({"_id": id})
+	    .then(function(event) { 
+	      console.log('GET /event', event); 
           res.render('../static/views/events',{
-        	marker: studio[0],
+        	marker: event[0],
           page: null,
-          markerEncoded: encodeURIComponent(JSON.stringify(studio[0]))
+          markerEncoded: encodeURIComponent(JSON.stringify(event[0]))
         });
 
         //res.sendFile(path.join(__dirname, '../static', 'index.html'));

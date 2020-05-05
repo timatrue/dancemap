@@ -1,6 +1,19 @@
 this.dancemap.nav = (function(){
   let self = this;
   
+  
+  function setCategoryListener() {
+    let classSelector = document.getElementById('class-selector');
+    classSelector.addEventListener('change', function (event) {
+      dancemap.ui.category = this.value;
+      dancemap.mapcontrol.getMap().closePopup();
+      dancemap.mapcontrol.moveEnd();
+      console.log('setCategoryListener', this.value);
+    }, false);
+  }
+
+
+
   function setInputDate(input) {
     if(input) {
       //input.value = new Date().toISOString().split('T')[0];
@@ -55,7 +68,7 @@ this.dancemap.nav = (function(){
       upDay(settings);
       downDay(settings);
     }
-
+    setCategoryListener();
     setURLID();
     onSearch();
     onClear();
@@ -64,7 +77,7 @@ this.dancemap.nav = (function(){
   function onSearch() {
     const input = document.querySelector('input[type="search"]');
     input.addEventListener('search', (e) => {
-      //dancemap.socket.findStudio(input.value);
+      //dancemap.socket.findMarker(input.value);
       console.log("The term searched for was " + input.value);
     })
 
@@ -74,7 +87,7 @@ this.dancemap.nav = (function(){
         // Cancel the default action, if needed
         event.preventDefault();
         // Trigger the button element with a click
-        dancemap.socket.findStudio(input.value);
+        dancemap.socket.findMarker(input.value);
         input.blur();
         console.log("The term searched for was " + input.value);
       }

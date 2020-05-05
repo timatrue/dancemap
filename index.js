@@ -25,6 +25,7 @@ const Event = require('./models/event')
 const studioTemplate = require('./models/studioTemplate')
 const eventTemplate = require('./models/eventTemplate')
 const Supercluster = require('supercluster')
+const clusterdata = require('./supercluster/clusterdata')
 
 
 const mongoose = require('mongoose')
@@ -80,8 +81,12 @@ server.listen(port, () => {
   console.log('HTTPS Server running on port ' + port);
 });
 
-let index = {};
 
+let cluster;
+clusterdata.getData().then(data => cluster = data );
+
+//let index = {};
+//clusterdata.getData()
 /*memory usage debug
 index.all1 = new Supercluster({radius: 40,maxZoom: 17});
 index.all2 = new Supercluster({radius: 40,maxZoom: 17});
@@ -94,7 +99,7 @@ index.all8 = new Supercluster({radius: 40,maxZoom: 17});
 index.all9 = new Supercluster({radius: 40,maxZoom: 17});
 index.all10 = new Supercluster({radius: 40,maxZoom: 17});*/
 
-
+/*
 index.all = new Supercluster({
   radius: 40,
   maxZoom: 17
@@ -124,13 +129,14 @@ index.salsa = new Supercluster({
     radius: 40,
     maxZoom: 17
 });
+*/
 
-getData().catch(error => console.log('getData',error.stack));
+/*getData().catch(error => console.log('getData',error.stack));
 
 async function getData() {
 
   await Studio.find({}).then(function(studios) { 
-    index.all.load(studios);
+    index.all.load(studios);*/
     
     /*memory usage debug
     index.all1.load(studios);
@@ -144,7 +150,7 @@ async function getData() {
     index.all9.load(studios);
     index.all10.load(studios);*/
 
-
+/*
     console.log('index_all', index.all);
   });
   await Studio.find({'properties.classes.hustle': true}).then(function(studios) { 
@@ -168,7 +174,7 @@ async function getData() {
     index.salsa.load(studios);
     console.log('index_salsa', index.salsa);
   });
-}
+}*/
 
 /*SOCKET*/
 const io = require('socket.io')(server);
@@ -204,7 +210,7 @@ io.on('connection', function(socket) {
   });
   socket.on('get_supercluster', function () {
 
-    socket.emit('get_supercluster', index);
+    socket.emit('get_supercluster', cluster);
   });
 
   socket.on('post_studio', function (msg) {
@@ -283,14 +289,16 @@ io.on('connection', function(socket) {
 
 
   socket.on('get_clusters', (box) => {
-
+    let index;
+    const category = box.category;
+    if(box.type === 'event') index = cluster.events;
+    if(box.type === 'studio') index = cluster.studios;
+     
     console.log('get_clusters', box);
-    const type = box.class;
-
       if (box.getClusterExpansionZoom) {
         try {
           let data = {
-            expansionZoom: index[type].getClusterExpansionZoom(box.getClusterExpansionZoom),
+            expansionZoom: index[category].getClusterExpansionZoom(box.getClusterExpansionZoom),
             center: box.center
           };
           console.log('get_zoomed_clusters', data);
@@ -306,11 +314,11 @@ io.on('connection', function(socket) {
 
 	    /*check if user sent correct property from front*/
 	    try {
-          if(index.hasOwnProperty(type)) {
-            socket.emit('get_clusters', index[type].getClusters(box.bounds, box.zoom));
+          if(index.hasOwnProperty(category)) {
+            socket.emit('get_clusters', index[category].getClusters(box.bounds, box.zoom));
           }
         } catch (e) {
-          console.error(e, 'socket.on_get_clusters  if(index.hasOwnProperty(type)');
+          console.error(e, 'socket.on_get_clusters  if(index.hasOwnProperty(category)');
         }
       }
 
@@ -320,13 +328,13 @@ io.on('connection', function(socket) {
   
   /*Utility socket functions*/
   socket.on('get_children', (clusterId) => {
-
+    let index = cluster.studios;
   	let children = index.all.getChildren(clusterId);
   	socket.emit('get_children', children);
   });
 
   socket.on('get_leaves', (clusterId) => {
-    
+    let index = cluster.studios;
     let leaves = index.all.getLeaves(clusterId, limit = 10, offset = 0);
     socket.emit('get_leaves', leaves);
   });
@@ -341,23 +349,27 @@ io.on('connection', function(socket) {
     
   });
 
-  socket.on('find_studio', (query) => {
+  socket.on('find_marker', (query) => {
   	
     let category = query.category === 'all' ? null : 'properties.classes.' + query.category;
+    let type = query.type;
+    let ModelDB;
+    if(type === 'event') ModelDB = Event;
+    if(type === 'studio') ModelDB = Studio;
     
-    if(!query.type) {
-      console.log('findStudio all', query, category)
+    if(!query.queryType) {
+      console.log('findMarker all', query, category)
       if(category) {
         Studio.find({ "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }, [category] : "true"})
-          .then((res) => socket.emit('find_studio', res))
+          .then((res) => socket.emit('find_marker', res))
       } else {
         Studio.find({ "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }})
-          .then((res) => socket.emit('find_studio', res))
+          .then((res) => socket.emit('find_marker', res))
       }
     }
 
-    if(query.type === "near") {
-      console.log('findStudio $near', query, category)
+    if(query.queryType === "near") {
+      console.log('findMarker $near', query, category)
       if(category) {
       	
         Studio.find({ 
@@ -374,7 +386,7 @@ io.on('connection', function(socket) {
             }} 
 
         })
-        .then((res) => socket.emit('find_studio', res))
+        .then((res) => socket.emit('find_marker', res))
       } else {
         Studio.find({
           "properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') },
@@ -388,14 +400,14 @@ io.on('connection', function(socket) {
              //"$minDistance": <distance in meters>
           }} 
         })
-        .then((res) => socket.emit('find_studio', res))
+        .then((res) => socket.emit('find_marker', res))
       }
     }
-    if(query.type === "geoWithin") {
-      console.log('findStudio $geoWithin', query, category)
+    if(query.queryType === "geoWithin") {
+      console.log('findMarker $geoWithin', query, category)
       if(category) {
       	
-        Studio.find({
+        ModelDB.find({
         	$or: [ {"properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }},
             {"properties.altername" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }}],
         	[category] : "true",
@@ -405,11 +417,11 @@ io.on('connection', function(socket) {
             }} 
 
         })
-        //.then((res) => socket.emit('find_studio', res))
+        //.then((res) => socket.emit('find_marker', res))
         .then((res) => socket.emit('get_clusters', res))
         
       } else {
-        Studio.find({
+        ModelDB.find({
           $or: [{"properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }},
           {"properties.altername" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }}],
           "geometry" : {
@@ -417,11 +429,15 @@ io.on('connection', function(socket) {
             "$box": query.box
           }} 
         })
-        //.then((res) => socket.emit('find_studio', res))
+        //.then((res) => socket.emit('find_marker', res))
         .then((res) => socket.emit('get_clusters', res))
       }
     }    
   });
+
+
+
+
   socket.on('get_memory_usage', function () {
     getMemoryUsage();
   });

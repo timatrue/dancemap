@@ -166,7 +166,7 @@ input::-webkit-input-placeholder {
 .search-prompt {
   position: relative;
   display: flex;
-  z-index: 9999;
+  z-index: 6999;
   overflow-x: hidden;
   cursor: pointer;
   visibility: hidden;
@@ -436,7 +436,7 @@ input::-webkit-input-placeholder {
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
 }
-.studio-title {
+.marker-title {
   font-weight:bold;
 }
 

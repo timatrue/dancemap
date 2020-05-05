@@ -16,7 +16,7 @@ function getStudios(fn) {
   socket.emit('get_studio', {});
 }
 
-function getClusters(e) {
+function getClusters() {
 
 
     let map = dancemap.mapcontrol.getMap();
@@ -26,7 +26,8 @@ function getClusters(e) {
     let box = {
       bounds: [bounds.getWest(), bounds.getSouth(), bounds.getEast(), bounds.getNorth()],
       zoom: zoom,
-      class: self.dancemap.ui.class
+      category: dancemap.ui.category,
+      type: dancemap.ui.type
     } 
     console.log('getClusters', box)
     socket.emit('get_clusters', box);
@@ -34,7 +35,7 @@ function getClusters(e) {
 }
 
 function getZoomedClusters(box) {
-  box.class = self.dancemap.ui.class;
+  box.category = self.dancemap.ui.category;
 
   socket.emit('get_clusters', box);
 }
@@ -60,18 +61,19 @@ function getMemoryUsage() {
   socket.emit('get_memory_usage', {});
 }
 
-function findStudio(studio) {
+function findMarker(studio) {
   let map = dancemap.mapcontrol.getMap();
-  let category = dancemap.ui.class
+  let type = dancemap.ui.type;
+  let category = dancemap.ui.category
   let radius = dancemap.ui.radius;
-  let type = dancemap.ui.queryType;
+  let queryType = dancemap.ui.queryType;
   let center = map.getCenter();
   let sw = map.getBounds().getSouthWest();
   let ne = map.getBounds().getNorthEast();
   let box = [[sw.lng,sw.lat], [ne.lng,ne.lat]];
 
-  let query = {studio, category, center, radius, type, box};
-  socket.emit('find_studio', query);
+  let query = {studio, category, center, radius, queryType, box, type};
+  socket.emit('find_marker', query);
 }
 
 function isStudioIdValid(studio) {
@@ -143,7 +145,7 @@ function reload(secret) {
     getZoomedClusters: getZoomedClusters,
     getClusterChildren: getClusterChildren,
     getClusterLeaves: getClusterLeaves,
-    findStudio: findStudio,
+    findMarker: findMarker,
     isStudioIdValid,
     reload: reload,
     getMemoryUsage: getMemoryUsage,

@@ -1,22 +1,5 @@
 this.dancemap.mapcontrol = (function(){
   let self = this; 
- 
-   /**/
-  this.dancemap.ui = {};
-  this.dancemap.ui.class = 'all';
-  this.dancemap.ui.radius = 5000;
-  this.dancemap.ui.queryType = 'geoWithin';
-
-  let classSelector = document.getElementById('class-selector');
-  classSelector.addEventListener('change', function (event) {
-
-    self.dancemap.ui.class = this.value;
-    self.dancemap.mapcontrol.getMap().closePopup();
-
-    moveEnd();
-    console.log(this.value);
-
-  }, false);
 
   let map = L.map('map-box', {
     	geoLocationHandler: true,
@@ -103,11 +86,11 @@ this.dancemap.mapcontrol = (function(){
        }, options);
     }
   });
-
+  
   map.addHandler('geoLocationHandler', L.GeoLocationHandler);
   map.on('moveend', moveEnd);
-  map.on("zoomstart", function (e) { classSelector.disabled = true; });
-  map.on("zoomend", function (e) { classSelector.disabled = false; });
+  map.on("zoomstart", function (e) { document.getElementById('class-selector').disabled = true; });
+  map.on("zoomend", function (e) { document.getElementById('class-selector').disabled = false; });
   map.on("popupopen", function(e) {
 
     if (window.matchMedia('screen and (max-width: 480px)').matches) {
@@ -153,7 +136,7 @@ this.dancemap.mapcontrol = (function(){
 
   function moveEnd() {
     const input = document.querySelector('input[type="search"]');
-    input.value ? dancemap.socket.findStudio(input.value) : self.dancemap.socket.getClusters();
+    input.value ? dancemap.socket.findMarker(input.value) : dancemap.socket.getClusters();
     dancemap.nav.addLatLngToURL(map.getCenter());
   }
   
@@ -213,7 +196,7 @@ this.dancemap.mapcontrol = (function(){
       let clusterData = {
           getClusterExpansionZoom: e.layer.feature.properties.cluster_id,
           center: e.latlng,
-          class: self.dancemap.ui.class
+          category: self.dancemap.ui.category
       }
         
       self.dancemap.socket.getZoomedClusters(clusterData);
@@ -296,33 +279,47 @@ this.dancemap.mapcontrol = (function(){
     return map;
   }
 
-  function addPopupContent(studios) {
+  function addPopupContent(markers) {
 
-    studios.forEach((studio) => {
-      if(!studio.properties.cluster) {
-        getPopupContentDekstop(studio);
+    markers.forEach((marker) => {
+      if(!marker.properties.cluster) {
+        getPopupContentDekstop(marker);
       }
     })
-    return studios;
+    return markers;
   }
 
-  function getPopupContentDekstop(studio) {
-       studio.properties.popupContent =
+  function getPopupContentDekstop(marker) {
+       marker.properties.popupContent =
         `
-          ${studio.properties.name ?  `<div class='studio-title'> ${studio.properties.name} <hr></div>` : ''} 
+          ${marker.properties.name ?
+            `<div class='marker-title'> ${marker.properties.name}
+            ${marker.properties.start ? dayjs(marker.properties.start).format('D MMMM YY')  : ''} 
+            -
+            ${marker.properties.end ? dayjs(marker.properties.end).format('D MMMM YY') : ''}
+            <hr></div>` :
+             ''} 
           
-          <div class='studio-content'>
+          <div class='marker-content'>
           <div class='container-info__speciality'>
-            <span>Направления: </span>${studio.properties.speciality ?  `${studio.properties.speciality.join(', ')}` : ''}
+            <span>Направления: </span>${marker.properties.speciality ?  `${marker.properties.speciality.join(', ')}` : ''}
           </div>
         
           <div class='container-info__address'>
-            ${self.dancemap.icons.marker} ${studio.properties.address ? `<div> ${studio.properties.city}, ${studio.properties.address} </div>` : ''} 
+            ${self.dancemap.icons.marker} ${marker.properties.address ? `<div> ${marker.properties.city}, ${marker.properties.address} </div>` : ''} 
           </div>
           
-          ${studio.properties.vk ? `<div class=''><a href='${studio.properties.vk}' target="_blank"> ${self.dancemap.icons.vk} </a></div>` : ''} 
+          ${marker.properties.vk ? `<div class=''><a href='${marker.properties.vk}' target="_blank"> ${self.dancemap.icons.vk} </a></div>` : ''} 
           <div class="container-info__url"><button onclick="dancemap.nav.copyPopupURL()">копировать ссылку </button></div>
         </div>` 
+  }
+
+  function searchSetup(settings) {
+    dancemap.ui = dancemap.ui || {} ;
+    dancemap.ui.type = settings.type;
+    dancemap.ui.category = settings.category;
+    dancemap.ui.radius = settings.radius;
+    dancemap.ui.queryType = settings.queryType;
   }
 
   return {
@@ -330,7 +327,9 @@ this.dancemap.mapcontrol = (function(){
     getMap: getMap,
     addClusters: addClusters,
     flyToClusters: flyToClusters,
-    openByURL: openByURL
+    openByURL: openByURL,
+    searchSetup: searchSetup,
+    moveEnd: moveEnd
   }
 
 })();
