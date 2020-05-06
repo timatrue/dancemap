@@ -23,19 +23,6 @@
          "longitude": "<%= marker.geometry.coordinates[0] %>"
       },
        "openingHours": "Mo 19:00-23:00 Tu 19:00-23:00 We 19:00-23:00 Th 19:00-23:00 Fr 19:00-23:00"
-             /*"eventSchedule": [{
-        "@type": "Schedule",
-        "repeatFrequency": "P1M",
-        "byDay": [
-          "http://schema.org/Monday",
-          "http://schema.org/Tuesday",
-          "http://schema.org/Wednesday",
-          "http://schema.org/Thursday",
-          "http://schema.org/Friday"
-        ],
-        "startTime": "18:00",
-        "endTime": "22:00"
-      }],*/
     }
   <% } %>
   <% if (marker.properties.type === 'event') { %>
