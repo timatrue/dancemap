@@ -10,11 +10,15 @@ function getEventTemplate() {
         "name" : "",
         "altername" : "",
         "address" : "",
+        "city":"",
+        "country":"",
         "classes" : {},
         "speciality" : [],
         "seoimage" : {},
         "start" : "",
         "end" : "",
+        "startH" : "",
+        "endH" : "",
         "nestedgroup" : []
       }
     }

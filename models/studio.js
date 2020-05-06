@@ -38,6 +38,10 @@ const StudioScheme = new Schema({
   	  type: String,
   	  required: [true, 'city field required']
     },
+    country: {
+      type: String,
+      required: [true, 'country field required']
+    },
     vk: {
       type: String
     },

@@ -294,8 +294,8 @@ this.dancemap.mapcontrol = (function(){
         `
           ${marker.properties.name ?
             `<div class='marker-title'> ${marker.properties.name}
-            ${marker.properties.start ? dayjs(marker.properties.start).format('D MMMM YY')  : ''} 
-            -
+            ${marker.properties.start ? dayjs(marker.properties.start).format('D MMMM YY') + ' -' : ''} 
+            
             ${marker.properties.end ? dayjs(marker.properties.end).format('D MMMM YY') : ''}
             <hr></div>` :
              ''} 

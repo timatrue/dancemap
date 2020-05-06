@@ -1,34 +1,29 @@
 <% if (marker) { -%>
+
 <script type="application/ld+json">
-{
-  "@context": "http://www.schema.org",
-  "@type": "SportsActivityLocation",
-  "additionalType": ["https://schema.org/LeisureTimeActivity","https://schema.org/Balance","https://schema.org/Flexibility"],
-  "name": "<%= marker.properties.name %>",
-  "url": "<%= marker.properties.vk %>",
-  "image" : "https://dancemap.online/images/image-placeholder.svg",
-  "priceRange": "$",
-  "description": "Школа танцев: <%= marker.properties.speciality.join(', ') %>",
-  "address": {
-     "@type": "PostalAddress",
-     "streetAddress": "<%= marker.properties.address %>",
-     "addressLocality": "<%= marker.properties.city %>",
-     "addressCountry": "Россия"
-  },
-  "geo": {
-     "@type": "GeoCoordinates",
-     "latitude": "<%= marker.geometry.coordinates[1] %>",
-     "longitude": "<%= marker.geometry.coordinates[0] %>"
-  },
-   "openingHours": "Mo 19:00-23:00 Tu 19:00-23:00 We 19:00-23:00 Th 19:00-23:00 Fr 19:00-23:00",
-   "event": {
-      "@type": "DanceEvent",
-      "name": "Школа танцев <%= marker.properties.name %>",
-      "description": "Занятия по: <%= marker.properties.speciality.join(', ') %>",
-      "startDate": "2020-05-31T21:00:00.000Z",
-      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-      "eventStatus": "https://schema.org/EventScheduled",
-      "eventSchedule": [{
+  <% if (marker.properties.type === 'studio') { %>
+    {
+      "@context": "http://www.schema.org",
+      "@type": "SportsActivityLocation",
+      "additionalType": ["https://schema.org/LeisureTimeActivity","https://schema.org/Balance","https://schema.org/Flexibility"],
+      "name": "<%= marker.properties.name %>",
+      "url": "<%= marker.properties.vk %>",
+      "image" : "https://dancemap.online/images/image-placeholder.svg",
+      "priceRange": "$",
+      "description": "Школа танцев: <%= marker.properties.speciality.join(', ') %>",
+      "address": {
+         "@type": "PostalAddress",
+         "streetAddress": "<%= marker.properties.address %>",
+         "addressLocality": "<%= marker.properties.city %>",
+         "addressCountry": "<%= marker.properties.country %>"
+      },
+      "geo": {
+         "@type": "GeoCoordinates",
+         "latitude": "<%= marker.geometry.coordinates[1] %>",
+         "longitude": "<%= marker.geometry.coordinates[0] %>"
+      },
+       "openingHours": "Mo 19:00-23:00 Tu 19:00-23:00 We 19:00-23:00 Th 19:00-23:00 Fr 19:00-23:00"
+             /*"eventSchedule": [{
         "@type": "Schedule",
         "repeatFrequency": "P1M",
         "byDay": [
@@ -40,22 +35,40 @@
         ],
         "startTime": "18:00",
         "endTime": "22:00"
-      }],
+      }],*/
+    }
+  <% } %>
+  <% if (marker.properties.type === 'event') { %>
+    {
+      "@context": "http://www.schema.org",
+      "@type": "DanceEvent",
+      "name": "<%= marker.properties.name %>",
+      "description": "Социальные танцы: <%= marker.properties.speciality.join(', ') %>",
+      "startDate": "<%= marker.properties.start %>",
+      "endDate": "<%= marker.properties.end %>",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
       "location": {
         "@type": "Place",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "<%= marker.properties.address %>",
           "addressLocality": "<%= marker.properties.city %>",
-          "addressCountry": "Россия"
+          "addressCountry": "<%= marker.properties.country %>"
         }
       }
+      <% if (marker.properties.offers) { %>
+      "offers": {
+      "@type": "Offer",
+      "name": "Fullpass",
+      "price": "6200",
+      "priceCurrency": "RUB"
+      }
+      <% } %>
     }
-}
 
+  <% } %>
 </script>
-
 <% } -%>
-
-
+   
 

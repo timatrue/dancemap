@@ -198,10 +198,10 @@ io.on('connection', function(socket) {
     if(isObject(secret) && secret) {
       if(secret.secret === 'Covid19!') {
         /*firstly you have to define new property in studio.js */
-        Studio.updateMany({}, {$set: { 'properties.type': "studio"}} ).then(function(result) {
+        Studio.updateMany({}, {$set: { 'properties.country': "Россия"}} ).then(function(result) {
 	      console.log('set_all_documents', result);
 	    });
-	    Event.updateMany({}, {$set: { 'properties.type': "event"}} ).then(function(result) {
+	    Event.updateMany({}, {$set: { 'properties.country': "Россия"}} ).then(function(result) {
 	      console.log('set_all_documents', result);
 	    });
       }
@@ -264,6 +264,8 @@ io.on('connection', function(socket) {
     event.properties.altername = msg.altername;
     event.properties.start = msg.start;
     event.properties.end = msg.end;
+    //event.properties.start = new Date(new Date(msg.start).setHours(18)).toISOString();
+    //event.properties.end = new Date(new Date(msg.end).setHours(18)).toISOString();
 
     if(msg.hustle) event.properties.classes.hustle = true;
     if(msg.zouk) event.properties.classes.zouk = true;

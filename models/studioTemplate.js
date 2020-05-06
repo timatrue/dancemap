@@ -10,6 +10,8 @@ function getStudioTemplate() {
         "name": "",
         "altername":"",
         "address":"",
+        "city":"",
+        "country":"",
         "classes":{},
         "speciality":[],
         "seoimage": {}
