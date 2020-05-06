@@ -35,7 +35,8 @@ function getClusters() {
 }
 
 function getZoomedClusters(box) {
-  box.category = self.dancemap.ui.category;
+  box.category = dancemap.ui.category;
+  box.type = dancemap.ui.type;
 
   socket.emit('get_clusters', box);
 }
