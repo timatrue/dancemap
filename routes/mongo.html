@@ -27,7 +27,7 @@
   <header style=""></header>
 
   <h1>Post Studio</h1>
-  <form  id="formStudio">
+  <form  id="form">
     <div id="containerForm" style="">
       <div>
         <label for="eventRecord">Event</label>
@@ -75,14 +75,24 @@
       <input type="text" name="speciality" id="speciality"  required>
 
       <div id="eventBlock">
-        <label for="start">Start: ()</label>
-        <input type="date" name="start" id="start"  required>
-        <label for="end">End: ()</label>
-        <input type="date" name="end" id="end"  required>
-        <label for="nestedgroup">Nested group: (id1,id2,etc - without spaces!)</label>
-        <input type="text" name="nestedgroup" id="nestedgroup" >        
-      </div>
+        <fieldset id="datesBlock" name='datesBlock'>
+          <label for="start">Start Date: ()</label>
+          <input type="date" name="start" id="start"  required>
+          <label for="end">End Date: ()</label>
+          <input type="date" name="end" id="end"  required>
+          <label for="nestedgroup">Nested group: (id1,id2,etc - without spaces!)</label>
+          <input type="text" name="nestedgroup" id="nestedgroup" >        
+        </fieldset>
 
+        <fieldset id="offersBlock" name='offersBlock'>
+          <label for="offer">offer1:</label>
+          <input type="text" name="offer" id="" value='{"name":"name","price":"200","currency":"RUB"}' >
+          <label for="offer">offer2:</label>
+          <input type="offer" name="offer" id="" value='{"name":"name","price":"200","currency":"RUB"}' >
+          <label for="offer">offer3</label>
+          <input type="text" name="offer" value='{"name":"name","price":"200","currency":"RUB"}'>        
+        </fieldset>
+      </div>
       <input type="submit" name="Submit">
     </div>
   </form>
@@ -93,31 +103,46 @@
   <script  src="/js/socket.js"></script>
 
   <script>
-
+  
+  setDates()
   let radios = document.querySelectorAll('input[type=radio][name="recordType"]');
 
   function radioHandler(event) {
     let eventBlock = document.getElementById('eventBlock');
     if(this.value === 'event' ) {
       eventBlock.style.display = 'flex';
-    }else if ( this.value === 'studio' ) {
-       eventBlock.style.display = 'none';
+      document.getElementById('start').disabled = false;
+      document.getElementById('end').disabled = false;
+    } else if ( this.value === 'studio' ) {
+      eventBlock.style.display = 'none';
+      document.getElementById('start').disabled = true;
+      document.getElementById('end').disabled = true;
     }  
   }
 
   Array.prototype.forEach.call(radios, function(radio) {
     radio.addEventListener('change', radioHandler);
   });
+  
 
   //https://learn.javascript.ru/async-await
   let dancemap = this.dancemap;
-  document.querySelector("#formStudio").addEventListener("submit", function(e) {
+  document.querySelector("#form").addEventListener("submit", function(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const data = Array.from(formData.entries()).reduce((memo, pair) => ({
-      ...memo,
-      [pair[0]]:pair[1],
-    }), {})
+    const data = Array.from(formData.entries())
+      .reduce((memo, pair) => ({...memo, [pair[0]]:pair[1],}), {})
+    /*const offers = Array.from(formData.elements.offersBlock)
+      .reduce((memo, pair) => ({...memo, [pair[0]]:pair[1],}), {})*/
+    //new FormData(this.form).getAll('offerName')
+    if(formData.getAll('offer').length) {
+      data.offers = formData.getAll('offer')
+      .map(el => {
+        if(el) return JSON.parse(el);
+        return null;
+      })
+      .filter(el => el !== null)
+    }
     
     getImg64(data.img).then( img64 => {
       //console.log(img64)
@@ -126,12 +151,15 @@
     });
     
     if(!dancemap.util.isObjEmpty(data)) {
+       if(data.start) data.start = dancemap.util.getFormattedDate(data.start,{h:11,m:0,s:0});
+       if(data.end) data.end = dancemap.util.getFormattedDate(data.end, {h:18,m:0,s:0});
+
        
        console.log('data from form', data);
 
        if(dancemap.util.isObjPropNotEmpty(data)) {
-         if(data.recordType === 'studio') dancemap.socket.postStudio(data);
-         if(data.recordType === 'event') dancemap.socket.postEvent(data);
+         //if(data.recordType === 'studio') dancemap.socket.postStudio(data);
+         //if(data.recordType === 'event') dancemap.socket.postEvent(data);
        }
        return; 
     }
@@ -151,6 +179,11 @@
     return await toBase64(img);   
   }
 
+  function setDates() {
+    document.getElementById('start').valueAsDate = new Date();
+    document.getElementById('end').valueAsDate = new Date();
+  }
+  
 
 
 

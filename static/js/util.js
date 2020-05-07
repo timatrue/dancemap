@@ -21,10 +21,22 @@ this.dancemap.util = (function(){
     return template.content.childNodes;
   }
 
+  function getFormattedDate(dateString, hms) {
+   var date = new Date(dateString);
+   if(hms) {
+     date.setHours(hms.h, hms.m, hms.s);
+   } else {
+     date.setHours(0, 0, 0); 
+   }
+     // Set hours, minutes and seconds
+   return date.toISOString();
+}
+
   return {
     isObjEmpty : isObjEmpty,
     isObjPropNotEmpty : isObjPropNotEmpty,
-    htmlToElements : htmlToElements
+    htmlToElements : htmlToElements,
+    getFormattedDate: getFormattedDate
 
   }
 
