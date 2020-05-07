@@ -3,8 +3,6 @@ Host: https://dancemap.online
 Sitemap: https://dancemap.online/sitemap.xml
 
 Disallow: /testmenu
-Disallow: /events
-Disallow: /events/*
 Disallow: /*ll=
 
 # Yandex-only
