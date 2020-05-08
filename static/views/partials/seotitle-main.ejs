@@ -20,12 +20,12 @@
 <% if (marker) { %>
   <% if (marker.properties.type === 'studio') { %>
     <title>Школа социальных танцев <%= marker.properties.name %>, <%= marker.properties.city %></title>
-    <meta name="Description" content="Школа танцев <%= marker.properties.name %>, обучение танцам: <%= marker.properties.speciality.join(', ') %>">
+    <meta name="Description" content="Школа социальных танцев <%= marker.properties.name %>, обучение танцам: <%= marker.properties.speciality.join(', ') %>, <%= marker.properties.city %>">
   <% } %>
 
     <% if (marker.properties.type === 'event') { %>
-    <title>Школа социальных танцев <%= marker.properties.name %>, <%= marker.properties.city %></title>
-    <meta name="Description" content="Школа танцев <%= marker.properties.name %>, обучение танцам: <%= marker.properties.speciality.join(', ') %>">
+    <title><%= marker.properties.name %>, <%= marker.properties.city %></title>
+    <meta name="Description" content="<%= marker.properties.name %>, <%= marker.properties.speciality.join(', ') %>">
   <% } %>
 
 <% }  %>	
