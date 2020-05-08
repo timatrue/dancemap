@@ -63,6 +63,9 @@ const EventScheme = new Schema({
     end: Date,
     nestedgroup: {
       type: [String]
+    },
+    offers: {
+      type: [Object]
     }
   },/*
   city: {

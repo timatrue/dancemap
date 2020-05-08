@@ -19,7 +19,8 @@ function getEventTemplate() {
         "end" : "",
         "startH" : "",
         "endH" : "",
-        "nestedgroup" : []
+        "nestedgroup" : [],
+        "offers": []
       }
     }
     return event;

@@ -19,15 +19,44 @@ index.all8 = new Supercluster({radius: 40,maxZoom: 17});
 index.all9 = new Supercluster({radius: 40,maxZoom: 17});
 index.all10 = new Supercluster({radius: 40,maxZoom: 17});*/
 
+
+/*EVENTS*/
 index.events.all = new Supercluster({
   radius: 40,
   maxZoom: 17
 });
 
+index.events.hustle = new Supercluster({
+  radius: 40,
+  maxZoom: 17
+});
+
+index.events.zouk = new Supercluster({
+    radius: 40,
+    maxZoom: 17
+});
+
+index.events.wcs = new Supercluster({
+    radius: 40,
+    maxZoom: 17
+});
+
+index.events.bachata = new Supercluster({
+    radius: 40,
+    maxZoom: 17
+});
+
+index.events.salsa = new Supercluster({
+    radius: 40,
+    maxZoom: 17
+});
+
+/*STUDIOS*/
 index.studios.all = new Supercluster({
   radius: 40,
   maxZoom: 17
 });
+
 
 index.studios.hustle = new Supercluster({
   radius: 40,
@@ -56,12 +85,35 @@ index.studios.salsa = new Supercluster({
 
 
 async function getData() {
-  
+  /*EVENTS*/
   await Event.find({}).then(function(events) { 
     index.events.all.load(events);
 
     console.log('index_all_events', index.events.all);
   });
+  await Event.find({'properties.classes.hustle': true}).then(function(events) { 
+    index.events.hustle.load(events);
+    console.log('index_hustle_events', index.events.hustle);
+  });
+  await Event.find({'properties.classes.zouk': true}).then(function(events) { 
+    index.events.zouk.load(events);
+    console.log('index_zouk_events', index.events.events);
+  });
+  await Event.find({'properties.classes.wcs': true}).then(function(events) { 
+    index.events.wcs.load(events);
+    console.log('index_wcs_events', index.events.wcs);
+  });
+  await Event.find({'properties.classes.bachata': true}).then(function(events) { 
+    index.events.bachata.load(events);
+    console.log('index_bachata_events', index.events.bachata);
+  });
+  await Event.find({'properties.classes.salsa': true}).then(function(events) { 
+    index.events.salsa.load(events);
+    console.log('index_salsa_events', index.events.events);
+  });
+
+
+/*STUDIOS*/
   await Studio.find({}).then(function(studios) { 
     index.studios.all.load(studios);
 

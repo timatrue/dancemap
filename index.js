@@ -260,10 +260,12 @@ io.on('connection', function(socket) {
     event.properties.name = msg.name;
     event.properties.address = msg.address;
     event.properties.city = msg.city;
+    event.properties.country = msg.country;
     event.properties.vk = msg.vk;
     event.properties.altername = msg.altername;
     event.properties.start = msg.start;
     event.properties.end = msg.end;
+    event.properties.offers = msg.offers;
     //event.properties.start = new Date(new Date(msg.start).setHours(18)).toISOString();
     //event.properties.end = new Date(new Date(msg.end).setHours(18)).toISOString();
 
@@ -297,6 +299,8 @@ io.on('connection', function(socket) {
     if(box.type === 'studio') index = cluster.studios;
      
     console.log('get_clusters', box);
+
+
       if (box.getClusterExpansionZoom) {
         try {
           let data = {

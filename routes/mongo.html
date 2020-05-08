@@ -158,8 +158,8 @@
        console.log('data from form', data);
 
        if(dancemap.util.isObjPropNotEmpty(data)) {
-         //if(data.recordType === 'studio') dancemap.socket.postStudio(data);
-         //if(data.recordType === 'event') dancemap.socket.postEvent(data);
+          if(data.recordType === 'studio') dancemap.socket.postStudio(data);
+          if(data.recordType === 'event') dancemap.socket.postEvent(data);
        }
        return; 
     }

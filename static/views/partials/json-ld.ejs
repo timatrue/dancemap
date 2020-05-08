@@ -45,16 +45,27 @@
         }
       }
       <% if (marker.properties.offers) { %>
-      "offers": {
-      "@type": "Offer",
-      "name": "Fullpass",
-      "price": "6200",
-      "priceCurrency": "RUB"
-      }
+        ,"offers" : [
+          <% for(var i = 0; i < marker.properties.offers.length; i++) { %>
+            {
+              "@type": "Offer",
+              "name": "<%= marker.properties.offers[i].name %>",
+              "price": "<%= marker.properties.offers[i].price %>",
+              "priceCurrency": "<%= marker.properties.offers[i].currency %>"
+            }
+            <% if (marker.properties.offers[i+1]) { %>
+             ,
+            <% } %>
+          <% } %>
+        ]
+
       <% } %>
+    <% } %>
+
+
     }
 
-  <% } %>
+
 </script>
 <% } -%>
    
