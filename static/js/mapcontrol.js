@@ -293,10 +293,10 @@ this.dancemap.mapcontrol = (function(){
        marker.properties.popupContent =
         `
           ${marker.properties.name ?
-            `<div class='marker-title'> ${marker.properties.name} <br>
-            ${marker.properties.start ? dayjs(marker.properties.start).format('D MMMM YYYY') + ' -' : ''} 
+            `<div class='marker-title'> <h1>${marker.properties.name}</h1>
+            ${marker.properties.start ? '<h2>' + dayjs(marker.properties.start).format('D MMMM YYYY') + ' -' : ''} 
             
-            ${marker.properties.end ? dayjs(marker.properties.end).format('D MMMM YYYY') : ''}
+            ${marker.properties.end ? dayjs(marker.properties.end).format('D MMMM YYYY') + '</h2>' : ''} 
             <hr></div>` :
              ''} 
           

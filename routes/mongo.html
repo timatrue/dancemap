@@ -5,17 +5,66 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <meta name="Description" content=""/>
+    <link href='/css/main.css' rel='stylesheet' />
     <script src="/socket.io/socket.io.js"></script>
     <style>
-      #eventBlock {
-        display: block;
+      #containerForm {
+        display: flex;
       }
-      form > div > *{
-        margin-top: 5px;
+      form {
+        display: inline-flex;
+        flex-direction: column;
+        margin: auto;
+        min-width: 360px;
       }
-      #containerForm, #eventBlock {
+
+      form fieldset {
+        margin: 10px 0px;
         display:flex;
         flex-direction: column;
+      } 
+      form label {
+        padding: 8px 2px 2px 2px;
+      }
+      input {
+        font-size: 16px;
+        padding: 4px 2px;
+      }
+      input[type=text] {
+        width: 100%;
+      }
+      #publishBlock {
+
+      }
+      #eventBlock {
+
+      }
+
+      .btn {
+        border: none;
+        color: white;
+        padding: 15px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 16px 2px 6px 2px;
+        cursor: pointer;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 2px 4px 0 rgba(0,0,0,0.19);
+        width: 100%;
+      }
+      .blue-bg {
+        background-color: #4c90cc;
+      }
+      .blue-bg:hover {
+        background-color: #1261A6;
+      }
+      .red-bg {
+        background-color: #F20505;
+      }
+      .red-bg:hover {
+        background-color: #D91A3D;
       }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -24,55 +73,93 @@
   
   <body>
     
-  <header style=""></header>
+    <div class="container-header__nav"> 
+      <header class="">
+          
+         <a class="nav btn-back" href="/">Назад на главную</a>
+        
+        <a class="nav" id="container-logo" href="/" title="Танцевальная карта dancemap">
+          <span>dance</span><span>map</span>
+        </a>
+      </header>
+    </div>  
 
-  <h1>Post Studio</h1>
-  <form  id="form">
-    <div id="containerForm" style="">
-      <div>
-        <label for="eventRecord">Event</label>
-        <input type="radio" id="eventRecord" name="recordType" value="event" checked>
-        <label for="studioRecord">Studio</label>
-        <input type="radio" id="studioRecord" name="recordType" value="studio">
-      </div>
+  
+  <div id="containerForm">
 
-      <label for="name">Name:</label>
-      <input type="text" name="name" id="name" minlength="1" maxlength="30" required>
-      <label for="altername">Altername:</label>
-      <input type="text" name="altername" id="altername" minlength="1" maxlength="30" required>
-      <label for="address">Address:</label>
-      <input type="text" name="address" id="address" minlength="1" maxlength="50" required>
-      <label for="city">City:</label>
-      <input type="text" name="city" id="city" minlength="1" maxlength="50" required>
-      <label for="country">Country:</label>
-      <input type="text" name="country" id="country" minlength="1" maxlength="50" required>
-      <label for="vk">vk:</label>
-      <input type="text" name="vk" id="vk" minlength="1" maxlength="50" >
-      <label for="lat">Latitude:</label>
-      <input type="text" name="lat" id="lat"  minlength="1" maxlength="10" required>
-      <label for="lon">Longitude:</label>
-      <input type="text" name="lon" id="lon"  minlength="1" maxlength="10" required>
-      <label for="img">Image:</label>
-      <input type="file" id="img" name="img" accept="image/png, image/jpeg">
+    <form id="form">
       <div>
-        <input type="checkbox" name="hustle" id="hustle">
-        <label for="hustle">hustle</label>
-        
-        <input type="checkbox" name="zouk" id="zouk">
-        <label for="zouk">zouk</label>
-        
-        <input type="checkbox" name="wcs" id="wcs">
-        <label for="wcs">wcs</label>
-        
-        <input type="checkbox" name="salsa" id="salsa">
-        <label for="salsa">salsa</label>
-        
-        <input type="checkbox" name="bachata" id="bachata">
-        <label for="bachata">bachata</label>
+        <fieldset id=publishBlock>
+          <h1>Post marker</h1>
+            <span><label for="debug">Debug</label>
+            <input type="checkbox" name="debug" id="debug" checked>
+          </span>  
+          <input class="btn red-bg" id="submit" type="submit" name="Submit">
+        </fieldset>
       </div>
-      
-      <label for="speciality">Speciality: (Хастл,etc - without spaces!)</label>
-      <input type="text" name="speciality" id="speciality"  required>
+      <div id="generalBlock">
+        <fieldset>
+          <span>
+            <label for="eventRecord">Event</label>
+            <input type="radio" id="eventRecord" name="recordType" value="event" checked>
+            <label for="studioRecord">Studio</label>
+            <input type="radio" id="studioRecord" name="recordType" value="studio"> 
+          </span>     
+        </fieldset>
+
+        <fieldset>
+          <label for="name">Name:</label>
+          <input type="text" name="name" id="name" minlength="1" maxlength="30" value="test name" required>
+          <label for="altername">Altername:</label>
+          <input type="text" name="altername" id="altername" minlength="1" maxlength="30" value="test altername" required>
+          <label for="address">Address:</label>
+          <input type="text" name="address" id="address" minlength="1" maxlength="50" value="test address" required>
+          <label for="city">City:</label>
+          <input type="text" name="city" id="city" minlength="1" maxlength="50" value="test city" required>
+          <label for="country">Country:</label>
+          <input type="text" name="country" id="country" minlength="1" maxlength="50" value="test city" required>
+          <label for="vk">vk:</label>
+          <input type="text" name="vk" id="vk" minlength="1" maxlength="50" value="test vk">
+          <label for="lat">Latitude:</label>
+          <input type="text" name="lat" id="lat"  minlength="1" maxlength="10" value="1.1" required>
+          <label for="lon">Longitude:</label>
+          <input type="text" name="lon" id="lon"  minlength="1" maxlength="10" value="1.1" required>
+          <label for="img">Image:</label>
+          <input type="file" id="img" name="img" accept="image/png, image/jpeg">
+        </fieldset>
+        <fieldset>
+          <span>
+            <input type="checkbox" name="hustle" id="hustle">
+            <label for="hustle">hustle</label>
+          </span>
+          
+          <span>
+            <input type="checkbox" name="zouk" id="zouk">
+            <label for="zouk">zouk</label>
+          </span>
+          
+          <span>
+            <input type="checkbox" name="wcs" id="wcs">
+            <label for="wcs">wcs</label>
+          </span>
+          
+          <span>
+            <input type="checkbox" name="salsa" id="salsa">
+            <label for="salsa">salsa</label>
+          </span>
+          
+          <span>
+            <input type="checkbox" name="bachata" id="bachata">
+            <label for="bachata">bachata</label>
+          </span>
+        
+          <span>
+            <label for="speciality">Speciality: (Хастл,etc - without spaces!)</label>
+            <input type="text" name="speciality" id="speciality"  value="Хастл,Зук" required>
+          </span>
+
+        </fieldset>
+      </div>
 
       <div id="eventBlock">
         <fieldset id="datesBlock" name='datesBlock'>
@@ -84,35 +171,44 @@
           <input type="text" name="nestedgroup" id="nestedgroup" >        
         </fieldset>
 
-        <fieldset id="eventType" name='eventType'>
-          <input type="checkbox" name="masterclass" id="masterclass">
-          <label for="masterclass">Masterclass</label>
+        <fieldset id="activityBlock" name='activityBlock'>
+          <span>
+            <input type="checkbox" name="activityBox"  value="masterclass" id="masterclass">
+            <label for="masterclass">Masterclass</label>
+          </span>
+         
+          <span>
+            <input type="checkbox" name="activityBox"  value="openair" id="openair">
+            <label for="party">Party</label>
+          </span>
           
-          <input type="checkbox" name="openair" id="openair">
-          <label for="party">Party</label>
+          <span>
+            <input type="checkbox" name="activityBox"  value="fest" id="fest">
+            <label for="fest">Fest</label>
+          </span>
           
-          <input type="checkbox" name="fest" id="wcs">
-          <label for="fest">Fest</label>
+          <span>
+            <input type="checkbox" name="activityBox"  value="competition"  id="competition">
+            <label for="competition">Competition</label>
+          </span>
           
-          <input type="checkbox" name="competition" id="competition">
-          <label for="competition">Competition</label>
-          
-          <input type="checkbox" name="online" id="online">
-          <label for="online">Online</label>       
+          <span>
+            <input type="checkbox" name="activityBox"  id="online">
+            <label for="online">Online</label>
+          </span>       
         </fieldset>
 
         <fieldset id="offersBlock" name='offersBlock'>
           <label for="offer">offer1:</label>
           <input type="text" name="offer" id="" value='{"name":"name","price":"200","currency":"RUB"}' >
           <label for="offer">offer2:</label>
-          <input type="offer" name="offer" id="" value='{"name":"name","price":"200","currency":"RUB"}' >
+          <input type="text" name="offer" id="" value='{"name":"name","price":"200","currency":"RUB"}' >
           <label for="offer">offer3</label>
           <input type="text" name="offer" value='{"name":"name","price":"200","currency":"RUB"}'>        
         </fieldset>
       </div>
-      <input type="submit" name="Submit">
-    </div>
-  </form>
+    </form>
+  </div>
 
   
   <script  src="/js/dancemap.js"></script>
@@ -127,7 +223,7 @@
   function radioHandler(event) {
     let eventBlock = document.getElementById('eventBlock');
     if(this.value === 'event' ) {
-      eventBlock.style.display = 'flex';
+      eventBlock.style.display = 'block';
       document.getElementById('start').disabled = false;
       document.getElementById('end').disabled = false;
     } else if ( this.value === 'studio' ) {
@@ -136,6 +232,24 @@
       document.getElementById('end').disabled = true;
     }  
   }
+  
+  let debug = document.getElementById('debug');
+  debug.addEventListener('change', submitColor);
+  
+  function submitColor(event) {
+    let submit = document.getElementById('submit');
+
+    if(this.checked) {
+      //submit.style.backgroundColor = "#F20505";
+      submit.classList.remove("blue-bg");
+      submit.classList.add("red-bg");
+    } else {
+      //submit.style.backgroundColor = "#4c90cc";
+      submit.classList.remove("red-bg");
+      submit.classList.add("blue-bg");
+    }  
+  }
+
 
   Array.prototype.forEach.call(radios, function(radio) {
     radio.addEventListener('change', radioHandler);
@@ -148,10 +262,8 @@
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Array.from(formData.entries())
-      .reduce((memo, pair) => ({...memo, [pair[0]]:pair[1],}), {})
-    /*const offers = Array.from(formData.elements.offersBlock)
-      .reduce((memo, pair) => ({...memo, [pair[0]]:pair[1],}), {})*/
-    //new FormData(this.form).getAll('offerName')
+      .reduce((memo, pair) => ({...memo, [pair[0]]:pair[1],}), {});
+    
     if(formData.getAll('offer').length) {
       data.offers = formData.getAll('offer')
       .map(el => {
@@ -159,6 +271,20 @@
         return null;
       })
       .filter(el => el !== null)
+    }
+
+    if(formData.getAll('activityBox').length) {
+      let checkedValue = {}; 
+      let inputElements = document.getElementsByName('activityBox');
+      for(let i=0; inputElements[i]; ++i) {
+        if(inputElements[i].checked) {
+          let field = inputElements[i].value;
+           checkedValue[field] = 'on';
+        }
+        
+      }
+      data.activities = checkedValue;
+      console.log('formData.getAll activityBox', checkedValue)
     }
     
     getImg64(data.img).then( img64 => {
@@ -174,7 +300,7 @@
        
        console.log('data from form', data);
 
-       if(dancemap.util.isObjPropNotEmpty(data)) {
+       if(dancemap.util.isObjPropNotEmpty(data) && !data.debug) {
           if(data.recordType === 'studio') dancemap.socket.postStudio(data);
           if(data.recordType === 'event') dancemap.socket.postEvent(data);
        }
