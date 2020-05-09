@@ -226,11 +226,8 @@ io.on('connection', function(socket) {
     studio.properties.city = msg.city;
     studio.properties.vk = msg.vk;
     studio.properties.altername = msg.altername;
-    if(msg.hustle) studio.properties.classes.hustle = true;
-    if(msg.zouk) studio.properties.classes.zouk = true;
-    if(msg.wcs) studio.properties.classes.wcs = true;
-    if(msg.bachata) studio.properties.classes.bachata = true;
-    if(msg.salsa) studio.properties.classes.salsa = true;
+    if(msg.courses) studio.properties.classes = msg.courses;
+
     if(msg.img64) {
     	/*console.log(studio.properties)
     	studio.properties.seoimage.data = new Buffer(msg.img64.split(",")[1],"base64"),
@@ -269,11 +266,9 @@ io.on('connection', function(socket) {
     //event.properties.start = new Date(new Date(msg.start).setHours(18)).toISOString();
     //event.properties.end = new Date(new Date(msg.end).setHours(18)).toISOString();
 
-    if(msg.hustle) event.properties.classes.hustle = true;
-    if(msg.zouk) event.properties.classes.zouk = true;
-    if(msg.wcs) event.properties.classes.wcs = true;
-    if(msg.bachata) event.properties.classes.bachata = true;
-    if(msg.salsa) event.properties.classes.salsa = true;
+    if(msg.courses) event.properties.classes = msg.courses;
+    if(msg.activities) event.properties.activities = msg.activities;
+
     if(msg.img64) {
     	/*console.log(event.properties)
     	event.properties.seoimage.data = new Buffer(msg.img64.split(",")[1],"base64"),
@@ -285,7 +280,7 @@ io.on('connection', function(socket) {
     //event["type"] = "Feature";
     
     Event.create(event).then(function(result) {
-    	//reload();
+    	reload();
 		console.log('post_event', result);
 	})
   });
@@ -451,7 +446,10 @@ io.on('connection', function(socket) {
 });
 
 function reload() {
-  getData().catch(error => console.log('getData', error.stack));
+  clusterdata.getData()
+    .then(data => cluster = data )
+    .catch(error => console.log('getData error', error.stack));
+
 }
 
 function isObject(val) {

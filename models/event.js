@@ -47,8 +47,7 @@ const EventScheme = new Schema({
     },
     speciality: {
     	type: [String],
-    	enum: ["Хастл","Зук","Сальса", "Бачата", "WCS"],
-    	required: [true, 'speciality field required']
+    	enum: ["Хастл","Зук","Сальса", "Бачата", "WCS"]
     },
     classes: {
     	hustle: {type: Boolean},
@@ -56,7 +55,13 @@ const EventScheme = new Schema({
     	wcs: {type: Boolean},
     	bachata: {type: Boolean},
     	salsa: {type: Boolean}
-    	
+    },
+    activities: {
+      masterclass: {type: Boolean},
+      party: {type: Boolean},
+      fest: {type: Boolean},
+      competition: {type: Boolean},
+      online: {type: Boolean}
     },
     seoimage: { data: Buffer, contentType: String },
     start: Date,

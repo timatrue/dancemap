@@ -515,12 +515,12 @@ input::-webkit-input-placeholder {
   
 }
 
-[type="date"]::-webkit-inner-spin-button {
+.container-filters input[type="date"]::-webkit-inner-spin-button {
   display: none;
   -webkit-appearance: none;  
 }
 
-[type="date"]::-webkit-calendar-picker-indicator {
+.container-filters input[type="date"]::-webkit-calendar-picker-indicator {
   /*display: none;*/
   -webkit-appearance: none;
   opacity: 0;
@@ -535,12 +535,12 @@ input::-webkit-input-placeholder {
   background: transparent;
 }
 
-[type="date"]::-webkit-clear-button { 
+.container-filters input[type="date"]::-webkit-clear-button { 
   display: none;
   -webkit-appearance: none;
 }
 /* change color of symbol on hover */
-[type="date"]:hover:after {
+.container-filters input[type="date"]:hover:after {
     color: #bf1400;
 }
 

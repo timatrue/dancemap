@@ -56,7 +56,6 @@ const StudioScheme = new Schema({
     	wcs: {type: Boolean},
     	bachata: {type: Boolean},
     	salsa: {type: Boolean}
-    	
     },
     seoimage: { data: Buffer, contentType: String }
   },/*

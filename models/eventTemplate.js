@@ -13,6 +13,7 @@ function getEventTemplate() {
         "city":"",
         "country":"",
         "classes" : {},
+        "activities" : {},
         "speciality" : [],
         "seoimage" : {},
         "start" : "",
