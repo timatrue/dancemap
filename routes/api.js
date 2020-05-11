@@ -6,6 +6,7 @@ const path = require('path')
 const { buildSitemaps } = require('express-sitemap-xml')
 const fs = require('fs')
 
+
 router.get('/mongo', function(req, res) {
 	Studio.find({}).then(function(studio) { 
 	  console.log('GET /mongo',studio);
@@ -98,8 +99,6 @@ router.put('/mongo/:id', function(req, res) {
 router.delete('/mongo/:id', function(req, res) {
 	res.send({type:'DELETE'});
 });
-
-
 
 
 

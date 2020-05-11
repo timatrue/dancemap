@@ -257,18 +257,85 @@ this.dancemap.mapcontrol = (function(){
     map.flyTo(data.center, data.expansionZoom);
   }
 
-  function addClusters(data) {
+  function addClusters(markers) {
+    let nestedMarkers = findNestedMarkers(markers);
+    markers = nestedMarkers || markers ;
     
-    self.dancemap.nav.togglePrompt(data);
-    self.dancemap.cluster = data;
+    self.dancemap.nav.togglePrompt(markers);
+    self.dancemap.cluster = markers;
     self.dancemap.geojson.eachLayer((layer) => {
       if(!layer.isPopupOpen()) {
         self.dancemap.geojson.removeLayer(layer);
       }
     })
-    self.dancemap.geojson.addData(addPopupContent(data));
+
+    self.dancemap.geojson.addData(addPopupContent(markers));
   }
   
+  function findNestedMarkers(markers) {
+    
+
+    //let nested = [];
+    let grouped = {};
+    let nested = [];
+    markers.forEach(marker => {
+      /*if(marker.properties.address) {
+        let prop = marker.properties.address;
+        sorted[prop] = sorted[prop] || [];
+        sorted[prop].push(marker);
+      }
+      if(marker.properties.cluster) {
+        let prop = marker.properties.cluster_id;
+        sorted[prop] = sorted[prop] || [];
+        sorted[prop].push(marker);
+      }*/
+      let prop = marker.properties.address || marker.properties.cluster_id;
+      grouped[prop] = grouped[prop] || [];
+      grouped[prop].push(marker);
+    })
+
+    Object.values(grouped).forEach(address => {
+      /*
+      if(address.length > 1) {
+        //let mergedMarker = Object.assign({}, ...address);
+        let marker = address[0];
+        marker.group = address;
+        temp.push(marker);
+      } else {
+        let marker = address[0];
+        temp.push(marker)
+      }*/
+
+      let marker = address[0];
+      if(address.length > 1) marker.group = address;
+      nested.push(marker);
+    })
+  
+    /*
+    const grouped = groupBy(data, (marker) => marker.properties.address);
+    Object.values(grouped)
+      .forEach(group => {
+        if(group.length > 1) {
+          let parent = group[0];
+          group[0].nested = group;
+          nested.push(parent);
+        } else {
+          nested.push(...group)
+        }
+      })*/
+
+    console.log('findNestedMarkers', nested)
+    return nested;
+  }
+
+  /*function groupBy(data, fn) {
+    return data
+      .reduce((acc, marker, i, a, k = fn(marker)) => {
+        if(acc) return  ((acc[k] || (acc[k] = [])).push(marker), acc)
+      }
+      , {})
+  }*/
+
   function checkClass(layer) {
     let currentClass = this.dancemap.ui.class;
     let speciality = layer.feature.properties.speciality;
@@ -283,21 +350,30 @@ this.dancemap.mapcontrol = (function(){
 
     markers.forEach((marker) => {
       if(!marker.properties.cluster) {
-        getPopupContentDekstop(marker);
+        if(!marker.group) {
+          marker.properties.popupContent = getPopupContentDekstop(marker);
+        }
+        if(marker.group) {
+          let template = marker.group.reduce((acc,current) => {
+            return getPopupContentDekstop(acc) + `<hr>` +getPopupContentDekstop(current)
+          })
+          marker.properties.popupContent = template;
+          //console.log('template',template);
+        }
       }
     })
     return markers;
   }
 
   function getPopupContentDekstop(marker) {
-       marker.properties.popupContent =
+       template =
         `
           ${marker.properties.name ?
             `<div class='marker-title'> <h1>${marker.properties.name}</h1>
             ${marker.properties.start ? '<h2>' + dayjs(marker.properties.start).format('D MMMM YYYY') + ' -' : ''} 
             
             ${marker.properties.end ? dayjs(marker.properties.end).format('D MMMM YYYY') + '</h2>' : ''} 
-            <hr></div>` :
+            </div>` :
              ''} 
           
           <div class='marker-content'>
@@ -311,7 +387,9 @@ this.dancemap.mapcontrol = (function(){
           
           ${marker.properties.vk ? `<div class=''><a href='${marker.properties.vk}' target="_blank"> ${self.dancemap.icons.vk} </a></div>` : ''} 
           <div class="container-info__url"><button onclick="dancemap.nav.copyPopupURL()">копировать ссылку </button></div>
+          
         </div>` 
+        return template;
   }
 
   function searchSetup(settings) {
@@ -322,6 +400,16 @@ this.dancemap.mapcontrol = (function(){
     dancemap.ui.queryType = settings.queryType;
   }
 
+  function getDistance(lat1, lon1, lat2, lon2) {
+    const p = 0.017453292519943295;    // Math.PI / 180
+    const c = Math.cos;
+    const a = 0.5 - c((lat2 - lat1) * p)/2 + 
+          c(lat1 * p) * c(lat2 * p) * 
+          (1 - c((lon2 - lon1) * p))/2;
+
+    return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+  }
+
   return {
     
     getMap: getMap,
@@ -329,7 +417,8 @@ this.dancemap.mapcontrol = (function(){
     flyToClusters: flyToClusters,
     openByURL: openByURL,
     searchSetup: searchSetup,
-    moveEnd: moveEnd
+    moveEnd: moveEnd,
+    getDistance: getDistance
   }
 
 })();
