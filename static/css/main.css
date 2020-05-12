@@ -436,6 +436,17 @@ input::-webkit-input-placeholder {
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
 }
+.map-marker {
+  display: inline-block;
+  margin: 0px;
+  background: url(../images/map-marker.svg);
+  background-repeat: no-repeat;
+  height: 30px;
+  width: 30px;
+  opacity: 1;
+  stroke: black;
+
+}
 .marker-title {
   font-weight:bold;
 }
