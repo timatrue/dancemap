@@ -28,7 +28,8 @@ function getClusters() {
       zoom: zoom,
       category: dancemap.ui.category,
       type: dancemap.ui.type
-    } 
+    }
+    if(dancemap.ui.type == 'event') box.date = dancemap.ui.date; 
     console.log('getClusters', box)
     socket.emit('get_clusters', box);
 
@@ -72,8 +73,9 @@ function findMarker(studio) {
   let sw = map.getBounds().getSouthWest();
   let ne = map.getBounds().getNorthEast();
   let box = [[sw.lng,sw.lat], [ne.lng,ne.lat]];
+  let date = dancemap.ui.type == 'event' ? dancemap.ui.date : "";
 
-  let query = {studio, category, center, radius, queryType, box, type};
+  let query = {studio, category, center, radius, queryType, box, type, date};
   socket.emit('find_marker', query);
 }
 

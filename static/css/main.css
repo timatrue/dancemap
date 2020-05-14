@@ -555,7 +555,7 @@ input::-webkit-input-placeholder {
     color: #bf1400;
 }
 
-#date-left, #date-right, #date-icon {
+#date-left, #date-right, #date-icon, #date-calendar {
   width: 24px;
   height: 24px;
   border: 0px;
@@ -576,6 +576,9 @@ input::-webkit-input-placeholder {
 }
 #date-right {
   background: url(/images/chevron-right-solid.svg) center / contain no-repeat;
+}
+#date-calendar {
+  background: url(/images/calendar-week.svg) center / contain no-repeat;
 }
 #date-left:hover { 
   opacity: 1;

@@ -35,23 +35,31 @@
         <option value="online">Онлайн уроки</option>
       </select>
     </div>
-    <div class="filter-date__nav">
+    
+    <!-- <div class="filter-date__nav">
       <span >
         <button id='date-left'></button>
       </span>
-      <!--<span>
+      <span>
         <button id='date-icon'></button>
-      </span>-->
-    </div>
-    <div class="filter-date">  
+      </span>
+    </div>-->
+    <div class="filter-date"> 
+      <label for="datepicker" style="margin:0px 5px">до </label> 
       <input type="date" id="datepicker" name="" value="" required="required">
     </div>
-    <div class="filter-date__nav">
+    <!--<div class="filter-date__nav">
       <span>
         <button id='date-right'></button>
       </span>
+    </div>-->
+    <div class="filter-date__nav">
+      <span>
+        <button id='date-calendar'></button>
+      </span>
     </div>
   </div>
+
   
   <noindex>
     <% if (markerEncoded) { -%>

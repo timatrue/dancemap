@@ -13,17 +13,22 @@ this.dancemap.nav = (function(){
   }
 
 
-
   function setInputDate(input) {
     if(input) {
       //input.value = new Date().toISOString().split('T')[0];
-      input.valueAsDate = new Date();
+      let date = new Date();
+      input.valueAsDate = dancemap.ui.date = date;
+      dancemap.ui.date = date;
     }
   }
 
   function setInputDateListener(input) {
+    const query = document.querySelector('input[type="search"]');
     input.addEventListener('change',(e) => { 
       let date = new Date(e.target.value);
+      dancemap.ui.date = date;
+      dancemap.mapcontrol.getMap().closePopup();
+      dancemap.socket.findMarker(query.value);
       console.log('datepicker', date);
     })
   }
@@ -60,13 +65,14 @@ this.dancemap.nav = (function(){
   }
 
   function navSetup(settings) {
+    dancemap.ui.inputs = {};
+    dancemap.ui.inputs.search = settings.search;
     if(settings.event) {
-      let input = settings.datepicker;
-
-      setInputDate(input);
-      setInputDateListener(input);
-      upDay(settings);
-      downDay(settings);
+      dancemap.ui.inputs.datepicker = settings.datepicker;
+      setInputDate(settings.datepicker);
+      setInputDateListener(settings.datepicker);
+      //upDay(settings);
+      //downDay(settings);
     }
     setCategoryListener();
     setURLID();
@@ -75,7 +81,7 @@ this.dancemap.nav = (function(){
   }
   
   function onSearch() {
-    const input = document.querySelector('input[type="search"]');
+    const input = dancemap.ui.inputs.search;
     input.addEventListener('search', (e) => {
       //dancemap.socket.findMarker(input.value);
       console.log("The term searched for was " + input.value);
@@ -96,11 +102,18 @@ this.dancemap.nav = (function(){
 
   function onClear() {
     const btnClear = document.querySelector('#btn-clear');
-    const input = document.querySelector('input[type="search"]');
+    const input = dancemap.ui.inputs.search;
 
     btnClear.addEventListener('click', (e) => {
       input.value = '';
-      dancemap.socket.getClusters()
+      
+      if(dancemap.ui.type == 'event') {
+        dancemap.socket.findMarker(input.value)
+      }
+      if(dancemap.ui.type == 'studio') {
+        dancemap.socket.getClusters()
+      }
+
       console.log("The input cleared: " + input.value);
     })
   }

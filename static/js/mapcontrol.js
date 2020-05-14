@@ -142,8 +142,17 @@ this.dancemap.mapcontrol = (function(){
   }).addTo(map)
 
   function moveEnd() {
-    const input = document.querySelector('input[type="search"]');
-    input.value ? dancemap.socket.findMarker(input.value) : dancemap.socket.getClusters();
+    const inputSearch = dancemap.ui.inputs.search;
+    const inputDate = dancemap.ui.inputs.datepicker;
+    if(dancemap.ui.type == 'event') {
+      dancemap.socket.findMarker(inputSearch.value)
+    }
+    if(dancemap.ui.type == 'studio') {
+      inputSearch.value ?
+        dancemap.socket.findMarker(inputSearch.value) :
+        dancemap.socket.getClusters();
+    }
+    
     dancemap.nav.addLatLngToURL(map.getCenter());
   }
   

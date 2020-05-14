@@ -326,30 +326,6 @@ io.on('connection', function(socket) {
 
   });
 
-  
-  /*Utility socket functions*/
-  socket.on('get_children', (clusterId) => {
-    let index = cluster.studios;
-  	let children = index.all.getChildren(clusterId);
-  	socket.emit('get_children', children);
-  });
-
-  socket.on('get_leaves', (clusterId) => {
-    let index = cluster.studios;
-    let leaves = index.all.getLeaves(clusterId, limit = 10, offset = 0);
-    socket.emit('get_leaves', leaves);
-  });
-
-  socket.on('reload', (secret) => {
-    if(isObject(secret) && secret) {
-      if(secret.secret === 'Covid19!') {
-        reload();
-        socket.emit('reload', {reload: true});
-      }
-    }
-    
-  });
-
   socket.on('find_marker', (query) => {
   	
     let category = query.category === 'all' ? null : 'properties.classes.' + query.category;
@@ -369,6 +345,7 @@ io.on('connection', function(socket) {
       }
     }
 
+    /*NEAR START*/
     if(query.queryType === "near") {
       console.log('findMarker $near', query, category)
       if(category) {
@@ -404,40 +381,103 @@ io.on('connection', function(socket) {
         .then((res) => socket.emit('find_marker', res))
       }
     }
+    /*NEAR END*/
+
+    /*GEOWITHIN START*/
     if(query.queryType === "geoWithin") {
       console.log('findMarker $geoWithin', query, category)
-      if(category) {
-      	
-        ModelDB.find({
+
+      if(type === 'studio') {
+      	if(category) {
+          ModelDB.find({
         	$or: [ {"properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }},
             {"properties.altername" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }}],
         	[category] : "true",
         	"geometry" : {
-            "$geoWithin": {
-              "$box": query.box
-            }} 
-
-        })
-        //.then((res) => socket.emit('find_marker', res))
-        .then((res) => socket.emit('get_clusters', res))
+              "$geoWithin": {
+                "$box": query.box
+              }
+            }
+          })
+          .then((res) => socket.emit('get_clusters', res))
         
-      } else {
-        ModelDB.find({
-          $or: [{"properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }},
-          {"properties.altername" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }}],
-          "geometry" : {
-          "$geoWithin": {
-            "$box": query.box
-          }} 
-        })
-        //.then((res) => socket.emit('find_marker', res))
-        .then((res) => socket.emit('get_clusters', res))
+        } else {
+          ModelDB.find({
+            $or: [{"properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }},
+            {"properties.altername" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }}],
+            "geometry" : {
+              "$geoWithin": {
+                "$box": query.box
+              }
+            } 
+          })
+          .then((res) => socket.emit('get_clusters', res))
+        }
       }
-    }    
+
+      if(type === 'event') {
+        if (query.date && !category) {
+      	  let gte = new Date().toISOString();
+          ModelDB.find({
+            $or: [{"properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }},
+            {"properties.altername" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }}],
+            "geometry" : {
+              "$geoWithin": {
+                "$box": query.box
+              }
+            },
+            "properties.start": {"$gte": gte, "$lte": query.date}
+          })
+          .then((res) => {
+            console.log('FIND BY DATE RANGE all', res)
+        	socket.emit('get_clusters', res)
+          })
+        }
+        if (query.date  && category) {
+      	  let gte = new Date().toISOString();
+          ModelDB.find({
+            $or: [{"properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }},
+            {"properties.altername" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }}],
+            "geometry" : {
+              "$geoWithin": {
+                "$box": query.box
+              }
+            },
+            [category] : "true",
+            "properties.start": {"$gte": gte, "$lte": query.date}
+          })
+          .then((res) => {
+            console.log('FIND BY DATE RANGE CATEGORY', res)
+        	socket.emit('get_clusters', res)
+          })
+        }
+      }
+    }
+    /*GEOWITHIN END*/    
   });
 
+  /*Utility socket functions*/
+  socket.on('get_children', (clusterId) => {
+    let index = cluster.studios;
+  	let children = index.all.getChildren(clusterId);
+  	socket.emit('get_children', children);
+  });
 
+  socket.on('get_leaves', (clusterId) => {
+    let index = cluster.studios;
+    let leaves = index.all.getLeaves(clusterId, limit = 10, offset = 0);
+    socket.emit('get_leaves', leaves);
+  });
 
+  socket.on('reload', (secret) => {
+    if(isObject(secret) && secret) {
+      if(secret.secret === 'Covid19!') {
+        reload();
+        socket.emit('reload', {reload: true});
+      }
+    }
+    
+  });
 
   socket.on('get_memory_usage', function () {
     getMemoryUsage();
