@@ -65,7 +65,7 @@ function getMemoryUsage() {
 
 function findMarker(studio) {
   let map = dancemap.mapcontrol.getMap();
-  let type = dancemap.ui.type;
+  let uiType = dancemap.ui.type;
   let category = dancemap.ui.category
   let radius = dancemap.ui.radius;
   let queryType = dancemap.ui.queryType;
@@ -73,9 +73,10 @@ function findMarker(studio) {
   let sw = map.getBounds().getSouthWest();
   let ne = map.getBounds().getNorthEast();
   let box = [[sw.lng,sw.lat], [ne.lng,ne.lat]];
-  let date = dancemap.ui.type == 'event' ? dancemap.ui.date : "";
+  let date = uiType == 'event' ? dancemap.ui.date : "";
+  let eventType = uiType == 'event' ? dancemap.ui.eventType : "";
 
-  let query = {studio, category, center, radius, queryType, box, type, date};
+  let query = {studio, category, center, radius, queryType, box, uiType, date, eventType};
   socket.emit('find_marker', query);
 }
 

@@ -187,11 +187,16 @@ input::-webkit-input-placeholder {
 @media only screen and (max-width: 480px) {
   input[type=search] {min-width: 65vw;}
 
-  #class-selector {
-  -webkit-appearance: none; 
-  background: url(../images/filter-solid.svg) no-repeat right;
-  width:22px;
-}
+  #filter-category {
+    -webkit-appearance: none; 
+    background: url(../images/filter-solid.svg) no-repeat right;
+    width:22px;
+  }
+
+  #filter-type {
+
+  }
+
 
   header .container-select__pseudo {
     padding: 7px

@@ -2,10 +2,18 @@ this.dancemap.nav = (function(){
   let self = this;
   
   
-  function setCategoryListener() {
-    let classSelector = document.getElementById('class-selector');
-    classSelector.addEventListener('change', function (event) {
+  function setCategoryListener(input) {
+    input.addEventListener('change', function (event) {
       dancemap.ui.category = this.value;
+      dancemap.mapcontrol.getMap().closePopup();
+      dancemap.mapcontrol.moveEnd();
+      console.log('setCategoryListener', this.value);
+    }, false);
+  }
+
+  function setTypeListener(input) {
+    input.addEventListener('change', function (event) {
+      dancemap.ui.eventType = this.value;
       dancemap.mapcontrol.getMap().closePopup();
       dancemap.mapcontrol.moveEnd();
       console.log('setCategoryListener', this.value);
@@ -17,6 +25,7 @@ this.dancemap.nav = (function(){
     if(input) {
       //input.value = new Date().toISOString().split('T')[0];
       let date = new Date();
+      date.setMonth(date.getMonth() + 6);
       input.valueAsDate = dancemap.ui.date = date;
       dancemap.ui.date = date;
     }
@@ -67,14 +76,18 @@ this.dancemap.nav = (function(){
   function navSetup(settings) {
     dancemap.ui.inputs = {};
     dancemap.ui.inputs.search = settings.search;
+    dancemap.ui.inputs.category = settings.category;
+
     if(settings.event) {
       dancemap.ui.inputs.datepicker = settings.datepicker;
+      dancemap.ui.inputs.type = settings.type;
       setInputDate(settings.datepicker);
       setInputDateListener(settings.datepicker);
+      setTypeListener(settings.type);
       //upDay(settings);
       //downDay(settings);
     }
-    setCategoryListener();
+    setCategoryListener(settings.category);
     setURLID();
     onSearch();
     onClear();

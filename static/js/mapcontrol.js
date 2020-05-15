@@ -95,8 +95,8 @@ this.dancemap.mapcontrol = (function(){
   
   map.addHandler('geoLocationHandler', L.GeoLocationHandler);
   map.on('moveend', moveEnd);
-  map.on("zoomstart", function (e) { document.getElementById('class-selector').disabled = true; });
-  map.on("zoomend", function (e) { document.getElementById('class-selector').disabled = false; });
+  map.on("zoomstart", function (e) { dancemap.ui.inputs.category.disabled = true; });
+  map.on("zoomend", function (e) { dancemap.ui.inputs.category.disabled = false; });
   map.on("popupopen", function(e) {
 
     if (window.matchMedia('screen and (max-width: 480px)').matches) {
@@ -143,7 +143,7 @@ this.dancemap.mapcontrol = (function(){
 
   function moveEnd() {
     const inputSearch = dancemap.ui.inputs.search;
-    const inputDate = dancemap.ui.inputs.datepicker;
+    
     if(dancemap.ui.type == 'event') {
       dancemap.socket.findMarker(inputSearch.value)
     }

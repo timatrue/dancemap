@@ -329,10 +329,11 @@ io.on('connection', function(socket) {
   socket.on('find_marker', (query) => {
   	
     let category = query.category === 'all' ? null : 'properties.classes.' + query.category;
-    let type = query.type;
+    let uiType = query.uiType;
+    let eventType = query.eventType;
     let ModelDB;
-    if(type === 'event') ModelDB = Event;
-    if(type === 'studio') ModelDB = Studio;
+    if(uiType === 'event') ModelDB = Event;
+    if(uiType === 'studio') ModelDB = Studio;
     
     if(!query.queryType) {
       console.log('findMarker all', query, category)
@@ -387,7 +388,8 @@ io.on('connection', function(socket) {
     if(query.queryType === "geoWithin") {
       console.log('findMarker $geoWithin', query, category)
 
-      if(type === 'studio') {
+      if(uiType === 'studio') {
+      	console.log('findMarker $geoWithin STUDIO')
       	if(category) {
           ModelDB.find({
         	$or: [ {"properties.name" : { $regex: new RegExp('.*' + query.studio + '.*', 'i') }},
@@ -399,7 +401,10 @@ io.on('connection', function(socket) {
               }
             }
           })
-          .then((res) => socket.emit('get_clusters', res))
+          .then((res) => {
+           console.log('FIND STUDIO CATEGORY', res)
+          	socket.emit('get_clusters', res)
+          })
         
         } else {
           ModelDB.find({
@@ -411,11 +416,15 @@ io.on('connection', function(socket) {
               }
             } 
           })
-          .then((res) => socket.emit('get_clusters', res))
+          .then((res) => {
+          	console.log('FIND STUDIO', res)
+          	socket.emit('get_clusters', res)
+          })
         }
       }
 
-      if(type === 'event') {
+      if(uiType === 'event') {
+      	console.log('findMarker $geoWithin EVENT')
         if (query.date && !category) {
       	  let gte = new Date().toISOString();
           ModelDB.find({
