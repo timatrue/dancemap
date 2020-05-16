@@ -1,0 +1,67 @@
+<% if (marker) { -%>
+
+
+    <div id="sidecontent" class="sidecontent">
+     <a href="javascript:void(0)" class="closebtn" onclick="dancemap.nav.closeSideContent()">×</a>
+      <div class="marker-title">
+        <h1> <%= marker.properties.name %> </h1>
+        <% if (marker.properties.start) { %>
+          <h2> Начинаем: <%= dayjs(marker.properties.start).format('D MMMM YYYY') %> </h2> 
+        <% } %>
+        <% if (marker.properties.start) { %>
+          <h2> Заканчиваем: <%= dayjs(marker.properties.end).format('D MMMM YYYY') %> </h2>
+        <% } %>
+      </div>
+      <div class="marker-content">
+        <% if (marker.properties.speciality) { %>
+          <div class="container-info__speciality">
+            <div class='subtitle'>Танцевальные направления: </div>
+            <%= marker.properties.speciality.join(', ') %>
+          </div>
+        <% } %>
+
+        <% if (marker.properties.offers) { %>
+          <div class="container-info__offers">
+            <div class='subtitle'>Стоимость:</div>
+            <%- marker.properties.offers
+               .map(offer => '<div>' + offer.name + ' - ' + offer.price + '</div>')
+               .join("")
+            %>
+          </div>
+        <% } %>
+
+        <% if (marker.properties.address) { %>
+          <div class="container-info__address">
+            <div class='subtitle'>Адрес:</div>
+            <div id="address"> <i class='icon-location'> </i> <%= marker.properties.city %> , <%= marker.properties.address %> </div>
+          </div>
+        <% } %>
+
+        <% if (marker.properties.vk) { %>
+
+          <div class="container-info__social">
+            <a href='<%= marker.properties.vk %>' target="_blank" title='<%= marker.properties.name %>'>
+              <i class='icon-vk'> </i>
+            </a> 
+          </div>
+        <% } %>
+
+        <div class="container-info__url">
+          <button onclick="dancemap.nav.copyPopupURL()">копировать ссылку </button>
+        </div>
+
+      </div>
+    </div>
+
+
+  	
+  <% if (marker.properties.type === 'studio') { %>
+
+
+  <% } %>
+
+<% } -%>
+
+
+
+

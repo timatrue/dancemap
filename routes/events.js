@@ -5,6 +5,10 @@ const path = require('path')
 const { buildSitemaps } = require('express-sitemap-xml')
 const fs = require('fs')
 
+const dayjs = require('dayjs')
+require('dayjs/locale/ru')
+dayjs.locale('ru')
+
 
 
 
@@ -18,6 +22,7 @@ router.get('/:id', function(req, res) {
           res.render('../static/views/events',{
         	marker: event[0],
           page: null,
+          dayjs: dayjs,
           markerEncoded: encodeURIComponent(JSON.stringify(event[0]))
         });
 

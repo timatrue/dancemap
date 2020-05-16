@@ -8,17 +8,14 @@ const app = express()
 const favicon = require('serve-favicon')
 const bodyParser = require("body-parser")
 const fs = require('fs')
+/*TIME FORMAT*/
+const dayjs = require('dayjs')
+require('dayjs/locale/ru')
+dayjs.locale('ru')
 
-/**/
-const Telegraf = require('telegraf')
-const bot = new Telegraf("1054222010:AAFXOJVR2jgqF-ddaM7gEWuPhwP0EtEeOws")
-bot.command('server_ping', (ctx) => ctx.reply('Hello'))
-bot.launch()
 //Mongo cloud
 //const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://dancemap:Yy4UqOE9bihpePZc@cluster0-kkgwk.gcp.mongodb.net/dancemap?retryWrites=true&w=majority";
-const uri2 = "mongodb+srv://dancemap:Yy4UqOE9bihpePZc@cluster0-kkgwk.gcp.mongodb.net/sample_geospatial?retryWrites=true&w=majority";
-
 
 const Studio = require('./models/studio')
 const Event = require('./models/event')
@@ -53,21 +50,21 @@ app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ));
 app.get('/', function (req, res) {
     //res.send('dancemap here');
     //res.sendFile('static/index.html', {root: __dirname })
-    res.render('../static/views/index',{page:'main', marker: null, markerEncoded: null});
+    res.render('../static/views/index',{page:'main', marker: null, markerEncoded: null, dayjs: dayjs});
     //console.log('get /');
 })
 
 app.get('/studios', function (req, res) {
     //res.send('dancemap here');
     //res.sendFile('static/index.html', {root: __dirname })
-    res.render('../static/views/studios',{page:'studios', marker: null, markerEncoded: null});
+    res.render('../static/views/studios',{page:'studios', marker: null, markerEncoded: null, dayjs: dayjs});
     //console.log('get /');
 })
 
 app.get('/events', function (req, res) {
    //res.send('dancemap here');
    console.log('get /events');
-   res.render('../static/views/events',{page:'events', marker: null, markerEncoded: null});
+   res.render('../static/views/events',{page:'events', marker: null, markerEncoded: null, dayjs: dayjs});
 })
 
 app.get('/add', function (req, res) {
@@ -85,96 +82,7 @@ server.listen(port, () => {
 let cluster;
 clusterdata.getData().then(data => cluster = data );
 
-//let index = {};
-//clusterdata.getData()
-/*memory usage debug
-index.all1 = new Supercluster({radius: 40,maxZoom: 17});
-index.all2 = new Supercluster({radius: 40,maxZoom: 17});
-index.all3 = new Supercluster({radius: 40,maxZoom: 17});
-index.all4 = new Supercluster({radius: 40,maxZoom: 17});
-index.all5 = new Supercluster({radius: 40,maxZoom: 17});
-index.all6 = new Supercluster({radius: 40,maxZoom: 17});
-index.all7 = new Supercluster({radius: 40,maxZoom: 17});
-index.all8 = new Supercluster({radius: 40,maxZoom: 17});
-index.all9 = new Supercluster({radius: 40,maxZoom: 17});
-index.all10 = new Supercluster({radius: 40,maxZoom: 17});*/
 
-/*
-index.all = new Supercluster({
-  radius: 40,
-  maxZoom: 17
-});
-
-index.hustle = new Supercluster({
-  radius: 40,
-  maxZoom: 17
-});
-
-index.zouk = new Supercluster({
-    radius: 40,
-    maxZoom: 17
-});
-
-index.wcs = new Supercluster({
-    radius: 40,
-    maxZoom: 17
-});
-
-index.bachata = new Supercluster({
-    radius: 40,
-    maxZoom: 17
-});
-
-index.salsa = new Supercluster({
-    radius: 40,
-    maxZoom: 17
-});
-*/
-
-/*getData().catch(error => console.log('getData',error.stack));
-
-async function getData() {
-
-  await Studio.find({}).then(function(studios) { 
-    index.all.load(studios);*/
-    
-    /*memory usage debug
-    index.all1.load(studios);
-    index.all2.load(studios);
-    index.all3.load(studios);
-    index.all4.load(studios);
-    index.all5.load(studios);
-    index.all6.load(studios);
-    index.all7.load(studios);
-    index.all9.load(studios);
-    index.all9.load(studios);
-    index.all10.load(studios);*/
-
-/*
-    console.log('index_all', index.all);
-  });
-  await Studio.find({'properties.classes.hustle': true}).then(function(studios) { 
-    index.hustle.load(studios);
-    console.log('index_hustle', index.hustle);
-  });
-  await Studio.find({'properties.classes.zouk': true}).then(function(studios) { 
-    index.zouk.load(studios);
-    console.log('index_zouk', index.zouk);
-  });
-  await Studio.find({'properties.classes.wcs': true}).then(function(studios) { 
-    index.wcs.load(studios);
-    console.log('index_wcs', index.wcs);
-  });
-  await Studio.find({'properties.classes.bachata': true}).then(function(studios) { 
-    index.bachata.load(studios);
-    console.log('index_bachata', index.bachata);
-  });
-
-  await Studio.find({'properties.classes.salsa': true}).then(function(studios) { 
-    index.salsa.load(studios);
-    console.log('index_salsa', index.salsa);
-  });
-}*/
 
 /*SOCKET*/
 const io = require('socket.io')(server);

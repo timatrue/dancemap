@@ -3,6 +3,10 @@ const router = express.Router()
 const Studio = require('../models/studio')
 const path = require('path')
 
+const dayjs = require('dayjs')
+require('dayjs/locale/ru')
+dayjs.locale('ru')
+
 router.get('/:id', function(req, res) {
     console.log('GET /studio', req.params);  
     if(req.params.id) {
@@ -13,6 +17,7 @@ router.get('/:id', function(req, res) {
           res.render('../static/views/studios',{
         	marker: studio[0],
           page: null,
+          dayjs: dayjs,
           markerEncoded: encodeURIComponent(JSON.stringify(studio[0]))
         });
 

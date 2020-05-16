@@ -60,12 +60,20 @@ this.dancemap.nav = (function(){
     }) 
   }
 
-  function openNav() {
+  function openSidenav() {
     document.getElementById("sidenav").style.width = "250px";
   } 
 
-  function closeNav() {
+  function closeSidenav() {
     document.getElementById("sidenav").style.width = "0";
+  }
+
+  function openSideContent() {
+    document.getElementById("sidecontent").style.width = "300px";
+  } 
+
+  function closeSideContent() {
+    document.getElementById("sidecontent").style.width = "0";
   }
 
   function openModalMobile() {
@@ -191,8 +199,10 @@ this.dancemap.nav = (function(){
 
   return {
     setInputDate : setInputDate,
-    openNav : openNav,
-    closeNav : closeNav,
+    openSidenav : openSidenav,
+    closeSidenav : closeSidenav,
+    openSideContent : openSideContent,
+    closeSideContent : closeSideContent,
     navSetup: navSetup,
     togglePrompt: togglePrompt,
     setURLID: setURLID,
