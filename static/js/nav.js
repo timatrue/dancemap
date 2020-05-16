@@ -31,9 +31,9 @@ this.dancemap.nav = (function(){
     }
   }
 
-  function setInputDateListener(input) {
-    const query = document.querySelector('input[type="search"]');
-    input.addEventListener('change',(e) => { 
+  function setInputDateListener(date) {
+    const query = dancemap.ui.inputs.search;
+    date.addEventListener('change',(e) => { 
       let date = new Date(e.target.value);
       dancemap.ui.date = date;
       dancemap.mapcontrol.getMap().closePopup();
@@ -43,7 +43,7 @@ this.dancemap.nav = (function(){
   }
 
   function downDay(settings) {
-    settings.down.addEventListener('click',(e)=> {
+    settings.down.addEventListener('click', (e)=> {
       let date = new Date(settings.datepicker.value);
       date.setDate(date.getDate() - 1);
       settings.datepicker.valueAsDate = date;
@@ -52,7 +52,7 @@ this.dancemap.nav = (function(){
   }
 
   function upDay(settings) {
-    settings.up.addEventListener('click',(e)=> {
+    settings.up.addEventListener('click', (e)=> {
       let date = new Date(settings.datepicker.value);
       date.setDate(date.getDate() + 1);
       settings.datepicker.valueAsDate = date;

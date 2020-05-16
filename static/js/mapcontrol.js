@@ -4,7 +4,7 @@ this.dancemap.mapcontrol = (function(){
   let map = L.map('map-box', {
     	geoLocationHandler: true,
       })
-      .setView([55.746181, 37.625372], 12);
+      .setView([55.746181, 37.625372], 10);
     
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGltYXRydWUiLCJhIjoiY2p4cmQwem8wMDcxdDNtcWpndWhjOTMwbiJ9.SoBmmbCYNBwXFXuZFRcgHw', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -418,6 +418,7 @@ this.dancemap.mapcontrol = (function(){
   function searchSetup(settings) {
     dancemap.ui = dancemap.ui || {} ;
     dancemap.ui.type = settings.type;
+    if(settings.eventType) dancemap.ui.eventType = settings.eventType;
     dancemap.ui.category = settings.category;
     dancemap.ui.radius = settings.radius;
     dancemap.ui.queryType = settings.queryType;

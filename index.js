@@ -328,7 +328,7 @@ io.on('connection', function(socket) {
 
   socket.on('find_marker', (query) => {
   	
-    let category = query.category === 'all' ? null : 'properties.classes.' + query.category;
+    let category = query.category === 'all' ? "" : 'properties.classes.' + query.category;
     let uiType = query.uiType;
     let eventType = query.eventType;
     let ModelDB;
@@ -438,6 +438,8 @@ io.on('connection', function(socket) {
             "properties.start": {"$gte": gte, "$lte": query.date}
           })
           .then((res) => {
+          	res = eventType !== 'all' ?
+          	  res.filter((marker) => marker.properties.activities[eventType] == true) : res;
             console.log('FIND BY DATE RANGE all', res)
         	socket.emit('get_clusters', res)
           })
@@ -456,6 +458,9 @@ io.on('connection', function(socket) {
             "properties.start": {"$gte": gte, "$lte": query.date}
           })
           .then((res) => {
+            
+            res = eventType !== 'all' ?
+              res.filter((marker) => marker.properties.activities[eventType] == true) : res;
             console.log('FIND BY DATE RANGE CATEGORY', res)
         	socket.emit('get_clusters', res)
           })
