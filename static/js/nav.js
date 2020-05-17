@@ -68,12 +68,38 @@ this.dancemap.nav = (function(){
     document.getElementById("sidenav").style.width = "0";
   }
 
-  function openSideContent() {
-    document.getElementById("sidecontent").style.width = "300px";
+  function openSideContent(template) {
+    let sidebar = dancemap.ui.sidebars.content;
+    let content = "<div class='sidecontent-child' id='sidecontent-child'>" + template + "</div>";
+    if(template && sidebar.children.length == 1) {
+      sidebar.insertAdjacentHTML('beforeend', content); 
+    }
+    sidebar.style.width = "300px";
   } 
 
-  function closeSideContent() {
-    document.getElementById("sidecontent").style.width = "0";
+  function updateSideContent(template) {
+    let sidebar = dancemap.ui.sidebars.content;
+    let closeBtn = sidebar.firstElementChild;
+    let content = "<div class='sidecontent-child' id='sidecontent-child'>" + template + "</div>";
+    
+    let child = sidebar.querySelector('.sidecontent-child');
+    let throwawayNode = sidebar.removeChild(child);
+    sidebar.insertAdjacentHTML('beforeend', content);
+    
+    return false;
+  } 
+
+
+  function closeSideContent(e) {
+    
+    let sidebar = dancemap.ui.sidebars.content;
+    let closeBtn = sidebar.firstElementChild;
+    sidebar.style.width = "0";
+    
+    let child = sidebar.querySelector('.sidecontent-child');
+    let throwawayNode = sidebar.removeChild(child);
+
+    return false;
   }
 
   function openModalMobile() {
@@ -86,6 +112,9 @@ this.dancemap.nav = (function(){
     dancemap.ui.inputs.search = settings.search;
     dancemap.ui.inputs.category = settings.category;
 
+    dancemap.ui.sidebars = {};
+    dancemap.ui.sidebars.content = settings.sidecontent;
+    
     if(settings.event) {
       dancemap.ui.inputs.datepicker = settings.datepicker;
       dancemap.ui.inputs.type = settings.type;
@@ -203,6 +232,7 @@ this.dancemap.nav = (function(){
     closeSidenav : closeSidenav,
     openSideContent : openSideContent,
     closeSideContent : closeSideContent,
+    updateSideContent : updateSideContent,
     navSetup: navSetup,
     togglePrompt: togglePrompt,
     setURLID: setURLID,

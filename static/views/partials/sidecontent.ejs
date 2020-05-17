@@ -3,6 +3,7 @@
 
     <div id="sidecontent" class="sidecontent">
      <a href="javascript:void(0)" class="closebtn" onclick="dancemap.nav.closeSideContent()">×</a>
+      <div class='sidecontent-child' id='sidecontent-child'>
       <div class="marker-title">
         <h1> <%= marker.properties.name %> </h1>
         <% if (marker.properties.start) { %>
@@ -51,17 +52,16 @@
         </div>
 
       </div>
+      </div>
     </div>
-
-
-  	
-  <% if (marker.properties.type === 'studio') { %>
-
-
-  <% } %>
 
 <% } -%>
 
+  <% if (!marker) { %>
+    <div id="sidecontent" class="sidecontent" style="width:0px">
+      <a href="javascript:void(0)" class="closebtn" onclick="dancemap.nav.closeSideContent()">×</a>
+    </div>
+  <% } %>
 
 
 

@@ -22,21 +22,27 @@ this.dancemap.util = (function(){
   }
 
   function getFormattedDate(dateString, hms) {
-   var date = new Date(dateString);
-   if(hms) {
-     date.setHours(hms.h, hms.m, hms.s);
-   } else {
-     date.setHours(0, 0, 0); 
-   }
-     // Set hours, minutes and seconds
-   return date.toISOString();
-}
-
+    var date = new Date(dateString);
+    if(hms) {
+      date.setHours(hms.h, hms.m, hms.s);
+    } else {
+      date.setHours(0, 0, 0); 
+    }
+    // Set hours, minutes and seconds
+    return date.toISOString();
+  }
+  
+  function removeElement(id) {
+    var elem = document.getElementById(id);
+    return elem.parentNode.removeChild(elem);
+  }
+  
   return {
     isObjEmpty : isObjEmpty,
     isObjPropNotEmpty : isObjPropNotEmpty,
     htmlToElements : htmlToElements,
-    getFormattedDate: getFormattedDate
+    getFormattedDate : getFormattedDate,
+    removeElement : removeElement
 
   }
 

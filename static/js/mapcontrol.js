@@ -98,10 +98,19 @@ this.dancemap.mapcontrol = (function(){
   map.on("zoomstart", function (e) { dancemap.ui.inputs.category.disabled = true; });
   map.on("zoomend", function (e) { dancemap.ui.inputs.category.disabled = false; });
   map.on("popupopen", function(e) {
+    const template = e.popup._source.feature.properties.popupContent;
 
     if (window.matchMedia('screen and (max-width: 480px)').matches) {
       e.target.closePopup();
-      showMobilePopup(e.popup._source.feature.properties.popupContent)
+      showMobilePopup(template)
+    } else {
+      let width = parseInt(dancemap.ui.sidebars.content.style.width, 10);
+      if(width) {
+        dancemap.nav.updateSideContent(template);
+      } else {
+        dancemap.nav.openSideContent(template);
+      }
+      
     }
 
     
