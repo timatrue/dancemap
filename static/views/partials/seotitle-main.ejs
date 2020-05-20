@@ -1,18 +1,20 @@
 <% if (page) { %>
 
   <% if (page === 'events') { %>
-    <title>Опен эйры, вечеринки, конкурсы, мастер классы, фестивали по социальным танцам: хастл, бачата, зук, сальса, WCS на онлайн карте Dancemap.online </title>
-    <meta name="Description" content="Опен эйры, вечеринки, турниры, мастер классы, фестивали по социальным танцам: хастл, бачата, зук, сальса, WCS на онлайн карте Dancemap.online">
+    <title>Танцевальные опен эйры, дискотеки, конкурсы, мастер классы, фестивали по социальным танцам: хастл, бачата, зук, сальса, WCS на онлайн карте Dancemap.online </title>
+    <meta name="Description" content="Танцевальные Опен эйры, дискотеки, турниры, мастер классы, фестивали по социальным танцам: хастл, бачата, зук, сальса, WCS, свинг на онлайн карте Dancemap.online">
+    <meta name="keywords" content="танцевальные опен эйры, open airs, танцевальные вечеринки, танцевальные дискотеки, танцевальные турниры, мастер классы по танцам, фестивали социальных танцев">
   <% } %>
 
   <% if (page === 'studios') { %>
-    <title>Студии и школы социальных танцев: хастл, бачата, зук, сальса, WCS на онлайн карте Dancemap.online </title>
-    <meta name="Description" content="Студии и школы танцев: на онлайн карте Dancemap.online">
+    <title>Студии и школы парных танцев по: хастлу, дискофоксу, бачате, зуку, сальсе, WCS, свингу на онлайн карте Dancemap.online </title>
+    <meta name="Description" content="Студии и школы парных танцев по: хастлу, дискофоксу, бачате, зуку, сальсе, WCS, свингу на онлайн карте Dancemap.online">
+    <meta name="keywords" content="школа танцев хастл, школа танцев бачата, школа танцев зук, школа танцев сальса, школа танцев WCS, школа танцев свинг">
   <% } %>
 
   <% if (page === 'main') { %>
-    <title>Студии и школы социальных танцев, танцевальные события: хастл, бачата, зук, сальса, WCS на онлайн карте Dancemap.online</title>
-  <meta name="Description" content="Студии и школы социальных танцев, танцевальные события: хастл, бачата, зук, сальса, WCS на онлайн карте Dancemap.online">
+    <title>Школы парных танцев и танцевальные события по: хастлу, дискофоксу, бачате, зуку, сальсе, WCS, свингу на онлайн карте Dancemap.online</title>
+  <meta name="Description" content="Школы парных танцев, танцевальные события по: хастлу, дискофоксу, бачате, зуку, сальсе, WCS, свингу на онлайн карте Dancemap.online">
   <% } %>	
 
 <% }  %>
@@ -21,11 +23,13 @@
   <% if (marker.properties.type === 'studio') { %>
     <title>Школа социальных танцев <%= marker.properties.name %>, <%= marker.properties.city %></title>
     <meta name="Description" content="Школа социальных танцев <%= marker.properties.name %>, обучение танцам: <%= marker.properties.speciality.join(', ') %>, <%= marker.properties.city %>">
+    <meta name="keywords" content="<%= marker.properties.speciality.map( (el) => { return "Обучение танцу " + el;}).join(', ') %>">
   <% } %>
 
     <% if (marker.properties.type === 'event') { %>
     <title><%= marker.properties.name %>, <%= marker.properties.city %></title>
     <meta name="Description" content="<%= marker.properties.name %>, <%= marker.properties.speciality.join(', ') %>">
+    <meta name="keywords" content="<%= marker.properties.speciality.join(', ') %>"
   <% } %>
 
 <% }  %>	

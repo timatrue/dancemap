@@ -411,7 +411,7 @@ this.dancemap.mapcontrol = (function(){
           ${marker.properties.speciality ? 
             `<div class='marker-content'>
             <div class='container-info__speciality'>
-              <div class='subtitle'>Танцевальные направления: </div> ${marker.properties.speciality.join(', ')}
+              <div class='subtitle'>Стили танцев: </div> ${marker.properties.speciality.join(', ')}
             </div>`:
             ''} 
 

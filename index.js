@@ -106,10 +106,10 @@ io.on('connection', function(socket) {
     if(isObject(secret) && secret) {
       if(secret.secret === 'Covid19!') {
         /*firstly you have to define new property in studio.js */
-        Studio.updateMany({}, {$set: { 'properties.country': "Россия"}} ).then(function(result) {
+        Studio.updateMany({}, {$set: { 'properties.desc': ""}} ).then(function(result) {
 	      console.log('set_all_documents', result);
 	    });
-	    Event.updateMany({}, {$set: { 'properties.country': "Россия"}} ).then(function(result) {
+	    Event.updateMany({}, {$set: { 'properties.desc': ""}} ).then(function(result) {
 	      console.log('set_all_documents', result);
 	    });
       }

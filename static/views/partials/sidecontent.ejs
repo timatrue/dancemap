@@ -5,7 +5,17 @@
      <a href="javascript:void(0)" class="closebtn" onclick="dancemap.nav.closeSideContent()">×</a>
       <div class='sidecontent-child' id='sidecontent-child'>
       <div class="marker-title">
-        <h1> <%= marker.properties.name %> </h1>
+
+        
+        <% if (marker.properties.type === 'studio') { %>
+          <h1> Школа танцев <%= marker.properties.name %> </h1> 
+        <% } %>
+        <% if (marker.properties.type === 'event') { %>
+          <h1> <%= marker.properties.name %> </h1>
+        <% } %>        
+
+
+
         <% if (marker.properties.start) { %>
           <h2> Начинаем: <%= dayjs(marker.properties.start).format('D MMMM YYYY') %> </h2> 
         <% } %>
@@ -16,14 +26,14 @@
       <div class="marker-content">
         <% if (marker.properties.speciality) { %>
           <div class="container-info__speciality">
-            <div class='subtitle'>Танцевальные направления: </div>
+            <div class='subtitle'>Стили танцев: </div>
             <%= marker.properties.speciality.join(', ') %>
           </div>
         <% } %>
 
         <% if (marker.properties.offers) { %>
           <div class="container-info__offers">
-            <div class='subtitle'>Стоимость:</div>
+            <div class='subtitle'>Стоимость участия:</div>
             <%- marker.properties.offers
                .map(offer => '<div>' + offer.name + ' - ' + offer.price + '</div>')
                .join("")
@@ -41,6 +51,7 @@
         <% if (marker.properties.vk) { %>
 
           <div class="container-info__social">
+          <div class='subtitle'>Социальные сети:</div>
             <a href='<%= marker.properties.vk %>' target="_blank" title='<%= marker.properties.name %>'>
               <i class='icon-vk'> </i>
             </a> 
