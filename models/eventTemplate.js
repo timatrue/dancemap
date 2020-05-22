@@ -8,7 +8,9 @@ function getEventTemplate() {
       "properties": {
         "type" : "",
         "name" : "",
+        "subtype": "",
         "altername" : "",
+        "desc": "",
         "address" : "",
         "city":"",
         "country":"",

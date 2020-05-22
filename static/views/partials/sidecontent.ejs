@@ -8,10 +8,18 @@
 
         
         <% if (marker.properties.type === 'studio') { %>
-          <h1> Школа танцев <%= marker.properties.name %> </h1> 
+          <h1><%= marker.properties.name %>
+          <% if (marker.properties.subtype) { %>
+            <span class="subtype">, <%= marker.properties.subtype %></span> 
+          <% } %>
+        </h1> 
         <% } %>
         <% if (marker.properties.type === 'event') { %>
-          <h1> <%= marker.properties.name %> </h1>
+          <h1><%= marker.properties.name %>
+          <% if (marker.properties.subtype) { %>
+            <span class="subtype">, <%= marker.properties.subtype %></span> 
+          <% } %>
+        </h1>
         <% } %>        
 
 
@@ -24,6 +32,13 @@
         <% } %>
       </div>
       <div class="marker-content">
+
+        <% if (marker.properties.desc) { %>
+          <div class="container-info__desc">
+            <%= marker.properties.desc %>
+          </div>
+        <% } %>
+
         <% if (marker.properties.speciality) { %>
           <div class="container-info__speciality">
             <div class='subtitle'>Стили танцев: </div>

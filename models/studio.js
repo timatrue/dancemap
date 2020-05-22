@@ -26,9 +26,17 @@ const StudioScheme = new Schema({
   	  type: String,
   	  required: [true, 'name field required']
     },
+    subtype: {
+      type: String,
+      required: [true, 'subtype field required']
+    },
     altername: {
   	  type: String,
   	  required: [true, 'name field required']
+    },
+    desc: {
+      type: String,
+      required: [true, 'desc field required']
     },
     address: {
   	  type: String,

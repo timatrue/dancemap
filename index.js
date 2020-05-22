@@ -106,10 +106,10 @@ io.on('connection', function(socket) {
     if(isObject(secret) && secret) {
       if(secret.secret === 'Covid19!') {
         /*firstly you have to define new property in studio.js */
-        Studio.updateMany({}, {$set: { 'properties.desc': ""}} ).then(function(result) {
+        Studio.updateMany({}, {$set: { 'properties.subtype': ""}} ).then(function(result) {
 	      console.log('set_all_documents', result);
 	    });
-	    Event.updateMany({}, {$set: { 'properties.desc': ""}} ).then(function(result) {
+	    Event.updateMany({}, {$set: { 'properties.subtype': ""}} ).then(function(result) {
 	      console.log('set_all_documents', result);
 	    });
       }
@@ -130,6 +130,8 @@ io.on('connection', function(socket) {
     
     studio.properties.type = msg.recordType;
     studio.properties.name = msg.name;
+    studio.properties.subtype = msg.subtype;
+    studio.properties.desc = msg.desc;
     studio.properties.address = msg.address;
     studio.properties.city = msg.city;
     studio.properties.vk = msg.vk;
@@ -163,6 +165,8 @@ io.on('connection', function(socket) {
 
     event.properties.type = msg.recordType;
     event.properties.name = msg.name;
+    event.properties.subtype = msg.subtype;
+    event.properties.desc = msg.desc;
     event.properties.address = msg.address;
     event.properties.city = msg.city;
     event.properties.country = msg.country;

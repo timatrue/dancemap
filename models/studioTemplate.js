@@ -8,7 +8,9 @@ function getStudioTemplate() {
       "properties": {
         "type": "",
         "name": "",
+        "subtype": "",
         "altername":"",
+        "desc": "",
         "address":"",
         "city":"",
         "country":"",

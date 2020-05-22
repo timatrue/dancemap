@@ -400,52 +400,70 @@ this.dancemap.mapcontrol = (function(){
 
   function getPopupContentDekstop(marker) {
        template =
-        `
+        `<div class='marker-title'>
           ${marker.properties.name ?
-            `<div class='marker-title'> <h1>${marker.properties.name}</h1>
+            `
+            <h1>
+              ${marker.properties.name}
+              ${marker.properties.subtype ?
+                '<span class="subtype">' + ', ' + marker.properties.subtype + '</span>' :
+                 ""}
+            </h1>
             ${marker.properties.start ? '<h2>' + dayjs(marker.properties.start).format('D MMMM YYYY') + ' -' : ''} 
             
             ${marker.properties.end ? dayjs(marker.properties.end).format('D MMMM YYYY') + '</h2>' : ''} 
-            </div>` :
-             ''} 
-          ${marker.properties.speciality ? 
-            `<div class='marker-content'>
-            <div class='container-info__speciality'>
-              <div class='subtitle'>Стили танцев: </div> ${marker.properties.speciality.join(', ')}
-            </div>`:
-            ''} 
-
-          ${marker.properties.offers ?
-            `<div class='container-info__offers'>
-               <div class='subtitle'>Стоимость:</div>
-             ${marker.properties.offers
-               .map(offer => "<div>" + offer.name + ' - ' + offer.price + "</div>")
-               .join("")
-             }
-            </div>` :
-          ''}
-        
-          ${marker.properties.address ?
-            `<div class='container-info__address'>
-              <div class='subtitle'>Адрес:</div>
-              
-              <div> ${self.dancemap.icons.marker} ${marker.properties.city}, ${marker.properties.address} </div>  
-            </div>` :
-          ''}
-
-          ${marker.properties.vk ?  
-            `<div class='container-info__social'>
-                <a href='${marker.properties.vk}' target="_blank" title='${marker.properties.name}'>
-                  ${self.dancemap.icons.vk}
-                </a> 
-            </div>` :
-          ''}
-
-          <div class="container-info__url">
-            <button onclick="dancemap.nav.copyPopupURL()">копировать ссылку </button>
+            ` :
+            ''}
           </div>
+
           
-        </div>` 
+          <div class='marker-content'>
+            ${marker.properties.desc ? 
+              `<div class='container-info__desc'>
+                ${marker.properties.desc}
+              </div>`:
+              ''} 
+
+            ${marker.properties.speciality ? 
+              `<div class='container-info__speciality'>
+                <div class='subtitle'>Стили танцев: </div> ${marker.properties.speciality.join(', ')}
+              </div>`:
+              ''} 
+
+            ${marker.properties.offers ?
+              `<div class='container-info__offers'>
+                 <div class='subtitle'>Стоимость:</div>
+               ${marker.properties.offers
+                 .map(offer => {
+                  let expired =  offer.expired ? ', до ' + offer.expired : "";
+                  return "<div>" + offer.name + ' - ' + offer.price + expired + "</div>"
+                })
+                 .join("")
+               }
+              </div>` :
+            ''}
+          
+            ${marker.properties.address ?
+              `<div class='container-info__address'>
+                <div class='subtitle'>Адрес:</div>
+                
+                <div> ${self.dancemap.icons.marker} ${marker.properties.city}, ${marker.properties.address} </div>  
+              </div>` :
+            ''}
+
+            ${marker.properties.vk ?  
+              `<div class='container-info__social'>
+                  <a href='${marker.properties.vk}' target="_blank" title='${marker.properties.name}'>
+                    ${self.dancemap.icons.vk}
+                  </a> 
+              </div>` :
+            ''}
+
+            <div class="container-info__url">
+              <button onclick="dancemap.nav.copyPopupURL()">копировать ссылку </button>
+            </div>
+          
+          </div>` 
         return template;
   }
 

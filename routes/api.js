@@ -20,6 +20,19 @@ router.get('/mongo', function(req, res) {
     });
 })
 
+router.get('/editor', function(req, res) {
+  Studio.find({}).then(function(studio) { 
+    console.log('GET /mongo',studio);
+      
+      res.sendFile('/editor.html', {root: __dirname })
+      //res.send(studio);
+  });
+
+    Studio.countDocuments({}).then(function(err, count) {
+      console.log('GET', count);
+    });
+})
+
 router.get('/generatesitemap', function(req, res) {
   Promise.all([getStudioList(), getEventsList()])
     .then((values) => {

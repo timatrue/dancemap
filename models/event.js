@@ -26,9 +26,17 @@ const EventScheme = new Schema({
   	  type: String,
   	  required: [true, 'name field required']
     },
+    subtype: {
+      type: String,
+      required: [true, 'subtype field required']
+    },
     altername: {
   	  type: String,
-  	  required: [true, 'name field required']
+  	  required: [true, 'altername field required']
+    },
+    desc: {
+      type: String,
+      required: [true, 'desc field required']
     },
     address: {
   	  type: String,
@@ -61,7 +69,8 @@ const EventScheme = new Schema({
       party: {type: Boolean},
       fest: {type: Boolean},
       competition: {type: Boolean},
-      online: {type: Boolean}
+      online: {type: Boolean},
+      camp: {type: Boolean}
     },
     seoimage: { data: Buffer, contentType: String },
     start: Date,

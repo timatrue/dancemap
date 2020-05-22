@@ -526,6 +526,10 @@ input::-webkit-input-placeholder {
 .marker-title {
   font-weight:bold;
 }
+.marker-title .subtype {
+  font-style: italic;
+  font-weight: 500;
+}
 .marker-content > div {
   padding-bottom: 10px;
 }
