@@ -34,8 +34,11 @@
       <div class="marker-content">
 
         <% if (marker.properties.desc) { %>
-          <div class="container-info__desc">
-            <%= marker.properties.desc %>
+          <div class='container-info__desc' onclick="dancemap.nav.toggleDetails(this)">
+            <div class="container-info__predesc pre"> 
+              <%= marker.properties.desc %>
+            </div>
+            <div class="toggle-icon__down"></div>
           </div>
         <% } %>
 

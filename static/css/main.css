@@ -451,11 +451,58 @@ input::-webkit-input-placeholder {
   background:#bbb;
 }
 
+.container-info__desc {
+  display: inline-flex;
+ 
+  
+}
+.container-info__predesc {
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  
+}
+.pre {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 30px; 
+  
+}
+
+.container-info__desc .toggle-icon__down {
+  display: inline-block;
+  background-image: url(/images/chevron-down-solid.svg);
+  background-repeat: no-repeat;
+  min-width: 10px;
+  min-height: 10px;
+  cursor: pointer;
+  padding: 4px;
+  margin: 0px 2px;
+  opacity: 0.6;
+}
+.container-info__desc .toggle-icon__up {
+  background-image: url(/images/chevron-up-solid.svg);
+  opacity: 0.6;
+}
+
+.toggle-icon__down:hover {
+  opacity: 1;
+}
+
+.toggle-icon__up:hover {
+  opacity: 1;
+}
+
+
 .container-info__address {
   margin-top: 5px;
 }
 
-.container-info__address #address{
+.container-info__address #address {
   padding-top: 5px;
 }
 .container-info__url {

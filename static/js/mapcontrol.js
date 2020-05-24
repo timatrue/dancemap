@@ -419,9 +419,19 @@ this.dancemap.mapcontrol = (function(){
           
           <div class='marker-content'>
             ${marker.properties.desc ? 
-              `<div class='container-info__desc'>
-                ${marker.properties.desc}
-              </div>`:
+              `
+              <div class='container-info__desc' onclick="dancemap.nav.toggleDetails(this)">
+              
+                <div class='container-info__predesc pre' >
+                
+                  ${marker.properties.desc}
+              
+                </div>
+                <div class="toggle-icon__down"></div>
+              </div>
+
+              <hr>
+              `:
               ''} 
 
             ${marker.properties.speciality ? 

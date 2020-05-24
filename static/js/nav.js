@@ -226,6 +226,12 @@ this.dancemap.nav = (function(){
     document.body.removeChild(dummyInput);
   }
 
+  function toggleDetails(self) {
+    self.querySelector('.container-info__predesc').classList.toggle("pre");
+    self.querySelector('.toggle-icon__down').classList.toggle("toggle-icon__up");
+  }
+
+
   return {
     setInputDate : setInputDate,
     openSidenav : openSidenav,
@@ -240,7 +246,8 @@ this.dancemap.nav = (function(){
     addLatLngToURL: addLatLngToURL,
     getLatLngURL: getLatLngURL,
     copyPopupURL: copyPopupURL,
-    openModalMobile: openModalMobile
+    openModalMobile: openModalMobile,
+    toggleDetails: toggleDetails
   }
 
 })();

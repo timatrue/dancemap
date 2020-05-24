@@ -21,14 +21,14 @@
 
 <% if (marker) { %>
   <% if (marker.properties.type === 'studio') { %>
-    <title>Школа социальных танцев <%= marker.properties.name %>, <%= marker.properties.city %></title>
-    <meta name="Description" content="Школа социальных танцев <%= marker.properties.name %>, обучение танцам: <%= marker.properties.speciality.join(', ') %>, <%= marker.properties.city %>">
+    <title><%= marker.properties.subtype %> <%= marker.properties.name %>, <%= marker.properties.city %></title>
+    <meta name="Description" content="<%= marker.properties.subtype %> <%= marker.properties.name %>, обучение танцам: <%= marker.properties.speciality.join(', ') %>, <%= marker.properties.city %>">
     <meta name="keywords" content="<%= marker.properties.speciality.map( (el) => { return "Обучение танцу " + el;}).join(', ') %>">
   <% } %>
 
     <% if (marker.properties.type === 'event') { %>
-    <title><%= marker.properties.name %>, <%= marker.properties.city %></title>
-    <meta name="Description" content="<%= marker.properties.name %>, <%= marker.properties.speciality.join(', ') %>">
+    <title><%= marker.properties.subtype %> <%= marker.properties.name %>, <%= marker.properties.city %></title>
+    <meta name="Description" content="<%= marker.properties.subtype %> <%= marker.properties.name %>, <%= marker.properties.speciality.join(', ') %>">
     <meta name="keywords" content="<%= marker.properties.speciality.join(', ') %>"
   <% } %>
 
