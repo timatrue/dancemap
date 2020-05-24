@@ -244,7 +244,7 @@
         target: '#drag-drop-area'
       })
       //.use(Uppy.Tus, {endpoint: 'http://localhost:8080/upload'})
-      uppy.use(Uppy.XHRUpload, { endpoint: 'http://localhost:8080/upload' })
+      uppy.use(Uppy.XHRUpload, { endpoint: 'https://dancemap.online/upload' })
 
       uppy.on('complete', (result) => {
         console.log('Upload complete! We’ve uploaded these files:', result.successful)
