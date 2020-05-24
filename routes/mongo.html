@@ -7,6 +7,7 @@
     <meta name="Description" content=""/>
     <link href='/css/main.css' rel='stylesheet' />
     <script src="/socket.io/socket.io.js"></script>
+    <link href="https://transloadit.edgly.net/releases/uppy/v1.14.1/uppy.min.css" rel="stylesheet">
     <style>
       #containerForm {
         display: flex;
@@ -100,6 +101,9 @@
           </span>  
           <input class="btn red-bg" id="submit" type="submit" name="Submit">
         </fieldset>
+      </div>
+      <div>
+        <div id="drag-drop-area"></div>
       </div>
       <div id="generalBlock">
         <fieldset>
@@ -226,16 +230,25 @@
       </div>
     </form>
   </div>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph@latest"></script>
+  <script src="https://transloadit.edgly.net/releases/uppy/v1.14.1/uppy.min.js"></script>
   
   <script  src="/js/dancemap.js"></script>
   <script  src="/js/util.js"></script>
   <script  src="/js/socket.js"></script>
 
   <script>
+
+    var uppy = Uppy.Core()
+      .use(Uppy.Dashboard, {
+        inline: true,
+        target: '#drag-drop-area'
+      })
+      //.use(Uppy.Tus, {endpoint: 'http://localhost:8080/upload'})
+      uppy.use(Uppy.XHRUpload, { endpoint: 'http://localhost:8080/upload' })
+
+      uppy.on('complete', (result) => {
+        console.log('Upload complete! We’ve uploaded these files:', result.successful)
+      })
 
   setDates()
   let radios = document.querySelectorAll('input[type=radio][name="recordType"]');
