@@ -71,6 +71,15 @@
       .red-bg:hover {
         background-color: #D91A3D;
       }
+
+      .active {
+        display: block;
+      }
+
+      .tab {
+        display: none;
+      }
+
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
@@ -93,162 +102,192 @@
   <div id="containerForm">
 
     <form id="form">
-      <div>
-        <fieldset id=publishBlock>
-          <h1>Post marker</h1>
-            <span><label for="debug">Debug</label>
-            <input type="checkbox" name="debug" id="debug" checked>
-          </span>  
-          <input class="btn red-bg" id="submit" type="submit" name="Submit">
-        </fieldset>
-      </div>
-      <div>
+      
+      <div class="imgBlock tab">
         <div id="drag-drop-area"></div>
       </div>
-      <div id="generalBlock">
-        <fieldset>
-          <span>
-            <label for="eventRecord">Event</label>
-            <input type="radio" id="eventRecord" name="recordType" value="event" checked>
-            <label for="studioRecord">Studio</label>
-            <input type="radio" id="studioRecord" name="recordType" value="studio"> 
-          </span>     
-        </fieldset>
-
-        <fieldset>
-          <label for="name">Name:</label>
-          <input type="text" name="name" id="name" minlength="1" maxlength="30" value="test name" required>
-          <label for="subtype">Subtype:</label>
-          <input type="text" name="subtype" id="subtype" minlength="1" maxlength="30" value="sub type" required>
-          <label for="altername">Altername:</label>
-          <input type="text" name="altername" id="altername" minlength="1" maxlength="30" value="test altername" required>
-          <label for="desc">Desc:</label>
-          <textarea placeholder="Опишите" name="desc" id="desc" value="test desc" maxlength="30000" required> </textarea>
-          <label for="address">Address:</label>
-          <input type="text" name="address" id="address" minlength="1" maxlength="200" value="test address" required>
-          <label for="city">City:</label>
-          <input type="text" name="city" id="city" minlength="1" maxlength="50" value="test city" required>
-          <label for="country">Country:</label>
-          <input type="text" name="country" id="country" minlength="1" maxlength="50" value="test city" required>
-          <label for="vk">vk:</label>
-          <input type="text" name="vk" id="vk" minlength="1" maxlength="50" value="test vk">
-          <label for="lat">Latitude:</label>
-          <input type="text" name="lat" id="lat"  minlength="1" maxlength="10" value="1.1" required>
-          <label for="lon">Longitude:</label>
-          <input type="text" name="lon" id="lon"  minlength="1" maxlength="10" value="1.1" required>
-          <label for="img">Image:</label>
-          <input type="file" id="img" name="img" accept="image/png, image/jpeg">
-        </fieldset>
-        <fieldset id="courseBlock">
-          <span>
-            <input type="checkbox" name="course" id="hustle" value="hustle">
-            <label for="hustle">hustle</label>
-          </span>
-          
-          <span>
-            <input type="checkbox" name="course" id="zouk" value="zouk">
-            <label for="zouk">zouk</label>
-          </span>
-          
-          <span>
-            <input type="checkbox" name="course" id="wcs" value="wcs">
-            <label for="wcs">wcs</label>
-          </span>
-          
-          <span>
-            <input type="checkbox" name="course" id="salsa" value="salsa">
-            <label for="salsa">salsa</label>
-          </span>
-          
-          <span>
-            <input type="checkbox" name="course" id="bachata" value="bachata">
-            <label for="bachata">bachata</label>
-          </span>
+      <div class="descBlock tab">
+        <div>
+          <fieldset id=publishBlock>
+            <h1>Post marker</h1>
+              <span><label for="debug">Debug</label>
+              <input type="checkbox" name="debug" id="debug" checked>
+            </span>  
+            <input class="btn red-bg" id="submit" type="submit" name="Submit">
+          </fieldset>
+        </div>
         
-          <span>
-            <label for="speciality">Speciality: (Хастл,etc - without spaces!)</label>
-            <input type="text" name="speciality" id="speciality"  value="Хастл,Зук" required>
-          </span>
 
-        </fieldset>
+        <div id="generalBlock">
+          <fieldset>
+            <span>
+              <label for="eventRecord">Event</label>
+              <input type="radio" id="eventRecord" name="recordType" value="event" checked>
+              <label for="studioRecord">Studio</label>
+              <input type="radio" id="studioRecord" name="recordType" value="studio"> 
+            </span>     
+          </fieldset>
+
+          <fieldset>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" minlength="1" maxlength="30" value="test name" required>
+            <label for="subtype">Subtype:</label>
+            <input type="text" name="subtype" id="subtype" minlength="1" maxlength="30" value="sub type" required>
+            <label for="altername">Altername:</label>
+            <input type="text" name="altername" id="altername" minlength="1" maxlength="30" value="test altername" required>
+            <label for="desc">Desc:</label>
+            <textarea placeholder="Опишите" name="desc" id="desc" value="test desc" maxlength="30000" required> </textarea>
+            <label for="address">Address:</label>
+            <input type="text" name="address" id="address" minlength="1" maxlength="200" value="test address" required>
+            <label for="city">City:</label>
+            <input type="text" name="city" id="city" minlength="1" maxlength="50" value="test city" required>
+            <label for="country">Country:</label>
+            <input type="text" name="country" id="country" minlength="1" maxlength="50" value="test city" required>
+            <label for="vk">vk:</label>
+            <input type="text" name="vk" id="vk" minlength="1" maxlength="50" value="test vk">
+            <label for="lat">Latitude:</label>
+            <input type="text" name="lat" id="lat"  minlength="1" maxlength="10" value="1.1" required>
+            <label for="lon">Longitude:</label>
+            <input type="text" name="lon" id="lon"  minlength="1" maxlength="10" value="1.1" required>
+            <label for="img">Image:</label>
+            <input type="file" id="img" name="img" accept="image/png, image/jpeg">
+          </fieldset>
+          <fieldset id="courseBlock">
+            <span>
+              <input type="checkbox" name="course" id="hustle" value="hustle">
+              <label for="hustle">hustle</label>
+            </span>
+            
+            <span>
+              <input type="checkbox" name="course" id="zouk" value="zouk">
+              <label for="zouk">zouk</label>
+            </span>
+            
+            <span>
+              <input type="checkbox" name="course" id="wcs" value="wcs">
+              <label for="wcs">wcs</label>
+            </span>
+            
+            <span>
+              <input type="checkbox" name="course" id="salsa" value="salsa">
+              <label for="salsa">salsa</label>
+            </span>
+            
+            <span>
+              <input type="checkbox" name="course" id="bachata" value="bachata">
+              <label for="bachata">bachata</label>
+            </span>
+          
+            <span>
+              <label for="speciality">Speciality: (Хастл,etc - without spaces!)</label>
+              <input type="text" name="speciality" id="speciality"  value="Хастл,Зук" required>
+            </span>
+
+          </fieldset>
+        </div>
+
+        <div id="eventBlock">
+          <fieldset id="dateBlock" name='dateBlock'>
+            <label for="start">Start Date: ()</label>
+            <input type="date" name="start" id="start"  required>
+            <label for="end">End Date: ()</label>
+            <input type="date" name="end" id="end"  required>
+            <label for="nestedgroup">Nested group: (id1,id2,etc - without spaces!)</label>
+            <input type="text" name="nestedgroup" id="nestedgroup" >        
+          </fieldset>
+
+          <fieldset id="activityBlock" name='activityBlock'>
+            <span>
+              <input type="checkbox" name="activity"  value="masterclass" id="masterclass">
+              <label for="masterclass">Masterclass</label>
+            </span>
+           
+            <span>
+              <input type="checkbox" name="activity"  value="party" id="party">
+              <label for="party">Party</label>
+            </span>
+            
+            <span>
+              <input type="checkbox" name="activity"  value="fest" id="fest">
+              <label for="fest">Fest</label>
+            </span>
+            
+            <span>
+              <input type="checkbox" name="activity"  value="competition"  id="competition">
+              <label for="competition">Competition</label>
+            </span>
+            
+            <span>
+              <input type="checkbox" name="activity"  value="camp" id="camp">
+              <label for="camp">Camp</label>
+            </span> 
+
+            <span>
+              <input type="checkbox" name="activity"  value="online" id="online">
+              <label for="online">Online</label>
+            </span>       
+          </fieldset>
+
+          <fieldset id="offerBlock" name='offerBlock'>
+            <label for="offer">offer1:</label>
+            <input type="text" name="offer" value='{"name":"n1","price":"1", "expired":"до", "currency":"RUB"}' >
+            <label for="offer">offer2:</label>
+            <input type="text" name="offer" value='{"name":"n2","price":"2", "expired":"до","currency":"RUB"}' >
+            <label for="offer">offer3</label>
+            <input type="text" name="offer" value='{"name":"n3","price":"3", "expired":"до","currency":"RUB"}'> 
+            <label for="offer">offer4</label>
+            <input type="text" name="offer" value='{"name":"n4","price":"4", "expired":"до","currency":"RUB"}'> 
+            <label for="offer">offer5</label>
+            <input type="text" name="offer" value='{"name":"n5","price":"5", "expired":"до","currency":"RUB"}'>        
+          </fieldset>
+        </div>
       </div>
 
-      <div id="eventBlock">
-        <fieldset id="dateBlock" name='dateBlock'>
-          <label for="start">Start Date: ()</label>
-          <input type="date" name="start" id="start"  required>
-          <label for="end">End Date: ()</label>
-          <input type="date" name="end" id="end"  required>
-          <label for="nestedgroup">Nested group: (id1,id2,etc - without spaces!)</label>
-          <input type="text" name="nestedgroup" id="nestedgroup" >        
-        </fieldset>
-
-        <fieldset id="activityBlock" name='activityBlock'>
-          <span>
-            <input type="checkbox" name="activity"  value="masterclass" id="masterclass">
-            <label for="masterclass">Masterclass</label>
-          </span>
-         
-          <span>
-            <input type="checkbox" name="activity"  value="party" id="party">
-            <label for="party">Party</label>
-          </span>
-          
-          <span>
-            <input type="checkbox" name="activity"  value="fest" id="fest">
-            <label for="fest">Fest</label>
-          </span>
-          
-          <span>
-            <input type="checkbox" name="activity"  value="competition"  id="competition">
-            <label for="competition">Competition</label>
-          </span>
-          
-          <span>
-            <input type="checkbox" name="activity"  value="camp" id="camp">
-            <label for="camp">Camp</label>
-          </span> 
-
-          <span>
-            <input type="checkbox" name="activity"  value="online" id="online">
-            <label for="online">Online</label>
-          </span>       
-        </fieldset>
-
-        <fieldset id="offerBlock" name='offerBlock'>
-          <label for="offer">offer1:</label>
-          <input type="text" name="offer" value='{"name":"n1","price":"1", "expired":"до", "currency":"RUB"}' >
-          <label for="offer">offer2:</label>
-          <input type="text" name="offer" value='{"name":"n2","price":"2", "expired":"до","currency":"RUB"}' >
-          <label for="offer">offer3</label>
-          <input type="text" name="offer" value='{"name":"n3","price":"3", "expired":"до","currency":"RUB"}'> 
-          <label for="offer">offer4</label>
-          <input type="text" name="offer" value='{"name":"n4","price":"4", "expired":"до","currency":"RUB"}'> 
-          <label for="offer">offer5</label>
-          <input type="text" name="offer" value='{"name":"n5","price":"5", "expired":"до","currency":"RUB"}'>        
-        </fieldset>
+      <div class="controlBlock">
+        <button type="button" id="prevBtn">Назад</button>
+        <button type="button" id="nextBtn">Далее</button>
       </div>
     </form>
   </div>
   <script src="https://transloadit.edgly.net/releases/uppy/v1.14.1/uppy.min.js"></script>
+  <script src="https://transloadit.edgly.net/releases/uppy/locales/v1.13.3/ru_RU.min.js"></script>
   
   <script  src="/js/dancemap.js"></script>
+  <script  src="/js/formstep.js"></script>
   <script  src="/js/util.js"></script>
   <script  src="/js/socket.js"></script>
 
   <script>
 
-    var uppy = Uppy.Core()
-      .use(Uppy.Dashboard, {
+    const settings = {
+      next: document.getElementById('nextBtn'),
+      prev: document.getElementById('prevBtn'),
+      tabs: document.getElementsByClassName("tab"),
+      activeTab: 0
+    }
+    this.dancemap.formstep.setForm(settings);
+
+    this.dancemap.formstep.uppy = Uppy.Core();
+    let uppy = this.dancemap.formstep.uppy;
+
+      uppy.use(Uppy.Dashboard, {
         inline: true,
-        target: '#drag-drop-area'
+        locale: Uppy.locales.ru_RU,
+        target: '#drag-drop-area',
+        hideUploadButton: true,
       })
       //.use(Uppy.Tus, {endpoint: 'http://localhost:8080/upload'})
       uppy.use(Uppy.XHRUpload, { endpoint: 'https://dancemap.online/upload' })
+      //uppy.use(Uppy.XHRUpload, { endpoint: 'http://localhost:8080/upload' })
 
       uppy.on('complete', (result) => {
         console.log('Upload complete! We’ve uploaded these files:', result.successful)
       })
+
+  
+
+
+
 
   setDates()
   let radios = document.querySelectorAll('input[type=radio][name="recordType"]');
@@ -340,7 +379,8 @@
        if(data.start) data.start = dancemap.util.getFormattedDate(data.start,{h:11,m:0,s:0});
        if(data.end) data.end = dancemap.util.getFormattedDate(data.end, {h:18,m:0,s:0});
 
-       
+       dancemap.formstep.submitForm();
+
        console.log('data from form', data);
 
        if(dancemap.util.isObjPropNotEmpty(data) && !data.debug) {

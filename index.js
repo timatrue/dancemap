@@ -14,9 +14,6 @@ const dayjs = require('dayjs')
 require('dayjs/locale/ru')
 dayjs.locale('ru')
 
-
-
-
 //Mongo cloud
 //const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://dancemap:Yy4UqOE9bihpePZc@cluster0-kkgwk.gcp.mongodb.net/dancemap?retryWrites=true&w=majority";
@@ -55,27 +52,28 @@ function uploadRoute (req, res) {
     'Access-Control-Max-Age': 2592000 // 30 days
     /** add other headers as per requirement */
   }
-    // parse a file upload
-    var form = new formidable.IncomingForm()
-    form.uploadDir = './static/uploads'
-    form.keepExtensions = true
+  // parse a file upload
+  var form = new formidable.IncomingForm()
+  form.uploadDir = './static/uploads'
+  form.keepExtensions = true
 
-    form.parse(req, function (err, fields, files) {
-      if (err) {
-        console.log('some error', err)
-        res.writeHead(200, headers)
-        res.write(JSON.stringify(err))
-        return res.end()
-      }
-      var file = files['files[]']
-      console.log('saved file to', file.path)
-      console.log('original name', file.name)
-      console.log('type', file.type)
-      console.log('size', file.size)
+  form.parse(req, function (err, fields, files) {
+    if (err) {
+      console.log('uploadRoute error', err)
       res.writeHead(200, headers)
-      res.write(JSON.stringify({ fields, files }))
+      res.write(JSON.stringify(err))
       return res.end()
-    })
+    }
+  
+    var file = files['files[]']
+    console.log('uploadRoute saved file to', file.path)
+    console.log('uploadRoute original name', file.name)
+    console.log('uploadRoute type', file.type)
+    console.log('uploadRoute size', file.size)
+    res.writeHead(200, headers)
+    res.write(JSON.stringify({ fields, files }))
+    return res.end()
+  })
 }
 
 
