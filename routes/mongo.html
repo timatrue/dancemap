@@ -71,7 +71,17 @@
       .red-bg:hover {
         background-color: #D91A3D;
       }
-
+      .grey-bg {
+        color: #808080;
+        background-color: #D3D3D3;
+      }
+      .grey-bg:hover {
+        background-color: #C0C0C0;
+      }      
+      .disabled-bg {
+        color: #A9A9A9;
+        background-color: #E8E8E8;
+      }
       .active {
         display: block;
       }
@@ -244,8 +254,8 @@
       </div>
 
       <div class="controlBlock">
-        <button type="button" id="prevBtn">Назад</button>
-        <button type="button" id="nextBtn">Далее</button>
+        <button class='btn grey-bg' type="button" id="prevBtn">Назад</button>
+        <button class='btn disabled-bg' type="button" id="nextBtn" disabled="disabled">Далее</button>
       </div>
     </form>
   </div>
@@ -259,37 +269,23 @@
 
   <script>
 
-    const settings = {
+    const navSettings = {
       next: document.getElementById('nextBtn'),
       prev: document.getElementById('prevBtn'),
       tabs: document.getElementsByClassName("tab"),
       activeTab: 0
     }
-    this.dancemap.formstep.setForm(settings);
+    const dataSettings = {
+      form: document.querySelector('form')
+    }
 
-    this.dancemap.formstep.uppy = Uppy.Core();
-    let uppy = this.dancemap.formstep.uppy;
-
-      uppy.use(Uppy.Dashboard, {
-        inline: true,
-        locale: Uppy.locales.ru_RU,
-        target: '#drag-drop-area',
-        hideUploadButton: true,
-      })
-      //.use(Uppy.Tus, {endpoint: 'http://localhost:8080/upload'})
-      uppy.use(Uppy.XHRUpload, { endpoint: 'https://dancemap.online/upload' })
-      //uppy.use(Uppy.XHRUpload, { endpoint: 'http://localhost:8080/upload' })
-
-      uppy.on('complete', (result) => {
-        console.log('Upload complete! We’ve uploaded these files:', result.successful)
-      })
-
-  
+    this.dancemap.formstep.setForm(navSettings);
+    this.dancemap.formstep.setFormData(dataSettings);
+    this.dancemap.formstep.setUppy();
 
 
 
 
-  setDates()
   let radios = document.querySelectorAll('input[type=radio][name="recordType"]');
 
   function radioHandler(event) {
@@ -379,7 +375,7 @@
        if(data.start) data.start = dancemap.util.getFormattedDate(data.start,{h:11,m:0,s:0});
        if(data.end) data.end = dancemap.util.getFormattedDate(data.end, {h:18,m:0,s:0});
 
-       dancemap.formstep.submitForm();
+       if(dancemap.formstep.form.uploads) data.uploads =  dancemap.formstep.form.uploads;
 
        console.log('data from form', data);
 
@@ -405,11 +401,6 @@
     return await toBase64(img);   
   }
 
-  function setDates() {
-    document.getElementById('start').valueAsDate = new Date();
-    document.getElementById('end').valueAsDate = new Date();
-  }
-  
 
 
 

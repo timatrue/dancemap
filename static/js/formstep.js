@@ -2,6 +2,40 @@
 this.dancemap.formstep = (function(){
   let self = this;
 
+  function setUppy() {
+  	let dancemap = self.dancemap;
+
+    dancemap.formstep.uppy = Uppy.Core();
+    let uppy = dancemap.formstep.uppy;
+
+      uppy.use(Uppy.Dashboard, {
+        inline: true,
+        locale: Uppy.locales.ru_RU,
+        target: '#drag-drop-area',
+        hideUploadButton: false,
+      })
+      //.use(Uppy.Form, {target: 'form'})
+      //.use(Uppy.Tus, {endpoint: 'http://localhost:8080/upload'})
+      uppy.use(Uppy.XHRUpload, { endpoint: 'https://dancemap.online/upload' })
+      //uppy.use(Uppy.XHRUpload, { endpoint: 'http://localhost:8080/upload' })
+
+      uppy.on('complete', (result) => {
+
+      	let form = self.dancemap.formstep.form;
+
+      	if(form.uploads) form.uploads.push(...result.successful);
+      	else form.uploads = result.successful;
+
+        form.nextBtn.disabled = false;
+        form.nextBtn.classList.remove('disabled-bg')
+        form.nextBtn.classList.add('blue-bg')
+
+
+        console.log('Upload complete! We’ve uploaded these files:', result.successful)
+      })
+  }
+
+
   function setNextListener(el) {
   	let dancemap = self.dancemap;
     el.addEventListener('click', function (event) {
@@ -47,14 +81,16 @@ this.dancemap.formstep = (function(){
 
   function submitForm() {
   	let uppy = self.dancemap.formstep.uppy;
+  	let form = self.dancemap.formstep.form;
   	uppy.upload().then((result) => {
-      console.info('Successful uploads:', result.successful)
 
 	  if (result.failed.length > 0) {
 	    console.error('Errors:')
 	    result.failed.forEach((file) => {
 	      console.error(file.error)
 	    })
+	  } else {
+        console.info('Successful uploads:', result.successful)
 	  }
     })
 
@@ -77,12 +113,26 @@ this.dancemap.formstep = (function(){
     showTab();
     setNextListener(dancemap.formstep.next);
     setPrevListener(dancemap.formstep.prev);
-
   }
   
+  function setFormData(settings) {
+    let dancemap = self.dancemap;
+    dancemap.formstep.form = settings.form;
+    setDates()
+  }
+
+  function setDates() {
+  	let form = self.dancemap.formstep.form;
+
+    form.start.valueAsDate = new Date();
+    form.end.valueAsDate = new Date();
+  }
+
   return {
     setForm : setForm,
-    submitForm : submitForm
+    setUppy : setUppy,
+    submitForm : submitForm,
+    setFormData : setFormData
   }
 
 })();
