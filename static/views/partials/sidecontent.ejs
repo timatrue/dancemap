@@ -31,6 +31,9 @@
           <h2> Заканчиваем: <%= dayjs(marker.properties.end).format('D MMMM YYYY') %> </h2>
         <% } %>
       </div>
+      <div class="marker-images">
+        <img style='height: 100%; width: 100%; object-fit: cover' src="" alt="" width="" height=""> 
+      </div>
       <div class="marker-content">
 
         <% if (marker.properties.desc) { %>

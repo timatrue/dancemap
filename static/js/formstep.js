@@ -5,7 +5,31 @@ this.dancemap.formstep = (function(){
   function setUppy() {
   	let dancemap = self.dancemap;
 
-    dancemap.formstep.uppy = Uppy.Core();
+    dancemap.formstep.uppy = Uppy.Core({
+      restrictions: {
+	    maxFileSize: 1048576,
+	    maxNumberOfFiles: 3,
+	    minNumberOfFiles: null,
+	    allowedFileTypes: ['image/*', '.jpg', '.jpeg', '.png']
+	  },
+	  locale: {
+        strings: {
+	      youCanOnlyUploadX: {
+	        0: 'You can only upload %{smart_count} file',
+	        1: 'You can only upload %{smart_count} files'
+	      },
+          youHaveToAtLeastSelectX: {
+            0: 'You have to select at least %{smart_count} file',
+            1: 'You have to select at least %{smart_count} files'
+          },
+          // **NOTE**: This string is called `exceedsSize2` for backwards compatibility reasons.
+          // See https://github.com/transloadit/uppy/pull/2077
+          exceedsSize2: 'Размер файла превышает %{size}',
+          youCanOnlyUploadFileTypes: 'Вы можете загружать только файлы: %{types}',
+          companionError: 'Connection with Companion failed'
+        }
+      }
+	});
     let uppy = dancemap.formstep.uppy;
 
       uppy.use(Uppy.Dashboard, {
@@ -13,11 +37,12 @@ this.dancemap.formstep = (function(){
         locale: Uppy.locales.ru_RU,
         target: '#drag-drop-area',
         hideUploadButton: false,
+        note: 'Изображения размером не больше 1 МБ'
       })
       //.use(Uppy.Form, {target: 'form'})
       //.use(Uppy.Tus, {endpoint: 'http://localhost:8080/upload'})
-      uppy.use(Uppy.XHRUpload, { endpoint: 'https://dancemap.online/upload' })
-      //uppy.use(Uppy.XHRUpload, { endpoint: 'http://localhost:8080/upload' })
+      //uppy.use(Uppy.XHRUpload, { endpoint: 'https://dancemap.online/upload' })
+      uppy.use(Uppy.XHRUpload, { endpoint: 'http://localhost:8080/upload' })
 
       uppy.on('complete', (result) => {
 
