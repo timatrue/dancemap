@@ -2,7 +2,7 @@
 this.dancemap.formstep = (function(){
   let self = this;
 
-  function setUppy() {
+  function setUppy(debug) {
   	let dancemap = self.dancemap;
 
     dancemap.formstep.uppy = Uppy.Core({
@@ -30,6 +30,7 @@ this.dancemap.formstep = (function(){
         }
       }
 	});
+	
     let uppy = dancemap.formstep.uppy;
 
       uppy.use(Uppy.Dashboard, {
@@ -42,7 +43,7 @@ this.dancemap.formstep = (function(){
       //.use(Uppy.Form, {target: 'form'})
       //.use(Uppy.Tus, {endpoint: 'http://localhost:8080/upload'})
       //uppy.use(Uppy.XHRUpload, { endpoint: 'https://dancemap.online/upload' })
-      uppy.use(Uppy.XHRUpload, { endpoint: 'http://localhost:8080/upload' })
+      uppy.use(Uppy.XHRUpload, getEndpoint(debug))
 
       uppy.on('complete', (result) => {
 
@@ -60,6 +61,10 @@ this.dancemap.formstep = (function(){
       })
   }
 
+  function getEndpoint(debug) {
+    let endpoint = debug ? 'http://localhost:8080/upload' : 'https://dancemap.online/upload';
+    return {endpoint};
+  }
 
   function setNextListener(el) {
   	let dancemap = self.dancemap;
@@ -143,7 +148,10 @@ this.dancemap.formstep = (function(){
   function setFormData(settings) {
     let dancemap = self.dancemap;
     dancemap.formstep.form = settings.form;
-    setDates()
+    setDates();
+    setMarkerTypeListener();
+    setDebugListener();
+    setFormListener();
   }
 
   function setDates() {
@@ -151,6 +159,117 @@ this.dancemap.formstep = (function(){
 
     form.start.valueAsDate = new Date();
     form.end.valueAsDate = new Date();
+  }
+
+
+  function changeMarkerType(event) {
+  	let form = self.dancemap.formstep.form;
+    let eventBlock = form.querySelector('#eventBlock');
+    if(this.value === 'event' ) {
+      eventBlock.style.display = 'block';
+      form.start.disabled = false;
+      form.end.disabled = false;
+    } else if ( this.value === 'studio' ) {
+      eventBlock.style.display = 'none';
+      form.start.disabled = true;
+      form.end.disabled = true;
+    }  
+  }
+
+  function setMarkerTypeListener () {
+  	let form = self.dancemap.formstep.form;
+    let radios = form.querySelectorAll('input[type=radio][name="recordType"]'); 
+    Array.prototype.forEach.call(radios, function(radio) {
+      radio.addEventListener('change', changeMarkerType);
+    });  	
+  }
+
+
+  function setDebugListener() {
+  	let form = self.dancemap.formstep.form;
+  	let debug = form.debug;
+    debug.addEventListener('change', submitDebugColor);
+  }
+
+  
+  function submitDebugColor(event) {
+  	let form = self.dancemap.formstep.form;
+    let submit = form.submit;
+
+    if(this.checked) {
+      //submit.style.backgroundColor = "#F20505";
+      submit.classList.remove("blue-bg");
+      submit.classList.add("red-bg");
+    } else {
+      //submit.style.backgroundColor = "#4c90cc";
+      submit.classList.remove("red-bg");
+      submit.classList.add("blue-bg");
+    }  
+  }
+
+  function setFormListener () {
+  	let form = self.dancemap.formstep.form;
+    form.addEventListener("submit", formDataAggregation)	
+  }
+
+
+  function formDataAggregation(e) {
+    let dancemap = self.dancemap;
+
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Array.from(formData.entries())
+      .reduce((memo, pair) => ({...memo, [pair[0]]:pair[1],}), {});
+    
+    if(formData.getAll('offer').length) {
+      data.offers = formData.getAll('offer')
+      .map(el => {
+        if(el) return JSON.parse(el);
+        return null;
+      })
+      .filter(el => el !== null)
+    }
+
+    if(formData.getAll('activity').length) {
+      let checkedValue = {}; 
+      let inputElements = document.getElementsByName('activity');
+      for(let i=0; inputElements[i]; ++i) {
+        if(inputElements[i].checked) {
+          let field = inputElements[i].value;
+           checkedValue[field] = true;
+        }   
+      }
+      data.activities = checkedValue;
+    }
+
+    if(formData.getAll('course').length) {
+      let checkedValue = {}; 
+      let inputElements = document.getElementsByName('course');
+      for(let i=0; inputElements[i]; ++i) {
+        if(inputElements[i].checked) {
+          let field = inputElements[i].value;
+           checkedValue[field] = true;
+        }   
+      }
+      data.courses = checkedValue;
+    }
+    
+    if(!dancemap.util.isObjEmpty(data)) {
+       if(data.start) data.start = dancemap.util.getFormattedDate(data.start,{h:11,m:0,s:0});
+       if(data.end) data.end = dancemap.util.getFormattedDate(data.end, {h:18,m:0,s:0});
+
+       if(dancemap.formstep.form.uploads) data.uploads =  dancemap.formstep.form.uploads;
+
+       console.log('data from form', data);
+
+       if(dancemap.util.isObjPropNotEmpty(data) && !data.debug) {
+          if(data.recordType === 'studio') dancemap.socket.postStudio(data);
+          if(data.recordType === 'event') dancemap.socket.postEvent(data);
+       }
+       return; 
+    }
+    else console.error('form data is empty');
+
   }
 
   return {
