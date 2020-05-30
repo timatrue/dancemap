@@ -1,6 +1,7 @@
 //win32 is development
 const isWin = process.platform === 'win32'
 //Server
+const dotenv = require('dotenv')
 const http = require('http')
 const https = require('https')
 const express = require('express')
@@ -9,6 +10,9 @@ const favicon = require('serve-favicon')
 const bodyParser = require("body-parser")
 const fs = require('fs')
 const formidable = require('formidable')
+
+
+dotenv.config();
 /*TIME FORMAT*/
 const dayjs = require('dayjs')
 require('dayjs/locale/ru')
@@ -16,7 +20,8 @@ dayjs.locale('ru')
 
 //Mongo cloud
 //const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://dancemap:Yy4UqOE9bihpePZc@cluster0-kkgwk.gcp.mongodb.net/dancemap?retryWrites=true&w=majority";
+const mongoose = require('mongoose')
+const uri = process.env.DB_CONNECT;
 
 const Studio = require('./models/studio')
 const Event = require('./models/event')
@@ -25,8 +30,6 @@ const eventTemplate = require('./models/eventTemplate')
 const Supercluster = require('supercluster')
 const clusterdata = require('./supercluster/clusterdata')
 
-
-const mongoose = require('mongoose')
 //Ports
 const portHTTP = 8080
 const portHTTPS = 8443
@@ -34,17 +37,17 @@ const port = isWin ? portHTTP : portHTTPS
 
 app.set('view engine', 'ejs');
 app.use(favicon(__dirname + '/static/favicon.ico'))
-app.use(express.json({ extended: false }));
+app.use(express.json());
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
+
+app.use('/api/user', require('./routes/auth'))
 app.use('/api', require('./routes/api'))
 app.use('/studios', require('./routes/studios'))
 app.use('/events', require('./routes/events'))
 
+app.post('/upload', uploadImgRoute)
 
-
-app.post('/upload', uploadRoute)
-
-function uploadRoute (req, res) {
+function uploadImgRoute (req, res) {
   const headers = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
@@ -59,17 +62,17 @@ function uploadRoute (req, res) {
 
   form.parse(req, function (err, fields, files) {
     if (err) {
-      console.log('uploadRoute error', err)
+      console.log('uploadImgRoute error', err)
       res.writeHead(200, headers)
       res.write(JSON.stringify(err))
       return res.end()
     }
   
     var file = files['files[]']
-    console.log('uploadRoute saved file to', file.path)
-    console.log('uploadRoute original name', file.name)
-    console.log('uploadRoute type', file.type)
-    console.log('uploadRoute size', file.size)
+    console.log('uploadImgRoute saved file to', file.path)
+    console.log('uploadImgRoute original name', file.name)
+    console.log('uploadImgRoute type', file.type)
+    console.log('uploadImgRoute size', file.size)
     res.writeHead(200, headers)
     res.write(JSON.stringify({ fields, files }))
     return res.end()
@@ -142,7 +145,7 @@ io.on('connection', function(socket) {
   socket.on('set_all_documents', function (secret) {
 
     if(isObject(secret) && secret) {
-      if(secret.secret === 'Covid19!') {
+      if(secret.secret === process.env.DB_FRONTPASS) {
         /*firstly you have to define new property in studio.js */
         Studio.updateMany({}, {$set: { 'properties.subtype': ""}} ).then(function(result) {
 	      console.log('set_all_documents', result);
@@ -435,7 +438,7 @@ io.on('connection', function(socket) {
 
   socket.on('reload', (secret) => {
     if(isObject(secret) && secret) {
-      if(secret.secret === 'Covid19!') {
+      if(secret.secret === process.env.DB_FRONTPASS) {
         reload();
         socket.emit('reload', {reload: true});
       }
