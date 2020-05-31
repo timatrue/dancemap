@@ -21,7 +21,7 @@ dayjs.locale('ru')
 //Mongo cloud
 //const MongoClient = require('mongodb').MongoClient;
 const mongoose = require('mongoose')
-const uri = process.env.DB_CONNECT;
+const uri = process.env.DB_CONNECT
 
 const Studio = require('./models/studio')
 const Event = require('./models/event')
@@ -78,7 +78,6 @@ function uploadImgRoute (req, res) {
     return res.end()
   })
 }
-
 
 //Mongoose connect
 ;(async () => {
