@@ -5,9 +5,13 @@ const Event = require('../models/event');
 const path = require('path')
 const { buildSitemaps } = require('express-sitemap-xml')
 const fs = require('fs')
+const verify = require('../verifyToken')
 
 
-router.get('/mongo', function(req, res) {
+router.get('/mongo', verify.auth, function(req, res) {
+  
+  console.log('user id', req.user)
+
 	Studio.find({}).then(function(studio) { 
 	  console.log('GET /mongo',studio);
       

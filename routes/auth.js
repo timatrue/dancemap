@@ -5,6 +5,7 @@ const Event = require('../models/event');
 const User = require('../models/user');
 const { registerValidation, loginValidation } = require('../validation');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const path = require('path');
 
 //https://www.youtube.com/watch?v=2jqok-WgelI
@@ -52,6 +53,10 @@ router.post('/login', async (req, res) => {
   //Password is correct
   const validPass = await bcrypt.compare(req.body.password, user.password);
   if(!validPass) return res.status(400).send('Password is wrong');
+
+  //create and assign token
+  const token = jwt.sign({ _id : user._id }, process.env.JWT_SECRET);
+  res.header('auth-token', token).send(token);
 
   res.send('login success');
 
