@@ -11,7 +11,7 @@ const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const csrf = require("csurf")
 const fs = require('fs')
-const formidable = require('formidable')
+
 
 
 dotenv.config();
@@ -54,39 +54,7 @@ app.use('/api', require('./routes/api'))
 app.use('/studios', require('./routes/studios'))
 app.use('/events', require('./routes/events'))
 
-app.post('/upload', uploadImgRoute)
 
-function uploadImgRoute (req, res) {
-  const headers = {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
-    'Access-Control-Max-Age': 2592000 // 30 days
-    /** add other headers as per requirement */
-  }
-  // parse a file upload
-  var form = new formidable.IncomingForm()
-  form.uploadDir = './static/uploads'
-  form.keepExtensions = true
-
-  form.parse(req, function (err, fields, files) {
-    if (err) {
-      console.log('uploadImgRoute error', err)
-      res.writeHead(200, headers)
-      res.write(JSON.stringify(err))
-      return res.end()
-    }
-  
-    var file = files['files[]']
-    console.log('uploadImgRoute saved file to', file.path)
-    console.log('uploadImgRoute original name', file.name)
-    console.log('uploadImgRoute type', file.type)
-    console.log('uploadImgRoute size', file.size)
-    res.writeHead(200, headers)
-    res.write(JSON.stringify({ fields, files }))
-    return res.end()
-  })
-}
 
 //Mongoose connect
 ;(async () => {
