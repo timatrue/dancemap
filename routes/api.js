@@ -6,22 +6,34 @@ const path = require('path')
 const { buildSitemaps } = require('express-sitemap-xml')
 const fs = require('fs')
 const verify = require('../verifyToken')
+const admin = require("firebase-admin");
 
-
-router.get('/mongo', verify.auth, function(req, res) {
+//router.get('/mongo', verify.auth, function(req, res) {
+router.get('/mongo', function(req, res) {
+  const sessionCookie = req.cookies.session || "";
   
-  console.log('user id', req.user)
-
-	Studio.find({}).then(function(studio) { 
-	  console.log('GET /mongo',studio);
-      
+  admin
+    .auth()
+    .verifySessionCookie(sessionCookie, true /** checkRevoked */)
+    .then(() => {
       res.sendFile('/mongo.html', {root: __dirname })
-      //res.send(studio);
+    })
+    .catch((error) => {
+      res.redirect('/login');
+    });
+
+	/*Studio.find({}).then(function(studio) { 
+	  console.log('GET /mongo', studio);
 	});
 
-    Studio.countDocuments({}).then(function(err, count) {
-      console.log('GET', count);
-    });
+  Studio.countDocuments({}).then(function(err, count) {
+    console.log('GET', count);
+  });*/
+
+  //console.log('user id', req.user)
+  //console.log('sessionCookie', sessionCookie)
+  
+
 })
 
 router.get('/editor', function(req, res) {

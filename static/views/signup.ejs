@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firebase Server Signup</title>
+  </head>
+  <body>
+    <main>
+      <section>
+        <form id="signup">
+          <label>Login</label>
+          <input type="text" name="login" />
+          <label>Password</label>
+          <input type="password" name="password" />
+          <button>Sign up</button>
+        </form>
+      </section>
+
+      <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-auth.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+
+      <script>
+        const firebaseConfig = {
+          apiKey: "AIzaSyCdJEIo40zSJqkbLahbZuDx0QwIh0K7OGM",
+          authDomain: "dancemap-b12c5.firebaseapp.com",
+          databaseURL: "https://dancemap-b12c5.firebaseio.com",
+          projectId: "dancemap-b12c5",
+          storageBucket: "dancemap-b12c5.appspot.com",
+          messagingSenderId: "329645063781",
+          appId: "1:329645063781:web:c98b9e00ac0e55a490908c"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+
+        document
+          .getElementById("signup")
+          .addEventListener("submit", (event) => {
+            event.preventDefault();
+            const login = event.target.login.value;
+            const password = event.target.password.value;
+
+            firebase
+              .auth()
+              .createUserWithEmailAndPassword(login, password)
+              .then(({ user }) => {
+                return user.getIdToken().then((idToken) => {
+                  return fetch("/sessionLogin", {
+                    method: "POST",
+                    headers: {
+                      Accept: "application/json",
+                      "Content-Type": "application/json",
+                      "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+                    },
+                    body: JSON.stringify({ idToken }),
+                  });
+                });
+              })
+              .then(() => {
+                return firebase.auth().signOut();
+              })
+              .then(() => {
+                window.location.assign("/profile");
+              });
+            return false;
+          });
+      </script>
+    </main>
+  </body>
+</html>

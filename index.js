@@ -8,6 +8,8 @@ const express = require('express')
 const app = express()
 const favicon = require('serve-favicon')
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
+const csrf = require("csurf")
 const fs = require('fs')
 const formidable = require('formidable')
 
@@ -39,8 +41,15 @@ app.set('view engine', 'ejs');
 app.use(favicon(__dirname + '/static/favicon.ico'))
 app.use(express.json());
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
+app.use(cookieParser())
+app.use(csrf({ cookie: true }))
+app.all("*", (req, res, next) => {
+  res.cookie("XSRF-TOKEN", req.csrfToken());
+  next();
+})
 
 app.use('/api/user', require('./routes/auth'))
+app.use('/', require('./routes/authfirebase'))
 app.use('/api', require('./routes/api'))
 app.use('/studios', require('./routes/studios'))
 app.use('/events', require('./routes/events'))
@@ -81,7 +90,7 @@ function uploadImgRoute (req, res) {
 
 //Mongoose connect
 ;(async () => {
-  const connector = mongoose.connect(uri);
+  const connector = mongoose.connect(uri, { useNewUrlParser: true });
 })();
 
 
