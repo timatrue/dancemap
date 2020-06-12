@@ -260,6 +260,8 @@
     </form>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js" ></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js" ></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-auth.js" ></script>
   <script src="https://transloadit.edgly.net/releases/uppy/v1.14.1/uppy.min.js"></script>
   <script src="https://transloadit.edgly.net/releases/uppy/locales/v1.13.3/ru_RU.min.js"></script>
   
@@ -269,7 +271,18 @@
   <script  src="/js/socket.js"></script>
 
   <script>
+        const firebaseConfig = {
+          apiKey: "AIzaSyCdJEIo40zSJqkbLahbZuDx0QwIh0K7OGM",
+          authDomain: "dancemap-b12c5.firebaseapp.com",
+          databaseURL: "https://dancemap-b12c5.firebaseio.com",
+          projectId: "dancemap-b12c5",
+          storageBucket: "dancemap-b12c5.appspot.com",
+          messagingSenderId: "329645063781",
+          appId: "1:329645063781:web:c98b9e00ac0e55a490908c"
+        };
+                firebase.initializeApp(firebaseConfig);
 
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
     const navSettings = {
       next: document.getElementById('nextBtn'),
       prev: document.getElementById('prevBtn'),

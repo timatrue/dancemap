@@ -76,32 +76,42 @@ router.get('/sessionLogout', (req, res) => {
 
 router.post('/upload', uploadImgRoute)
 
-function getUserFID(idToken) {
+async function getUserFID(idToken) {
 // idToken comes from the client app
-  admin.auth().verifyIdToken(idToken)
+  return await admin
+    .auth()
+    .verifyIdToken(idToken)
     .then(function(decodedToken) {
       let uid = decodedToken.uid;
       console.log('getUserFID', uid)
       // ...
-    }).catch(function(error) {
-      // Handle error
+      return uid;
+    })
+    .catch(function(error) {
+      // Firebase tokens expires in 1 hour
+      console.log('getUserFID', error)     
     });
 }
 
 function createTempDir(uid) {
-  const dir = './uploads/temp/' + uid;
-  console.log('createTempDir', dir);
-  fs.mkdir(dir, function(err){
-    if(err){
-        console.log('failed to create directory');
-        return console.error(err);
-    }else{
-        console.log('Directory created successfully');
-    }
-  });
+  const dir = './static/uploads/temp/' + uid;
+  return new Promise((resolve, reject) => {
+    fs.mkdir(dir, { recursive: true }, function(err) {
+      if(err) {
+        if(err.code == 'EEXIST') {
+          resolve(dir);
+        } else {
+          reject(err);
+        }
+      } else {
+        resolve(dir);
+      }
+    });
+  })
 }
 
-function uploadImgRoute (req, res) {
+
+async function uploadImgRoute (req, res) {
   const headers = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
@@ -111,29 +121,39 @@ function uploadImgRoute (req, res) {
   }
   const token = req.cookies.token || "";
   if(token) {
-    const uid = getUserFID(token);
-    // parse a file upload
-    var form = new formidable.IncomingForm()
-    form.uploadDir = './static/uploads'; 
-    form.keepExtensions = true
+    let isDir;
+    getUserFID(token)
+      .then(uid => {
+        return createTempDir(uid)
+      })
+      .then(dir => {
+        console.log('Directory ready', dir);
+        // parse a file upload
+        var form = new formidable.IncomingForm()
+        form.uploadDir = dir; 
+        form.keepExtensions = true
 
-    form.parse(req, function (err, fields, files) {
-      if (err) {
-        console.log('uploadImgRoute error', err)
-        res.writeHead(200, headers)
-        res.write(JSON.stringify(err))
-        return res.end()
-      }
+        form.parse(req, function (err, fields, files) {
+          if (err) {
+            console.log('uploadImgRoute error', err)
+            res.writeHead(200, headers)
+            res.write(JSON.stringify(err))
+            return res.end()
+          }
     
-      var file = files['files[]']
-      console.log('uploadImgRoute saved file to', file.path)
-      console.log('uploadImgRoute original name', file.name)
-      console.log('uploadImgRoute type', file.type)
-      console.log('uploadImgRoute size', file.size)
-      res.writeHead(200, headers)
-      res.write(JSON.stringify({ fields, files }))
-      return res.end()
-    })  
+          var file = files['files[]']
+          console.log('uploadImgRoute saved file to', file.path)
+          console.log('uploadImgRoute original name', file.name)
+          console.log('uploadImgRoute type', file.type)
+          console.log('uploadImgRoute size', file.size)
+          res.writeHead(200, headers)
+          res.write(JSON.stringify({ fields, files }))
+          return res.end()
+        }) 
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
   } else {
     res.redirect('/login')
   }
