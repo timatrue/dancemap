@@ -5,20 +5,26 @@ const Event = require('../models/event');
 const path = require('path')
 const { buildSitemaps } = require('express-sitemap-xml')
 const fs = require('fs')
-const verify = require('../verifyToken')
+const verify = require('./verifyFirebase')
 const admin = require("firebase-admin");
+const csrf = require("csurf")
+
+let csrfProtection = csrf({ cookie: true })
 
 //router.get('/mongo', verify.auth, function(req, res) {
-router.get('/mongo', function(req, res) {
+router.get('/addmarker', verify.checkAuth, csrfProtection, function(req, res) {
   const sessionCookie = req.cookies.session || "";
   
   admin
     .auth()
     .verifySessionCookie(sessionCookie, true /** checkRevoked */)
     .then(() => {
-      res.sendFile('/mongo.html', {root: __dirname })
+      //res.sendFile('/mongo.html', {root: __dirname })
+      res.render('../static/views/addmarker', { csrfToken: req.csrfToken() })
+      
     })
     .catch((error) => {
+      console.error(error)
       res.redirect('/login');
     });
 

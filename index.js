@@ -41,11 +41,31 @@ app.set('view engine', 'ejs');
 app.use(favicon(__dirname + '/static/favicon.ico'))
 app.use(express.json());
 app.use(express.static(__dirname + '/static', { dotfiles: 'allow' } ))
+
+let csrfProtection = csrf({ cookie: true })
 app.use(cookieParser())
-app.use(csrf({ cookie: true }))
-app.all("*", (req, res, next) => {
+//app.use(csrfProtection)
+/*app.all("*", (req, res, next) => {
   res.cookie("XSRF-TOKEN", req.csrfToken());
   next();
+})*/
+
+/*app.use(function(req, res, next) {
+    console.log('formclosed..', req.path)
+    if ('formclosed'.indexOf(req.path) !== -1) {
+        next();
+    } else {
+        // 2. Use the middleware function across all requests.
+        //csrfProtection(req, res, next);  
+    }
+})*/
+
+app.use(function (err, req, res, next) {
+  if (err.code !== 'EBADCSRFTOKEN') return next(err)
+
+  // handle CSRF token errors here
+  res.status(403)
+  res.send('CSRF form tampered with')
 })
 
 app.use('/api/user', require('./routes/auth'))

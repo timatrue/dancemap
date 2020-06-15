@@ -8,12 +8,14 @@ const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
 const formidable = require('formidable');
 const fs = require('fs');
+const csrf = require("csurf")
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://dancemap-b12c5.firebaseio.com"
 });
 
+let csrfProtection = csrf({ cookie: true })
 //https://www.youtube.com/watch?v=2jqok-WgelI
 //https://www.youtube.com/watch?v=kX8by4eCyG4
 
@@ -21,15 +23,15 @@ router.post('/register', async (req, res) => {
 
 });
 
-router.get('/login', async (req, res) => {
+router.get('/login', csrfProtection, async (req, res) => {
 
-  res.render('../static/views/login');
+  res.render('../static/views/login', { csrfToken: req.csrfToken() });
 
 });
 
-router.get('/signup', async (req, res) => {
+router.get('/signup', csrfProtection, async (req, res) => {
 
-  res.render('../static/views/signup');
+  res.render('../static/views/signup', { csrfToken: req.csrfToken() });
 
 });
 
@@ -47,7 +49,7 @@ router.get('/profile', function (req, res) {
     });
 });
 
-router.post('/sessionLogin', (req, res) => {
+router.post('/sessionLogin', csrfProtection, (req, res) => {
   const idToken = req.body.idToken.toString();
 
   const expiresIn = 60 * 60 * 24 * 5 * 1000;
@@ -73,8 +75,21 @@ router.get('/sessionLogout', (req, res) => {
   res.redirect("/login");
 });
 
+router.post('/formclosed', (req, res) => {
+    const token = req.cookies.token || "";
+    if(token) {
+      console.log('POST /formclosed')      
+      getUserFID(token)
+        .then(uid => {
 
-router.post('/upload', uploadImgRoute)
+        })
+        .catch(error => {
+          console.log('POST /formclosed error', error);          
+        })
+    }
+})
+
+router.post('/upload', csrfProtection, uploadImgRoute)
 
 async function getUserFID(idToken) {
 // idToken comes from the client app
@@ -87,10 +102,10 @@ async function getUserFID(idToken) {
       // ...
       return uid;
     })
-    .catch(function(error) {
+    /*.catch(function(error) {
       // Firebase tokens expires in 1 hour
       console.log('getUserFID', error)     
-    });
+    });*/
 }
 
 function createTempDir(uid) {
@@ -152,7 +167,8 @@ async function uploadImgRoute (req, res) {
         }) 
       })
       .catch(err => {
-        console.log('err', err);
+        console.log('uploadImgRoute err', err);
+        res.redirect('/login')
       });
   } else {
     res.redirect('/login')
