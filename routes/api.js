@@ -11,7 +11,6 @@ const csrf = require("csurf")
 
 let csrfProtection = csrf({ cookie: true })
 
-//router.get('/mongo', verify.auth, function(req, res) {
 router.get('/addmarker', verify.checkAuth, csrfProtection, function(req, res) {
   const sessionCookie = req.cookies.session || "";
   
@@ -19,41 +18,15 @@ router.get('/addmarker', verify.checkAuth, csrfProtection, function(req, res) {
     .auth()
     .verifySessionCookie(sessionCookie, true /** checkRevoked */)
     .then(() => {
-      //res.sendFile('/mongo.html', {root: __dirname })
       res.render('../static/views/addmarker', { csrfToken: req.csrfToken() })
-      
     })
     .catch((error) => {
       console.error(error)
       res.redirect('/login');
     });
 
-	/*Studio.find({}).then(function(studio) { 
-	  console.log('GET /mongo', studio);
-	});
-
-  Studio.countDocuments({}).then(function(err, count) {
-    console.log('GET', count);
-  });*/
-
-  //console.log('user id', req.user)
-  //console.log('sessionCookie', sessionCookie)
-  
-
 })
 
-router.get('/editor', function(req, res) {
-  Studio.find({}).then(function(studio) { 
-    console.log('GET /mongo',studio);
-      
-      res.sendFile('/editor.html', {root: __dirname })
-      //res.send(studio);
-  });
-
-    Studio.countDocuments({}).then(function(err, count) {
-      console.log('GET', count);
-    });
-})
 
 router.get('/generatesitemap', function(req, res) {
   Promise.all([getStudioList(), getEventsList()])
@@ -102,38 +75,6 @@ getRootList = () => {
   return urls;
 }
 
-
-router.get('/studios/:id', function(req, res) {
-    console.log('GET /studio', req.params);  
-    if(req.params.id) {
-      const id = req.params.id
-	  Studio.find({"_id": id}).then(function(studio) { 
-	    console.log('GET /studio',studio);      
-        //res.sendFile('/mongo.html', {root: __dirname })
-        res.send(studio);
-	  });
-
-    }
-})
-
-router.post('/mongo', function(req, res) {
-	/*var studio = new Studio(req.body);
-	studio.save();*/
-	Studio.create(req.body).then(function(studio) {
-		console.log(studio);
-		res.send(studio);
-	})
-
-	res.send({type:'POST'});
-});
-
-router.put('/mongo/:id', function(req, res) {
-	res.send({type:'PUT'});
-});
-
-router.delete('/mongo/:id', function(req, res) {
-	res.send({type:'DELETE'});
-});
 
 
 

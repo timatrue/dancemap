@@ -10,6 +10,7 @@ const formidable = require('formidable');
 const fs = require('fs');
 const csrf = require("csurf")
 
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://dancemap-b12c5.firebaseio.com"
@@ -81,7 +82,14 @@ router.post('/formclosed', (req, res) => {
       console.log('POST /formclosed')      
       getUserFID(token)
         .then(uid => {
-
+          return removeFiles(uid)
+        })
+        .then(uid => {
+          return removeDir(uid)
+        })
+        .then(dir => {
+          console.log('POST /formclosed deleted dir and files successfully', dir);
+          return true;
         })
         .catch(error => {
           console.log('POST /formclosed error', error);          
@@ -93,6 +101,7 @@ router.post('/upload', csrfProtection, uploadImgRoute)
 
 async function getUserFID(idToken) {
 // idToken comes from the client app
+// Firebase tokens expires in 1 hour
   return await admin
     .auth()
     .verifyIdToken(idToken)
@@ -103,7 +112,6 @@ async function getUserFID(idToken) {
       return uid;
     })
     /*.catch(function(error) {
-      // Firebase tokens expires in 1 hour
       console.log('getUserFID', error)     
     });*/
 }
@@ -125,6 +133,35 @@ function createTempDir(uid) {
   })
 }
 
+function removeDir(uid) {
+  const dir = './static/uploads/temp/' + uid;
+  return new Promise((resolve, reject) => {
+    fs.rmdir(dir, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(dir);
+      }  
+    });
+  })
+}
+
+function removeFiles(uid) {
+  const dir = './static/uploads/temp/' + uid;
+  return new Promise((resolve, reject) => {
+    fs.readdir(dir, (err, files) => {
+      if (err) reject(err);
+      if(files) {
+        for (const file of files) {
+          fs.unlink(path.join(dir, file), err => {
+            if (err) reject(err);
+          });
+        }
+      }
+      resolve(uid);
+    });
+  })
+}
 
 async function uploadImgRoute (req, res) {
   const headers = {
