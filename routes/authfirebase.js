@@ -152,14 +152,23 @@ function removeFiles(uid) {
     fs.readdir(dir, (err, files) => {
       if (err) reject(err);
       if(files) {
+        let promises = [];
         for (const file of files) {
-          fs.unlink(path.join(dir, file), err => {
-            if (err) reject(err);
-          });
+          promises.push(new Promise((resolve, reject) => {
+            fs.unlink(path.join(dir, file), err => {
+              if (err) reject(err);
+              resolve();
+            });
+          }))
         }
-      }
-      resolve(uid);
+        Promise.all(promises)
+          .then(res => {
+            resolve(uid);
+          })  
+    }
+      
     });
+    
   })
 }
 
