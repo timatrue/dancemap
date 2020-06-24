@@ -69,8 +69,9 @@ this.dancemap.formstep = (function(){
     return endpoint;
   }
   function getHeaders() {
+    const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');    
     const headers = {
-      "CSRF-Token": Cookies.get("XSRF-TOKEN")
+      "CSRF-Token": csrf
     }
     return headers;
   }

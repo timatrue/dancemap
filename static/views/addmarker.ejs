@@ -4,6 +4,7 @@
     <title>Mongo</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
+    <meta name="csrf-token" content="<%= csrfToken %>">
     <meta name="Description" content=""/>
     <link href='/css/main.css' rel='stylesheet' />
     <link href="https://transloadit.edgly.net/releases/uppy/v1.14.1/uppy.min.css" rel="stylesheet">
@@ -270,8 +271,9 @@
 
   <script>
     window.addEventListener("unload", function() {
+      const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
       const headers = {
-        "CSRF-Token": Cookies.get("XSRF-TOKEN")
+        "CSRF-Token": csrf
       };
       const body = {};
       

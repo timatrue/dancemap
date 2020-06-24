@@ -18,7 +18,8 @@ router.get('/addmarker', verify.checkAuth, csrfProtection, function(req, res) {
     .auth()
     .verifySessionCookie(sessionCookie, true /** checkRevoked */)
     .then(() => {
-      res.render('../static/views/addmarker', { csrfToken: req.csrfToken() })
+      let csrfToken = req.csrfToken();
+      res.render('../static/views/addmarker', { csrfToken })
     })
     .catch((error) => {
       console.error(error)

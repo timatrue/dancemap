@@ -3,7 +3,8 @@ const admin = require("firebase-admin");
 const checkAuth = (req, res, next) => {
   const idToken = req.cookies.token || "";
 
-  if(!idToken) return res.status(401).send('Access denied');
+  //if(!idToken) return res.status(401).send('Access denied');
+  if(!idToken) return res.redirect('/login');
 
   verifyToken(idToken)
     .then(uid => {

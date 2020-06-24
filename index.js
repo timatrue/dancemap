@@ -59,20 +59,21 @@ app.use(cookieParser())
         //csrfProtection(req, res, next);  
     }
 })*/
-
+/*
 app.use(function (err, req, res, next) {
   if (err.code !== 'EBADCSRFTOKEN') return next(err)
 
   // handle CSRF token errors here
   res.status(403)
   res.send('CSRF form tampered with')
-})
+})*/
 
 app.use('/api/user', require('./routes/auth'))
 app.use('/', require('./routes/authfirebase'))
 app.use('/api', require('./routes/api'))
 app.use('/studios', require('./routes/studios'))
 app.use('/events', require('./routes/events'))
+
 
 
 

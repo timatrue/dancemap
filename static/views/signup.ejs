@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="<%= csrfToken %>">
     <title>Firebase Server Signup</title>
   </head>
   <body>
@@ -19,7 +20,6 @@
 
       <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
       <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-auth.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 
       <script>
         const firebaseConfig = {
@@ -42,6 +42,7 @@
             event.preventDefault();
             const login = event.target.login.value;
             const password = event.target.password.value;
+            const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
             firebase
               .auth()
@@ -53,7 +54,7 @@
                     headers: {
                       Accept: "application/json",
                       "Content-Type": "application/json",
-                      "CSRF-Token": Cookies.get("XSRF-TOKEN"),
+                      "CSRF-Token": csrf,
                     },
                     body: JSON.stringify({ idToken }),
                   });

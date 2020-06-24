@@ -8,8 +8,10 @@ const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
 const formidable = require('formidable');
 const fs = require('fs');
-const csrf = require("csurf")
+const csrf = require("csurf");
+const bodyParser = require('body-parser');
 
+let parseForm = bodyParser.urlencoded({ extended: false })
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -25,14 +27,14 @@ router.post('/register', async (req, res) => {
 });
 
 router.get('/login', csrfProtection, async (req, res) => {
-
-  res.render('../static/views/login', { csrfToken: req.csrfToken() });
+  let csrfToken = req.csrfToken();
+  res.render('../static/views/login', { csrfToken });
 
 });
 
 router.get('/signup', csrfProtection, async (req, res) => {
-
-  res.render('../static/views/signup', { csrfToken: req.csrfToken() });
+  let csrfToken = req.csrfToken();
+  res.render('../static/views/signup', { csrfToken });
 
 });
 
@@ -50,7 +52,8 @@ router.get('/profile', function (req, res) {
     });
 });
 
-router.post('/sessionLogin', csrfProtection, (req, res) => {
+router.post('/sessionLogin', parseForm, csrfProtection, (req, res) => {
+  
   const idToken = req.body.idToken.toString();
 
   const expiresIn = 60 * 60 * 24 * 5 * 1000;
