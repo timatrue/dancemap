@@ -36,13 +36,34 @@ this.dancemap.util = (function(){
     var elem = document.getElementById(id);
     return elem.parentNode.removeChild(elem);
   }
+
+  function inactivityTime() {
+    //https://stackoverflow.com/questions/667555/how-to-detect-idle-time-in-javascript-elegantly
+    let time;
+    window.onload = resetTimer;
+    // DOM Events
+    document.onmousemove = resetTimer;
+    document.onkeypress = resetTimer;
+
+    function logout() {
+        //alert("You are now logged out.")
+        location.href = 'addmarker'
+    }
+
+    function resetTimer() {
+        clearTimeout(time);
+        time = setTimeout(logout, 1000*60)
+        // 1000 milliseconds = 1 second
+    }
+  };
   
   return {
     isObjEmpty : isObjEmpty,
     isObjPropNotEmpty : isObjPropNotEmpty,
     htmlToElements : htmlToElements,
     getFormattedDate : getFormattedDate,
-    removeElement : removeElement
+    removeElement : removeElement,
+    inactivityTime : inactivityTime
 
   }
 

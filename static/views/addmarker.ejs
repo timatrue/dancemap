@@ -267,9 +267,14 @@
   <script  src="/js/dancemap.js"></script>
   <script  src="/js/formstep.js"></script>
   <script  src="/js/util.js"></script>
- <script  src="/js/socket.js"></script>
+  <script  src="/js/socket.js"></script>
 
   <script>
+
+    window.onload = function() {
+      dancemap.util.inactivityTime();
+    }
+
     window.addEventListener("unload", function() {
       const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
       const headers = {
@@ -279,13 +284,8 @@
       
       let blob = new Blob([JSON.stringify([body])], headers);
       navigator.sendBeacon("/formclosed", blob);
-      /*fetch("/formclosed", {
-          method: "POST",
-          headers: {
-            "CSRF-Token": Cookies.get("XSRF-TOKEN"),
-          }
-        })*/
     });
+    
     const navSettings = {
       next: document.getElementById('nextBtn'),
       prev: document.getElementById('prevBtn'),
