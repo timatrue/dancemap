@@ -66,7 +66,7 @@ this.dancemap.formstep = (function(){
 
   function getEndpoint(debug) {
     let endpoint = debug ? 'http://localhost:8080/upload' : 'https://dancemap.online/upload';
-    return endpoint;
+    return 'https://dancemap.online/upload';
   }
   function getHeaders() {
     const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');    
