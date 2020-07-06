@@ -225,4 +225,7 @@ async function uploadImgRoute (req, res) {
 
 }
 
-module.exports = router;
+module.exports = {
+  router : router,
+  getUserFID : getUserFID
+}

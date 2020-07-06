@@ -11,7 +11,7 @@ const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const csrf = require("csurf")
 const fs = require('fs')
-
+const auth = require('./routes/authfirebase')
 
 
 dotenv.config();
@@ -69,7 +69,7 @@ app.use(function (err, req, res, next) {
 })*/
 
 app.use('/api/user', require('./routes/auth'))
-app.use('/', require('./routes/authfirebase'))
+app.use('/', auth.router)
 app.use('/api', require('./routes/api'))
 app.use('/studios', require('./routes/studios'))
 app.use('/events', require('./routes/events'))
@@ -160,8 +160,15 @@ io.on('connection', function(socket) {
   });
 
   socket.on('post_studio', function (msg) {
-
-  	let studio = studioTemplate.getStudioTemplate();
+    if(msg.token) {
+      auth.getUserFID(msg.token)
+        .then(uid => {
+          console.log('uid from socket', uid)
+          return;
+        })
+    }
+    
+  	/*let studio = studioTemplate.getStudioTemplate();
     
     studio.geometry.coordinates.push(msg.lon);
     studio.geometry.coordinates.push(msg.lat);
@@ -177,9 +184,9 @@ io.on('connection', function(socket) {
     if(msg.courses) studio.properties.classes = msg.courses;
 
     if(msg.img64) {
-    	/*console.log(studio.properties)
-    	studio.properties.seoimage.data = new Buffer(msg.img64.split(",")[1],"base64"),
-    	studio.properties.seoimage.contentType = 'image/png'*/
+    	//console.log(studio.properties)
+    	//studio.properties.seoimage.data = new Buffer(msg.img64.split(",")[1],"base64"),
+    	//studio.properties.seoimage.contentType = 'image/png'
     }
     
     studio.properties.speciality = msg.speciality.split(',');
@@ -189,11 +196,11 @@ io.on('connection', function(socket) {
     Studio.create(studio).then(function(result) {
     	reload();
 		console.log('post_studio', result);
-	})
+	})*/
   });
   
   socket.on('post_event', function (msg) {
-
+    getUserFID(msg.token)
   	let event = eventTemplate.getEventTemplate();
     
     event.geometry.coordinates.push(msg.lon);
@@ -220,9 +227,9 @@ io.on('connection', function(socket) {
     if(msg.activities) event.properties.activities = msg.activities;
 
     if(msg.img64) {
-    	/*console.log(event.properties)
-    	event.properties.seoimage.data = new Buffer(msg.img64.split(",")[1],"base64"),
-    	event.properties.seoimage.contentType = 'image/png'*/
+    	//console.log(event.properties)
+    	//event.properties.seoimage.data = new Buffer(msg.img64.split(",")[1],"base64"),
+    	//event.properties.seoimage.contentType = 'image/png'
     }
     
     event.properties.speciality = msg.speciality.split(',');
@@ -234,7 +241,6 @@ io.on('connection', function(socket) {
 		console.log('post_event', result);
 	})
   });
-
 
 
   socket.on('get_clusters', (box) => {

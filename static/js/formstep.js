@@ -66,7 +66,8 @@ this.dancemap.formstep = (function(){
 
   function getEndpoint(debug) {
     let endpoint = debug ? 'http://localhost:8080/upload' : 'https://dancemap.online/upload';
-    return 'https://dancemap.online/upload';
+    //return 'https://dancemap.online/upload';
+    return 'http://localhost:8080/upload';
   }
   function getHeaders() {
     const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');    
@@ -227,8 +228,10 @@ this.dancemap.formstep = (function(){
 
     e.preventDefault();
     const formData = new FormData(e.target);
-    const data = Array.from(formData.entries())
+    const data = Array
+      .from(formData.entries())
       .reduce((memo, pair) => ({...memo, [pair[0]]:pair[1],}), {});
+    data.token = Cookies.get('token');
     
     if(formData.getAll('offer').length) {
       data.offers = formData.getAll('offer')
