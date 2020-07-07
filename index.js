@@ -161,42 +161,36 @@ io.on('connection', function(socket) {
 
   socket.on('post_studio', function (msg) {
     if(msg.token) {
+      
       auth.getUserFID(msg.token)
         .then(uid => {
           console.log('uid from socket', uid)
-          return;
+          let studio = studioTemplate.getStudioTemplate();
+          studio.geometry.coordinates.push(msg.lon);
+          studio.geometry.coordinates.push(msg.lat);
+    
+          studio.properties.type = msg.recordType;
+          studio.properties.name = msg.name;
+          studio.properties.subtype = msg.subtype;
+          studio.properties.desc = msg.desc;
+          studio.properties.address = msg.address;
+          studio.properties.city = msg.city;
+          studio.properties.country = msg.country;
+          studio.properties.vk = msg.vk;
+          studio.properties.altername = msg.altername;
+          if(msg.courses) studio.properties.classes = msg.courses;
+          studio.properties.speciality = msg.speciality.split(',');
+          return studio;
         })
+        .then( studio => {
+          return createStudio(studio)
+        })
+        .catch(err => {
+          console.log('CREATE_post_studio_error', err)
+        })
+    } else {
+      console.log('TOKEN_post_studio_error', err)
     }
-    
-  	/*let studio = studioTemplate.getStudioTemplate();
-    
-    studio.geometry.coordinates.push(msg.lon);
-    studio.geometry.coordinates.push(msg.lat);
-    
-    studio.properties.type = msg.recordType;
-    studio.properties.name = msg.name;
-    studio.properties.subtype = msg.subtype;
-    studio.properties.desc = msg.desc;
-    studio.properties.address = msg.address;
-    studio.properties.city = msg.city;
-    studio.properties.vk = msg.vk;
-    studio.properties.altername = msg.altername;
-    if(msg.courses) studio.properties.classes = msg.courses;
-
-    if(msg.img64) {
-    	//console.log(studio.properties)
-    	//studio.properties.seoimage.data = new Buffer(msg.img64.split(",")[1],"base64"),
-    	//studio.properties.seoimage.contentType = 'image/png'
-    }
-    
-    studio.properties.speciality = msg.speciality.split(',');
-    
-    //studio["type"] = "Feature";
-    
-    Studio.create(studio).then(function(result) {
-    	reload();
-		console.log('post_studio', result);
-	})*/
   });
   
   socket.on('post_event', function (msg) {
@@ -454,6 +448,15 @@ io.on('connection', function(socket) {
   });
   console.log('a user connected');
 });
+
+
+async function createStudio(studio) {
+  return await Studio.create(studio)
+    .then((result) => {
+      reload();
+      console.log('post_studio', result);
+    })
+}
 
 function reload() {
   clusterdata.getData()
