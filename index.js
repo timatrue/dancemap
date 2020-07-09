@@ -161,10 +161,19 @@ io.on('connection', function(socket) {
 
   socket.on('post_studio', function (msg) {
     if(msg.token) {
-      
+      let usersDir = './static/users/';
+      let tempDir = './static/uploads/temp/';
       auth.getUserFID(msg.token)
         .then(uid => {
-          console.log('uid from socket', uid)
+          const destDir = usersDir + uid;
+          console.log('dir for user', destDir)
+          return auth.createDir(destDir);
+        })
+        .then(destDir => {
+          //const sourceDir = userData.tempDir + userData.uid;
+          //return auth.copyAllFiles(destDir, sourceDir)
+        })
+        /*.then(dir => {
           let studio = studioTemplate.getStudioTemplate();
           studio.geometry.coordinates.push(msg.lon);
           studio.geometry.coordinates.push(msg.lat);
@@ -180,11 +189,11 @@ io.on('connection', function(socket) {
           studio.properties.altername = msg.altername;
           if(msg.courses) studio.properties.classes = msg.courses;
           studio.properties.speciality = msg.speciality.split(',');
-          return studio;
+          return studio;          
         })
         .then( studio => {
           return createStudio(studio)
-        })
+        })*/
         .catch(err => {
           console.log('CREATE_post_studio_error', err)
         })
@@ -194,7 +203,7 @@ io.on('connection', function(socket) {
   });
   
   socket.on('post_event', function (msg) {
-    getUserFID(msg.token)
+    auth.getUserFID(msg.token)
   	let event = eventTemplate.getEventTemplate();
     
     event.geometry.coordinates.push(msg.lon);

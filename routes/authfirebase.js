@@ -8,6 +8,7 @@ const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
 const formidable = require('formidable');
 const fs = require('fs');
+const { COPYFILE_EXCL } = fs.constants;
 const csrf = require("csurf");
 const bodyParser = require('body-parser');
 
@@ -82,13 +83,15 @@ router.get('/sessionLogout', (req, res) => {
 router.post('/formclosed', (req, res) => {
     const token = req.cookies.token || "";
     if(token) {
+      let tempDir = './static/uploads/temp/';
       console.log('POST /formclosed')      
       getUserFID(token)
         .then(uid => {
-          return removeFiles(uid)
+          const dir = tempDir + uid;
+          return removeAllFiles(dir)
         })
-        .then(uid => {
-          return removeDir(uid)
+        .then(dir => {
+          return removeDir(dir)
         })
         .then(dir => {
           console.log('POST /formclosed deleted dir and files successfully', dir);
@@ -119,8 +122,8 @@ async function getUserFID(idToken) {
     });*/
 }
 
-function createTempDir(uid) {
-  const dir = './static/uploads/temp/' + uid;
+function createDir(dir) {
+  //const dir = './static/uploads/temp/' + uid;
   return new Promise((resolve, reject) => {
     fs.mkdir(dir, { recursive: true }, function(err) {
       if(err) {
@@ -136,8 +139,7 @@ function createTempDir(uid) {
   })
 }
 
-function removeDir(uid) {
-  const dir = './static/uploads/temp/' + uid;
+function removeDir(dir) {
   return new Promise((resolve, reject) => {
     fs.rmdir(dir, (err) => {
       if (err) {
@@ -149,16 +151,17 @@ function removeDir(uid) {
   })
 }
 
-function removeFiles(uid) {
-  const dir = './static/uploads/temp/' + uid;
+function removeAllFiles(dir) {
   return new Promise((resolve, reject) => {
     fs.readdir(dir, (err, files) => {
       if (err) reject(err);
       if(files) {
+        
         let promises = [];
         for (const file of files) {
           promises.push(new Promise((resolve, reject) => {
             fs.unlink(path.join(dir, file), err => {
+              console.log('removeAllFiles', file)
               if (err) reject(err);
               resolve();
             });
@@ -166,10 +169,43 @@ function removeFiles(uid) {
         }
         Promise.all(promises)
           .then(res => {
-            resolve(uid);
+            resolve(dir);
           })  
     }
       
+    });
+    
+  })
+}
+
+function copyAllFiles(destDir, sourceDir) {
+
+  return new Promise((resolve, reject) => {
+
+            console.log('removeAllFiles source', sourceDir)
+            console.log('removeAllFiles dest', destDir)
+
+    fs.readdir(sourceDir, (err, files) => {
+      if (err) reject(err);
+      if(files) {
+        
+        let promises = [];
+        for (const file of files) {
+          promises.push(new Promise((resolve, reject) => {
+            const source = sourceDir + file;
+            const dest = destDir + file;
+
+            fs.copyFile(source, dest, COPYFILE_EXCL, (err) => {
+              if (err) reject(err);
+              resolve();
+            });
+          }))
+        }
+        Promise.all(promises)
+          .then(res => {
+            resolve(destDir);
+          })  
+    }      
     });
     
   })
@@ -185,10 +221,11 @@ async function uploadImgRoute (req, res) {
   }
   const token = req.cookies.token || "";
   if(token) {
-    let isDir;
+    let tempDir = './static/uploads/temp/';
     getUserFID(token)
       .then(uid => {
-        return createTempDir(uid)
+        const dir = tempDir + uid;
+        return createDir(dir)
       })
       .then(dir => {
         console.log('Directory ready', dir);
@@ -227,5 +264,9 @@ async function uploadImgRoute (req, res) {
 
 module.exports = {
   router : router,
-  getUserFID : getUserFID
+  getUserFID : getUserFID,
+  createDir : createDir,
+  removeAllFiles : removeAllFiles,
+  copyAllFiles : copyAllFiles,
+  removeDir : removeDir
 }
