@@ -161,23 +161,30 @@ io.on('connection', function(socket) {
 
   socket.on('post_studio', function (msg) {
     if(msg.token) {
-      let usersDir = './static/users/';
-      let tempDir = './static/uploads/temp/';
+      const usersDir = './static/users/';
+      const tempDir = './static/uploads/temp/';
+      let destDir, sourceDir, uid;
+
       auth.getUserFID(msg.token)
-        .then(uid => {
-          const destDir = usersDir + uid;
+        .then(fid => {
+          uid = fid;
+          destDir = usersDir + uid + '/';
+          sourceDir = tempDir + uid + '/';
           console.log('dir for user', destDir)
           return auth.createDir(destDir);
         })
         .then(destDir => {
-          //const sourceDir = userData.tempDir + userData.uid;
-          //return auth.copyAllFiles(destDir, sourceDir)
+          return auth.copyAllFiles(destDir, sourceDir)
         })
-        /*.then(dir => {
+        .then( imagesMeta => {
+          console.log('post_studio copied imagesMeta', imagesMeta)
           let studio = studioTemplate.getStudioTemplate();
+
           studio.geometry.coordinates.push(msg.lon);
           studio.geometry.coordinates.push(msg.lat);
-    
+          
+          studio.properties.uid = uid;
+          studio.properties.imagesMeta = imagesMeta;
           studio.properties.type = msg.recordType;
           studio.properties.name = msg.name;
           studio.properties.subtype = msg.subtype;
@@ -193,7 +200,7 @@ io.on('connection', function(socket) {
         })
         .then( studio => {
           return createStudio(studio)
-        })*/
+        })
         .catch(err => {
           console.log('CREATE_post_studio_error', err)
         })

@@ -16,7 +16,8 @@ function getStudioTemplate() {
         "country":"",
         "classes":{},
         "speciality":[],
-        "seoimage": {}
+        "seoimage": {},
+        "imagesMeta": {}
       }
     }
     return studio;

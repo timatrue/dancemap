@@ -182,8 +182,8 @@ function copyAllFiles(destDir, sourceDir) {
 
   return new Promise((resolve, reject) => {
 
-            console.log('removeAllFiles source', sourceDir)
-            console.log('removeAllFiles dest', destDir)
+    console.log('copyAllFiles source', sourceDir)
+    console.log('copyAllFiles dest', destDir)
 
     fs.readdir(sourceDir, (err, files) => {
       if (err) reject(err);
@@ -203,7 +203,12 @@ function copyAllFiles(destDir, sourceDir) {
         }
         Promise.all(promises)
           .then(res => {
-            resolve(destDir);
+            let imageDir = destDir.replace(/\.\/static/g,'');
+            let imagePath = imageDir + files[0];
+            resolve( {destDir, files, imagePath} );
+          })
+          .catch(err => {
+            console.log('copyAllFiles PROMISE ALL', err)
           })  
     }      
     });

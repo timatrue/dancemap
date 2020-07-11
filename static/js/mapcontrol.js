@@ -414,6 +414,14 @@ this.dancemap.mapcontrol = (function(){
             ${marker.properties.end ? dayjs(marker.properties.end).format('D MMMM YYYY') + '</h2>' : ''} 
             ` :
             ''}
+
+            ${marker.properties.imagesMeta ?
+              `<div class="marker-images">
+                 <img  src="${marker.properties.imagesMeta.imagePath}" alt="" width="" height="" 
+                   style='height: 100%; width: 100%; object-fit: cover' > 
+              </div>
+              ` :
+              ''}
           </div>
 
           

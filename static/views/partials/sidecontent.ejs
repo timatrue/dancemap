@@ -31,9 +31,14 @@
           <h2> Заканчиваем: <%= dayjs(marker.properties.end).format('D MMMM YYYY') %> </h2>
         <% } %>
       </div>
+
+      <% if (marker.properties.imagesMeta) { %>
       <div class="marker-images">
-        <img style='height: 100%; width: 100%; object-fit: cover' src="" alt="" width="" height=""> 
+        <img  src="<%= marker.properties.imagesMeta.imagePath %>" alt="" width="" height="" 
+          style='height: 100%; width: 100%; object-fit: cover' > 
       </div>
+      <% } %>
+
       <div class="marker-content">
 
         <% if (marker.properties.desc) { %>
