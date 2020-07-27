@@ -2,8 +2,11 @@
 this.dancemap.formstep = (function(){
   let self = this;
 
-  function setUppy(debug) {
+  function setUppy(mode) {
   	let dancemap = self.dancemap;
+    let endpoint = mode.debug ?
+      'http://localhost:8080/upload' :
+      'https://dancemap.online/upload';
 
     dancemap.formstep.uppy = Uppy.Core({
       restrictions: {
@@ -44,7 +47,7 @@ this.dancemap.formstep = (function(){
       //.use(Uppy.Tus, {endpoint: 'http://localhost:8080/upload'})
       //uppy.use(Uppy.XHRUpload, { endpoint: 'https://dancemap.online/upload' })
       uppy.use(Uppy.XHRUpload, {
-        endpoint: getEndpoint(debug),
+        endpoint: endpoint,
         headers: getHeaders()
       })
 
@@ -64,11 +67,6 @@ this.dancemap.formstep = (function(){
       })
   }
 
-  function getEndpoint(debug) {
-    let endpoint = debug ? 'http://localhost:8080/upload' : 'https://dancemap.online/upload';
-    //return 'https://dancemap.online/upload';
-    return 'http://localhost:8080/upload';
-  }
   function getHeaders() {
     const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');    
     const headers = {
@@ -76,6 +74,7 @@ this.dancemap.formstep = (function(){
     }
     return headers;
   }
+
   function setNextListener(el) {
   	let dancemap = self.dancemap;
     el.addEventListener('click', function (event) {

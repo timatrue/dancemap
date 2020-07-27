@@ -1,9 +1,13 @@
 <% if (nav === 'event') { %>
   <div id="sidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="dancemap.nav.closeSidenav()">&times;</a>
-    <a class="side-nav__link" id="nav-back" href="/">назад на главную</a>
-    <a class="side-nav__link" id="nav-studios" href="/studios">искать студии</a>
-    <a class="side-nav__link" id="nav-add" href="/add.html">добавить событие</a>
+    <a class="side-nav__link" id="nav-back" href="/">Назад на главную</a>
+    <a class="side-nav__link" id="nav-studios" href="/studios">Искать студии</a>
+    <a class="side-nav__link" id="nav-add" href="/add.html">Добавить событие</a>
+
+    <a class="side-nav__link" id="nav-sign-in" href="/login">Войти</a>
+    <a class="side-nav__link" id="nav-sign-up" href="/signup">Зарегистрироваться</a>
+    <a class="side-nav__link" id="nav-add" href="/add.html">Добавить студию</a>
   </div>
 
 <% } %>
@@ -11,14 +15,29 @@
 <% if (nav === 'studio') { %>
   <div id="sidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="dancemap.nav.closeSidenav()">&times;</a>
-    <a class="side-nav__link" id="nav-back" href="/">назад на главную</a>
-    <a class="side-nav__link" id="nav-events" href="/events">искать события</a>
-    <a class="side-nav__link" id="nav-add" href="/add.html">добавить студию</a>
+    <a class="side-nav__link" id="nav-back" href="/">Назад на главную</a>
+    <a class="side-nav__link" id="nav-events" href="/events">Искать события</a>
+
+    <a class="side-nav__link" id="nav-sign-in" href="/login">Войти</a>
+    <a class="side-nav__link" id="nav-sign-up" href="/signup">Зарегистрироваться</a>
+    <a class="side-nav__link" id="nav-add" href="/add.html">Добавить студию</a>
   </div>
 
 <% } %>
 
+<% if (nav === 'profile') { %>
+  <div id="sidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="dancemap.nav.closeSidenav()">&times;</a>
+    <a class="side-nav__link" id="nav-back" href="/">Назад на главную</a>
+    <a class="side-nav__link" id="nav-events" href="/events">Искать события</a>
+    <a class="side-nav__link" id="nav-studios" href="/studios">Искать студии</a>
 
+    <a class="side-nav__link" id="nav-sign-in" href="/login">Войти</a>
+    <a class="side-nav__link" id="nav-sign-up" href="/signup">Зарегистрироваться</a>
+    <a class="side-nav__link" id="nav-add" href="/add.html">Добавить студию</a>
+  </div>
+
+<% } %>
 
 
 

@@ -89,3 +89,6 @@ typings/
 
 # image uploads
 static/uploads/**
+
+# image uploads
+static/users/**

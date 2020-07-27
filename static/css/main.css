@@ -305,6 +305,42 @@ input::-webkit-input-placeholder {
   filter: invert(50%);  
 }
 
+.sidenav #nav-sign-in:before{
+  content: "";
+  display: inline-block;
+  background: url(../images/sign-in.svg) no-repeat center left;
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  opacity: 1;
+  -webkit-filter: invert(20%); /* Safari/Chrome */
+  filter: invert(20%);
+}
+
+.sidenav #nav-sign-in:hover:before {
+  transform: scale(1.1);
+  -webkit-filter: invert(50%); /* Safari/Chrome */
+  filter: invert(50%);  
+}
+.sidenav #nav-sign-up:before{
+  content: "";
+  display: inline-block;
+  background: url(../images/sign-up.svg) no-repeat center left;
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  opacity: 1;
+  -webkit-filter: invert(20%); /* Safari/Chrome */
+  filter: invert(20%);
+}
+
+.sidenav #nav-sign-up:hover:before {
+  transform: scale(1.1);
+  -webkit-filter: invert(50%); /* Safari/Chrome */
+  filter: invert(50%);  
+}
 .sidenav #nav-studios:before {
   content: "";
   display: inline-block;
